@@ -22,6 +22,8 @@ import com.sun.istack.internal.NotNull;
 
 
 @Entity
+
+
 @Table(name = "cenovnik")
 public class Cenovnik {
 	
