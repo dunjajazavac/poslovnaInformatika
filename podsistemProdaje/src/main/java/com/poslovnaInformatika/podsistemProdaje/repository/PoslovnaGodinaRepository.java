@@ -16,6 +16,6 @@ public interface PoslovnaGodinaRepository extends JpaRepository<PoslovnaGodina, 
 	
 	Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page);
 
-	void delete(Long id);
+	
 
 }

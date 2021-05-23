@@ -35,7 +35,7 @@ public class PoslovnaGodinaService {
 		return poslovnaGodinaRepo.findAll(page);
 	}
 	public void remove(Long id) {
-		 poslovnaGodinaRepo.delete(id);
+		 poslovnaGodinaRepo.deleteById(id);
 	}
 	
 	public Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page){
