@@ -31,7 +31,7 @@ public class FakturaService {
 	public List<Faktura> findAll(){
 		return fakturaRepo.findAll();
 	}
-	public List<Faktura> findByBrojFakture(int brojFakture){
+	public Faktura findByBrojFakture(int brojFakture){
 		return fakturaRepo.findByBrojFakture(brojFakture);
 	}
 	

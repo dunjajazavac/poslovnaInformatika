@@ -12,7 +12,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.Faktura;
 public interface FakturaRepository extends JpaRepository<Faktura, Long> {
 
 	Faktura findOne(Long id);
-	List<Faktura> findByBrojFakture(int brojFakture);
+	Faktura findByBrojFakture(int brojFakture);
 	Page<Faktura> findAllByStatusFakture(String status,Pageable page);
 	Page<Faktura> findAll(Pageable page);
 	Page<Faktura> findAllByBrojFakture(int brojFakture, Pageable page);
