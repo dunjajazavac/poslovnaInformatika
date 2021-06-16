@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poslovnaInformatika.podsistemProdaje.model.Cenovnik;
+import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.service.CenovnikService;
 import com.sun.el.parser.ParseException;
 
