@@ -44,8 +44,6 @@ public class CenovnikService {
 	public Page<Cenovnik> findAll(org.springframework.data.domain.Pageable page) {
 		return cenovnikRepo.findAll(page);
 	}
-
-
 	
 	public Page<Cenovnik> findAllByDatumPocetkaVazenja(Date datumPocetkaVazenja,org.springframework.data.domain.Pageable page) {
 		return cenovnikRepo.findAllByDatumPocetkaVazenja(datumPocetkaVazenja,page);

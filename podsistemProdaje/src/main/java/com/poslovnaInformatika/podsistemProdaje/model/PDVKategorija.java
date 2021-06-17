@@ -12,13 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class PDVKategorija {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idKategorije; 
+	private Long idKategorije; 
 
 	@Column(name = "naziv")
 	private String naziv; 
