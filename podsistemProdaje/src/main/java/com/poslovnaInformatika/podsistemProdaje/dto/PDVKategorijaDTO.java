@@ -4,7 +4,6 @@ import com.poslovnaInformatika.podsistemProdaje.model.PDVKategorija;
 
 public class PDVKategorijaDTO {
 
-	//ono cemu pripadas 
 	private Long idKategorije;
 	private String naziv;
 	

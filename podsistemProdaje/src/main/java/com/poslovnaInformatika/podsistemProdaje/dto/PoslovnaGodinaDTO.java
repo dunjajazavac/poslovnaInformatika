@@ -6,6 +6,7 @@ public class PoslovnaGodinaDTO {
 	private int godina;
 	private boolean zakljucena;
 	private Long idPreduzeca;
+	
 	public PoslovnaGodinaDTO() {
 		super();
 	}
