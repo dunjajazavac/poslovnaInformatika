@@ -1,6 +1,7 @@
 package com.poslovnaInformatika.podsistemProdaje.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.Cenovnik;
 public interface CenovnikRepository extends JpaRepository<Cenovnik,Long> {
 	Cenovnik findByDatumPocetkaVazenja (Date datumVazenja);
 	
-	Page<Cenovnik> findAll(Pageable page);
+	List<Cenovnik> findAll();
 	
 
 	Page<Cenovnik> findAllByDatumPocetkaVazenja(Date datumPocetkaVazenja, Pageable page);

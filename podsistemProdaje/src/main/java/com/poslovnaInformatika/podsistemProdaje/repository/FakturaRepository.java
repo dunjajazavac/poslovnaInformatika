@@ -1,6 +1,6 @@
 package com.poslovnaInformatika.podsistemProdaje.repository;
 
-import java.util.List;
+
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,6 @@ import com.poslovnaInformatika.podsistemProdaje.model.Faktura;
 @Repository
 public interface FakturaRepository extends JpaRepository<Faktura, Long> {
 
-	Faktura findOne(Long id);
 	Faktura findByBrojFakture(int brojFakture);
 	Page<Faktura> findAllByStatusFakture(String status,Pageable page);
 	Page<Faktura> findAll(Pageable page);

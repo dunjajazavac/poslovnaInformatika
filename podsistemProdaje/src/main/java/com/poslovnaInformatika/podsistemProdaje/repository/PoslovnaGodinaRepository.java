@@ -1,5 +1,7 @@
 package com.poslovnaInformatika.podsistemProdaje.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +14,8 @@ public interface PoslovnaGodinaRepository extends JpaRepository<PoslovnaGodina, 
 
 	PoslovnaGodina findOne(Long id);
 
+	List<PoslovnaGodina> findAll();
+	
 	PoslovnaGodina findByGodina(int godina);
 	
 	Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page);

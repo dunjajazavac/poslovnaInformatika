@@ -21,7 +21,7 @@ public class FakturaService {
 	
 	
 	public Faktura findOne(Long id) {
-		return fakturaRepo.findOne(id);
+		return fakturaRepo.findById(id).orElse(null);
 	}
 	
 	public Faktura save(Faktura faktura) {
