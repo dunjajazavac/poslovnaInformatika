@@ -36,5 +36,5 @@ import com.poslovnaInformatika.podsistemProdaje.repository.FakturaRepository;
 public class StavkaFaktureController {
 
 	
-
+ 
 }
