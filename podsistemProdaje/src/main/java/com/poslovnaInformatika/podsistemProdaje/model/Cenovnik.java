@@ -32,11 +32,11 @@ public class Cenovnik {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idCenovnika;
 	
-	@javax.validation.constraints.NotNull()
+	@NotNull
 	@Column(name="datum_pocetka_vazenja", columnDefinition = "DATE")
 	private Date datumPocetkaVazenja;
 	
-	@javax.validation.constraints.NotNull
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_preduzeca")
 	private Preduzece preduzece;

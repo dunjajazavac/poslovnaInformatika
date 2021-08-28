@@ -14,44 +14,44 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+
 @Entity
-@Table(name= "jedinicaMere")
+@Table(name = "jedinica_mere")
 public class JedinicaMere {
 	
 	@Id
-	@Column(name = "idJedinice")
+	@Column(name = "id_jedinice_mere")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idJediniceMere;
 	
-	
+	@NotBlank(message = "Naziv jedinice mere ne sme biti prazan")
 	@Size(max=20)
-	@Column(name = "naziv", columnDefinition = "VARCHAR(20)")
+	@Column(name = "naziv_jedinice_mere", columnDefinition = "VARCHAR(20)")
 	private String nazivJediniceMere;
 	
-	
+	@NotBlank(message = "Skraceni naziv ne sme biti prazan")
 	@Size(min=1, max=5)
-	@Column(name = "skraceniNaziv", columnDefinition = "CHAR(5)")
-	private String skraceniNazivJediniceMere;
+	@Column(name = "skraceni_naziv", columnDefinition = "CHAR(5)")
+	private String skraceniNaziv;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "jedinicaMere")
-	private List<RobaUsluge> roba = new ArrayList<RobaUsluge>();
-
+	private List<RobaUsluga> roba = new ArrayList<RobaUsluga>();
+	
 	public JedinicaMere() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public JedinicaMere(Long idJediniceMere, @Size(max = 20) String nazivJediniceMere,
-			@Size(min = 1, max = 5) String skraceniNazivJediniceMere,
-			List<RobaUsluge> roba) {
+	public JedinicaMere(Long idJediniceMere, String nazivJediniceMere, String skraceniNaziv, List<RobaUsluga> roba) {
 		super();
 		this.idJediniceMere = idJediniceMere;
 		this.nazivJediniceMere = nazivJediniceMere;
-		this.skraceniNazivJediniceMere = skraceniNazivJediniceMere;
+		this.skraceniNaziv = skraceniNaziv;
 		this.roba = roba;
 	}
 
@@ -71,65 +71,29 @@ public class JedinicaMere {
 		this.nazivJediniceMere = nazivJediniceMere;
 	}
 
-	public String getSkraceniNazivJediniceMere() {
-		return skraceniNazivJediniceMere;
+	public String getSkraceniNaziv() {
+		return skraceniNaziv;
 	}
 
-	public void setSkraceniNazivJediniceMere(String skraceniNazivJediniceMere) {
-		this.skraceniNazivJediniceMere = skraceniNazivJediniceMere;
+	public void setSkraceniNaziv(String skraceniNaziv) {
+		this.skraceniNaziv = skraceniNaziv;
 	}
 
-	public List<RobaUsluge> getRoba() {
+	public List<RobaUsluga> getRoba() {
 		return roba;
 	}
 
-	public void setRoba(List<RobaUsluge> roba) {
+	public void setRoba(List<RobaUsluga> roba) {
 		this.roba = roba;
 	}
 
 	@Override
 	public String toString() {
 		return "JedinicaMere [idJediniceMere=" + idJediniceMere + ", nazivJediniceMere=" + nazivJediniceMere
-				+ ", skraceniNazivJediniceMere=" + skraceniNazivJediniceMere + "]";
+				+ ", skraceniNaziv=" + skraceniNaziv + ", roba=" + roba + "]";
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idJediniceMere == null) ? 0 : idJediniceMere.hashCode());
-		result = prime * result + ((nazivJediniceMere == null) ? 0 : nazivJediniceMere.hashCode());
-		result = prime * result + ((skraceniNazivJediniceMere == null) ? 0 : skraceniNazivJediniceMere.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		JedinicaMere other = (JedinicaMere) obj;
-		if (idJediniceMere == null) {
-			if (other.idJediniceMere != null)
-				return false;
-		} else if (!idJediniceMere.equals(other.idJediniceMere))
-			return false;
-		if (nazivJediniceMere == null) {
-			if (other.nazivJediniceMere != null)
-				return false;
-		} else if (!nazivJediniceMere.equals(other.nazivJediniceMere))
-			return false;
-		if (skraceniNazivJediniceMere == null) {
-			if (other.skraceniNazivJediniceMere != null)
-				return false;
-		} else if (!skraceniNazivJediniceMere.equals(other.skraceniNazivJediniceMere))
-			return false;
-		return true;
-	}
-	
-	
 
 }
+	
+
+

@@ -11,48 +11,64 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
+
 
 @Entity
+@Table(name = "pdv_kategorija")
 public class PDVKategorija {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idKategorije; 
-
-	@Column(name = "naziv")
-	private String naziv; 
+	@Column(name = "kategorija_id")
+	private Long idKategorije;
 	
-	//veze: 
-	//one to many sa grupa robe ili usluga 
+	@NotBlank(message = "Naziv kategorije ne sme biti prazan")
+	@Column(name = "naziv_kategorije", columnDefinition = "VARCHAR(20)")
+	private String nazivKategorije;
 	
-	@OneToMany(mappedBy="pdvKategorija", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "pdvKategorija")
 	private List<PDVStopa> pdvStope = new ArrayList<PDVStopa>();
-
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "pdvKategorija")
+	private List<GrupaRobeUsluga> grupeRobe = new ArrayList<GrupaRobeUsluga>();
+	
 	public PDVKategorija() {
 		super();
 	}
 
-	public PDVKategorija(long idKategorije, String naziv, List<PDVStopa> pdvStope) {
+	public PDVKategorija(Long idKategorije, String nazivKategorije, List<PDVStopa> pdvStope,
+			List<GrupaRobeUsluga> grupeRobe) {
 		super();
 		this.idKategorije = idKategorije;
-		this.naziv = naziv;
+		this.nazivKategorije = nazivKategorije;
 		this.pdvStope = pdvStope;
+		this.grupeRobe = grupeRobe;
 	}
 
-	public long getIdKategorije() {
+	public Long getIdKategorije() {
 		return idKategorije;
 	}
 
-	public void setIdKategorije(long idKategorije) {
+	public void setIdKategorije(Long idKategorije) {
 		this.idKategorije = idKategorije;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getNazivKategorije() {
+		return nazivKategorije;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setNazivKategorije(String nazivKategorije) {
+		this.nazivKategorije = nazivKategorije;
 	}
 
 	public List<PDVStopa> getPdvStope() {
@@ -63,5 +79,20 @@ public class PDVKategorija {
 		this.pdvStope = pdvStope;
 	}
 
+	public List<GrupaRobeUsluga> getGrupeRobe() {
+		return grupeRobe;
+	}
+
+	public void setGrupeRobe(List<GrupaRobeUsluga> grupeRobe) {
+		this.grupeRobe = grupeRobe;
+	}
+
+	@Override
+	public String toString() {
+		return "PDVKategorija [idKategorije=" + idKategorije + ", nazivKategorije=" + nazivKategorije + ", pdvStope="
+				+ pdvStope + ", grupeRobe=" + grupeRobe + "]";
+	}
+
 	
+
 }

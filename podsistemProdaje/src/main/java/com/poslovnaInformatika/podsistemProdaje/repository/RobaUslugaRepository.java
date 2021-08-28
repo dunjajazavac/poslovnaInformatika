@@ -3,9 +3,11 @@ package com.poslovnaInformatika.podsistemProdaje.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.poslovnaInformatika.podsistemProdaje.model.RobaUsluge;
+import com.poslovnaInformatika.podsistemProdaje.model.RobaUsluga;
+
+
 
 @Repository
-public interface RobaUslugeRepository extends JpaRepository<RobaUsluge, Long> {
+public interface RobaUslugaRepository extends JpaRepository<RobaUsluga, Long> {
 
 }

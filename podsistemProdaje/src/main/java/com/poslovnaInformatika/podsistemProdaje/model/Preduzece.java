@@ -15,77 +15,102 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
+@Table(name = "preduzece")
 public class Preduzece {
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
-	@Column(name = "naziv", nullable = false)
-	private String naziv;
-
-	@Column(name = "adresa", nullable = false)
+	@Column(name = "id_preduzeca")
+	private Long idPreduzeca;
+	
+	@NotBlank(message = "Naziv preduzeca ne sme biti prazno")
+	@Column(name = "naziv_preduzeca", columnDefinition = "VARCHAR(20)")
+	private String nazivPreduzeca;
+	
+	@NotBlank(message = "Adresa preduzeca ne sme biti prazna")
+	@Column(name = "adresa_preduzeca", columnDefinition = "VARCHAR(20)")
 	private String adresa;
-
-	@Column(name = "fax")
+	
+	@NotBlank(message = "Broj telefona ne sme biti prazan")
+	@Column(name = "broj_telefona", columnDefinition = "VARCHAR(20)")
+	private String brojTelefona;
+	
+	//firma ne mora da ima fax, bitan je telefon
+	@Column(name = "fax_preduzeca", columnDefinition = "VARCHAR(20)")
 	private String fax;
 	
-	@Column(name = "tel")
-	private String tel;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "mesto_id")
-	private NaseljenoMesto mesto;
-
-	@OneToMany(mappedBy = "preduzece",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Faktura> fakture = new ArrayList<Faktura>();
-
-	@OneToMany(mappedBy = "preduzece",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@NotNull(message = "Naseljeno mesto ne sme biti prazno")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_mesta")
+	private NaseljenoMesto naseljenoMesto;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "preduzece")
+	private List<Cenovnik> cenovnici = new ArrayList<Cenovnik>();
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "preduzece")
 	private List<PoslovniPartner> poslovniPartneri = new ArrayList<PoslovniPartner>();
-
-	@OneToMany(mappedBy = "preduzece",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Cenovnik> cenovnik = new ArrayList<Cenovnik>();
-
-	@OneToMany(mappedBy = "preduzece",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<GrupaRobe> grupaRobe = new ArrayList<GrupaRobe>();
-
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "preduzece")
+	private List<Faktura> fakture = new ArrayList<Faktura>();
+	
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "preduzece")
+	private List<StavkaFakture> stavkeFakture = new ArrayList<StavkaFakture>();
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "preduzece")
+	private List<Narudzbenica> narudzbenice = new ArrayList<Narudzbenica>();
+	
 	public Preduzece() {
 		super();
 	}
 
-	public Preduzece(long id, String naziv, String adresa, String fax, String tel, NaseljenoMesto mesto,
-			List<Faktura> fakture,
-			List<PoslovniPartner> poslovniPartneri,
-			List<Cenovnik> cenovnik, List<GrupaRobe> grupaRobe) {
+	public Preduzece(Long idPreduzeca, String nazivPreduzeca, String adresa, String brojTelefona, String fax,
+			NaseljenoMesto naseljenoMesto, List<Cenovnik> cenovnici, List<PoslovniPartner> poslovniPartneri,
+			List<Faktura> fakture, List<StavkaFakture> stavkeFakture, List<Narudzbenica> narudzbenice) {
 		super();
-		this.id = id;
-		this.naziv = naziv;
+		this.idPreduzeca = idPreduzeca;
+		this.nazivPreduzeca = nazivPreduzeca;
 		this.adresa = adresa;
+		this.brojTelefona = brojTelefona;
 		this.fax = fax;
-		this.tel = tel;
-		this.mesto = mesto;
-		this.fakture = fakture;
+		this.naseljenoMesto = naseljenoMesto;
+		this.cenovnici = cenovnici;
 		this.poslovniPartneri = poslovniPartneri;
-		this.cenovnik = cenovnik;
-		this.grupaRobe = grupaRobe;
+		this.fakture = fakture;
+		this.stavkeFakture = stavkeFakture;
+		this.narudzbenice = narudzbenice;
 	}
 
-	public long getId() {
-		return id;
+	public Long getIdPreduzeca() {
+		return idPreduzeca;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdPreduzeca(Long idPreduzeca) {
+		this.idPreduzeca = idPreduzeca;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getNazivPreduzeca() {
+		return nazivPreduzeca;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setNazivPreduzeca(String nazivPreduzeca) {
+		this.nazivPreduzeca = nazivPreduzeca;
 	}
 
 	public String getAdresa() {
@@ -96,6 +121,14 @@ public class Preduzece {
 		this.adresa = adresa;
 	}
 
+	public String getBrojTelefona() {
+		return brojTelefona;
+	}
+
+	public void setBrojTelefona(String brojTelefona) {
+		this.brojTelefona = brojTelefona;
+	}
+
 	public String getFax() {
 		return fax;
 	}
@@ -104,28 +137,20 @@ public class Preduzece {
 		this.fax = fax;
 	}
 
-	public String getTel() {
-		return tel;
+	public NaseljenoMesto getNaseljenoMesto() {
+		return naseljenoMesto;
 	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setNaseljenoMesto(NaseljenoMesto naseljenoMesto) {
+		this.naseljenoMesto = naseljenoMesto;
 	}
 
-	public NaseljenoMesto getMesto() {
-		return mesto;
+	public List<Cenovnik> getCenovnici() {
+		return cenovnici;
 	}
 
-	public void setMesto(NaseljenoMesto mesto) {
-		this.mesto = mesto;
-	}
-
-	public List<Faktura> getFakture() {
-		return fakture;
-	}
-
-	public void setFakture(List<Faktura> fakture) {
-		this.fakture = fakture;
+	public void setCenovnici(List<Cenovnik> cenovnici) {
+		this.cenovnici = cenovnici;
 	}
 
 	public List<PoslovniPartner> getPoslovniPartneri() {
@@ -136,20 +161,36 @@ public class Preduzece {
 		this.poslovniPartneri = poslovniPartneri;
 	}
 
-	public List<Cenovnik> getCenovnik() {
-		return cenovnik;
+	public List<Faktura> getFakture() {
+		return fakture;
 	}
 
-	public void setCenovnik(List<Cenovnik> cenovnik) {
-		this.cenovnik = cenovnik;
+	public void setFakture(List<Faktura> fakture) {
+		this.fakture = fakture;
 	}
 
-	public List<GrupaRobe> getGrupaRobe() {
-		return grupaRobe;
+	public List<StavkaFakture> getStavkeFakture() {
+		return stavkeFakture;
 	}
 
-	public void setGrupaRobe(List<GrupaRobe> grupaRobe) {
-		this.grupaRobe = grupaRobe;
+	public void setStavkeFakture(List<StavkaFakture> stavkeFakture) {
+		this.stavkeFakture = stavkeFakture;
+	}
+
+	public List<Narudzbenica> getNarudzbenice() {
+		return narudzbenice;
+	}
+
+	public void setNarudzbenice(List<Narudzbenica> narudzbenice) {
+		this.narudzbenice = narudzbenice;
+	}
+
+	@Override
+	public String toString() {
+		return "Preduzece [idPreduzeca=" + idPreduzeca + ", nazivPreduzeca=" + nazivPreduzeca + ", adresa=" + adresa
+				+ ", brojTelefona=" + brojTelefona + ", fax=" + fax + ", naseljenoMesto=" + naseljenoMesto
+				+ ", cenovnici=" + cenovnici + ", poslovniPartneri=" + poslovniPartneri + ", fakture=" + fakture
+				+ ", stavkeFakture=" + stavkeFakture + ", narudzbenice=" + narudzbenice + "]";
 	}
 
 }
