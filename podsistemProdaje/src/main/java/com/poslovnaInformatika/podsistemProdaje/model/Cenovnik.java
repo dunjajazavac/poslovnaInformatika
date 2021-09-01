@@ -22,8 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-
-
 @Table(name = "cenovnik")
 public class Cenovnik {
 	
@@ -74,6 +72,8 @@ public class Cenovnik {
 	public void setDatumPocetkaVazenja(Date datumPocetkaVazenja) {
 		this.datumPocetkaVazenja = datumPocetkaVazenja;
 	}
+
+	
 
 	public Preduzece getPreduzece() {
 		return preduzece;
