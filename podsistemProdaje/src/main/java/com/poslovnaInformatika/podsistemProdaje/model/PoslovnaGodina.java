@@ -14,10 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 
 @Entity
 @Table(name = "poslovna_godina")
@@ -27,13 +27,14 @@ public class PoslovnaGodina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idGodine;
 	
-	
-	@Column(name = "godina", columnDefinition = "INT",nullable = false)
+	@NotNull(message = "Mora da postoji godina")
+	@Column(name = "godina", columnDefinition = "INT")
 	private int godina;
 	
 	@Column(name = "zakljucena", columnDefinition = "TINYINT(1)")
 	private boolean zakljucena;
 	
+	@NotNull(message = "Mora postojati preduzece")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_preduzeca")
 	private Preduzece preduzece;

@@ -10,11 +10,17 @@ import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 @Repository
 public interface PoslovnaGodinaRepository extends JpaRepository<PoslovnaGodina, Long>{
 
+<<<<<<< HEAD
 	PoslovnaGodina findOneByGodina(Long idGodine);
+=======
+	
+>>>>>>> branch 'milicaNovaGrana' of ssh://git@github.com/dunjajazavac/poslovnaInformatika.git
 
 	PoslovnaGodina findByGodina(int godina);
 	
 	Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page);
+
+
 
 	
 

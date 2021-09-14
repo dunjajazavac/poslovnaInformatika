@@ -15,6 +15,7 @@ import com.poslovnaInformatika.podsistemProdaje.repository.PoslovnaGodinaReposit
 public class PoslovnaGodinaService {
 
 	@Autowired
+<<<<<<< HEAD
 	PoslovnaGodinaRepository poslovnaGodinaRepository;
 	
 	public PoslovnaGodina findOne(Long idGodine) {
@@ -40,5 +41,32 @@ public class PoslovnaGodinaService {
 	
 	public Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page){
 		return poslovnaGodinaRepository.findAllByGodina(godina, page);
+=======
+	PoslovnaGodinaRepository poslovnaGodinaRepo;
+	
+	public PoslovnaGodina findOne(Long id) {
+		return poslovnaGodinaRepo.findById(id).orElse(null);
+	}
+	
+	public List<PoslovnaGodina> findAll() {
+		return poslovnaGodinaRepo.findAll();
+	}
+	
+	public PoslovnaGodina save(PoslovnaGodina poslovnaGodina) {
+		return poslovnaGodinaRepo.save(poslovnaGodina);
+	}
+	public PoslovnaGodina findByGodina(int godina) {
+		return poslovnaGodinaRepo.findByGodina(godina);
+	}
+	public Page<PoslovnaGodina> findAll(Pageable page) {
+		return poslovnaGodinaRepo.findAll(page);
+	}
+	public void remove(Long id) {
+		 poslovnaGodinaRepo.deleteById(id);
+	}
+	
+	public Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page){
+		return poslovnaGodinaRepo.findAllByGodina(godina, page);
+>>>>>>> branch 'milicaNovaGrana' of ssh://git@github.com/dunjajazavac/poslovnaInformatika.git
 	}
 }
