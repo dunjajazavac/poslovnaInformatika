@@ -2,6 +2,8 @@ package com.poslovnaInformatika.podsistemProdaje.dto;
 
 import java.sql.Date;
 
+import com.poslovnaInformatika.podsistemProdaje.model.Cenovnik;
+
 public class CenovnikDTO {
 	
 	private Long idCenovnika;
@@ -15,6 +17,9 @@ public class CenovnikDTO {
 		this.idCenovnika = idCenovnika;
 		this.datumPocetkaVazenja = datumPocetkaVazenja;
 		this.idPreduzeca = idPreduzeca;
+	}
+	public CenovnikDTO(Cenovnik cenovnik) {
+		// TODO Auto-generated constructor stub
 	}
 	public Long getIdCenovnika() {
 		return idCenovnika;
