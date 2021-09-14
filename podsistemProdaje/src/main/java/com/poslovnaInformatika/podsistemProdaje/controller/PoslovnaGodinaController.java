@@ -93,11 +93,9 @@ public class PoslovnaGodinaController {
 		
 		int godinaInt=Integer.parseInt(godina);
 		
-<<<<<<< HEAD
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOneByGodina(id);
-=======
-		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
->>>>>>> branch 'milicaNovaGrana' of ssh://git@github.com/dunjajazavac/poslovnaInformatika.git
+
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOnePoslovnaGodina(id);
+
 		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
 		if(poslovnaGodina !=null) {
 			poslovnaGodina.setIdGodine(id);
@@ -124,11 +122,11 @@ public class PoslovnaGodinaController {
 	public ResponseEntity<Void> obrisiGodinu(@RequestParam Long id){
 		
 		
-<<<<<<< HEAD
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOneByGodina(id);
-=======
-		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
->>>>>>> branch 'milicaNovaGrana' of ssh://git@github.com/dunjajazavac/poslovnaInformatika.git
+
+
+
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOnePoslovnaGodina(id);
+
 		if(poslovnaGodina!= null) {
 			poslovnaService.remove(poslovnaGodina.getIdGodine());;
 		}else {
