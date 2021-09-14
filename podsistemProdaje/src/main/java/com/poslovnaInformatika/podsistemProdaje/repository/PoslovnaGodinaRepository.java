@@ -10,11 +10,13 @@ import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 @Repository
 public interface PoslovnaGodinaRepository extends JpaRepository<PoslovnaGodina, Long>{
 
-	PoslovnaGodina findOne(Long id);
+	
 
 	PoslovnaGodina findByGodina(int godina);
 	
 	Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page);
+
+
 
 	
 

@@ -25,6 +25,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovnaGodinaRepository;
 import com.poslovnaInformatika.podsistemProdaje.repository.PreduzeceRepository;
+import com.poslovnaInformatika.podsistemProdaje.service.PoslovnaGodinaService;
 
 @CrossOrigin
 @RestController
@@ -33,18 +34,18 @@ import com.poslovnaInformatika.podsistemProdaje.repository.PreduzeceRepository;
 public class PoslovnaGodinaController {
 	
 	@Autowired
-	private PoslovnaGodinaRepository poslovnaRepo;
+	private PoslovnaGodinaService poslovnaService;
 	@Autowired
 	private PreduzeceRepository preduzeceRepo;
 	
 	@GetMapping(path="/all")
 	public List<PoslovnaGodina> findAll(){
-		return poslovnaRepo.findAll();
+		return poslovnaService.findAll();
 	}
 	
 	@GetMapping(path="/p")
 	public ResponseEntity<List<PoslovnaGodina>> getAllPoslovnaGodina(@RequestParam Pageable pageable){
-		Page<PoslovnaGodina> godine=poslovnaRepo.findAll(pageable);
+		Page<PoslovnaGodina> godine=poslovnaService.findAll(pageable);
 		HttpHeaders headers =new HttpHeaders();
 		headers.set("total", String.valueOf(godine.getTotalPages()));
 		return ResponseEntity.ok().headers(headers).body(godine.getContent());
@@ -53,7 +54,7 @@ public class PoslovnaGodinaController {
 	private ResponseEntity<List<PoslovnaGodina>> searchByGodina(@RequestParam("godina") String godinaString,Pageable page){
 		int godina=Integer.parseInt(godinaString);
 		
-		Page<PoslovnaGodina> godine=poslovnaRepo.findAllByGodina(godina,page);
+		Page<PoslovnaGodina> godine=poslovnaService.findAllByGodina(godina,page);
 		HttpHeaders headers=new HttpHeaders();
 		headers.set("total",String.valueOf(godine.getTotalPages()));
 		return ResponseEntity.ok().headers(headers).body(godine.getContent());
@@ -78,7 +79,7 @@ public class PoslovnaGodinaController {
 		}
 		
 		poslovnaGodina.setPreduzece(preduzece);
-		poslovnaRepo.save(poslovnaGodina);
+		poslovnaService.save(poslovnaGodina);
 		
 		System.out.println("Dodata je nova poslovna godina.");
 		
@@ -92,7 +93,7 @@ public class PoslovnaGodinaController {
 		
 		int godinaInt=Integer.parseInt(godina);
 		
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOne(id);
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
 		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
 		if(poslovnaGodina !=null) {
 			poslovnaGodina.setIdGodine(id);
@@ -103,7 +104,7 @@ public class PoslovnaGodinaController {
 				poslovnaGodina.setZakljucena(false);
 			}
 			poslovnaGodina.setPreduzece(preduzece);
-			poslovnaRepo.save(poslovnaGodina);
+			poslovnaService.save(poslovnaGodina);
 			System.out.println("Izmenjena poslovna godina");
 			
 			return new ResponseEntity<Void>(HttpStatus.OK);
@@ -119,9 +120,9 @@ public class PoslovnaGodinaController {
 	public ResponseEntity<Void> obrisiGodinu(@RequestParam Long id){
 		
 		
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOne(id);
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
 		if(poslovnaGodina!= null) {
-			poslovnaRepo.deleteById(poslovnaGodina.getIdGodine());;
+			poslovnaService.remove(poslovnaGodina.getIdGodine());;
 		}else {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
