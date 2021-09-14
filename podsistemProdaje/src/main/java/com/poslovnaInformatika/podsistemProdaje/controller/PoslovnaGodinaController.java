@@ -92,7 +92,7 @@ public class PoslovnaGodinaController {
 		
 		int godinaInt=Integer.parseInt(godina);
 		
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOne(id);
+		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOneByGodina(id);
 		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
 		if(poslovnaGodina !=null) {
 			poslovnaGodina.setIdGodine(id);
@@ -119,7 +119,7 @@ public class PoslovnaGodinaController {
 	public ResponseEntity<Void> obrisiGodinu(@RequestParam Long id){
 		
 		
-		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOne(id);
+		PoslovnaGodina poslovnaGodina=poslovnaRepo.findOneByGodina(id);
 		if(poslovnaGodina!= null) {
 			poslovnaRepo.deleteById(poslovnaGodina.getIdGodine());;
 		}else {
