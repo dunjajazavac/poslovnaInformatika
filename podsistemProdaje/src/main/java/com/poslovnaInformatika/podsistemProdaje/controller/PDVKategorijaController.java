@@ -10,6 +10,7 @@
 //import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
 //import org.springframework.web.bind.annotation.RequestBody;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@
 //@CrossOrigin
 //@RestController
 //@RequestMapping(value="api/pdvKategorije")
-//@ControllerAdvice
+////@ControllerAdvice
 //public class PDVKategorijaController {
 //
 //	@Autowired
@@ -50,17 +51,17 @@
 //		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija), HttpStatus.OK);
 //	}
 //	
-//	@PostMapping(value="/{pdvKategorijeId}", consumes="application/json")
-//	public ResponseEntity<PDVKategorijaDTO> savePDVKategorija(@RequestBody PDVKategorijaDTO pdvKategorijaDTO, @PathVariable("pdvKategorijeId") Long id){		
+//	@PostMapping(consumes="application/json")
+//	public ResponseEntity<PDVKategorijaDTO> savePDVKategorija(@RequestBody PDVKategorijaDTO pdvKategorijaDTO){		
 //		PDVKategorija pdvKategorija = new PDVKategorija();
-//		pdvKategorija.setNaziv(pdvKategorijaDTO.getNaziv());
-//		
-//		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
+//		pdvKategorija.setNazivKategorije(pdvKategorijaDTO.getNaziv());
 //	
+//		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
+//
 //		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija), HttpStatus.CREATED);	
 //	}
 //	
-//	@PostMapping(value="/{pdvKategorijeId}", consumes="application/json")
+//	@PutMapping(value="/{pdvKategorijeId}", consumes="application/json")
 //	public ResponseEntity<PDVKategorijaDTO> updatePDVKategorija(@RequestBody PDVKategorijaDTO pdvKategorijaDTO, @PathVariable("pdvKategorijeId") Long id){		
 //		
 //		PDVKategorija pdvKategorija = pdvKategorijaService.findOne(id);
@@ -69,7 +70,7 @@
 //			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //		}
 //		
-//		pdvKategorija.setNaziv(pdvKategorijaDTO.getNaziv());
+//		pdvKategorija.setNazivKategorije(pdvKategorijaDTO.getNaziv());
 //		
 //		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
 //	
