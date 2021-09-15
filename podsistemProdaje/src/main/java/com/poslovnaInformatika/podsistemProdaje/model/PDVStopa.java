@@ -86,8 +86,7 @@ public class PDVStopa {
 
 	@Override
 	public String toString() {
-		return "PDVStopa [idStope=" + idStope + ", datumVazenja=" + datumVazenja + ", procenat=" + procenat
-				+ ", pdvKategorija=" + pdvKategorija + "]";
+		return "PDVStopa [idStope=" + idStope + ", datumVazenja=" + datumVazenja + ", procenat=" + procenat;
 	}
 
 }

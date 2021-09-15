@@ -20,8 +20,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 @Entity
 @Table(name = "roba_usluga")
 public class RobaUsluga {
@@ -168,12 +166,5 @@ public class RobaUsluga {
 		this.stavkeNarudzbenice = stavkeNarudzbenice;
 	}
 
-	@Override
-	public String toString() {
-		return "RobaUsluga [idRobeUsluge=" + idRobeUsluge + ", nazivRobeUsluge=" + nazivRobeUsluge + ", opis=" + opis
-				+ ", roba=" + roba + ", jedinicaMere=" + jedinicaMere + ", grupaRobeUsluga=" + grupaRobeUsluga
-				+ ", stavkeCenovnika=" + stavkeCenovnika + ", stavkeFakture=" + stavkeFakture + ", stavkeOtpremnice="
-				+ stavkeOtpremnice + ", stavkeNarudzbenice=" + stavkeNarudzbenice + "]";
-	}
 	
 }

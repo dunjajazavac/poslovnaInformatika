@@ -17,10 +17,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
-
-
 @Entity
 @Table(name = "pdv_kategorija")
 public class PDVKategorija {
@@ -87,10 +83,10 @@ public class PDVKategorija {
 		this.grupeRobe = grupeRobe;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "PDVKategorija [idKategorije=" + idKategorije + ", nazivKategorije=" + nazivKategorije + ", pdvStope="
-				+ pdvStope + ", grupeRobe=" + grupeRobe + "]";
+		return "PDVKategorija [idKategorije=" + idKategorije + ", nazivKategorije=" + nazivKategorije + ", pdvStope=]" + pdvStope;
 	}
 
 	
