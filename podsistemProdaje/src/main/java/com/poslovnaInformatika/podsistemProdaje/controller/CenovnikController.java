@@ -78,16 +78,16 @@ public class CenovnikController {
 	
 	
 	@PostMapping(path = "/dodajCenovnik")
-	public ResponseEntity<Void> dodajCenovnik(@Validated @RequestParam("datum_vazenja") String datumVazenja,
+	public ResponseEntity<Void> dodajCenovnik( @RequestParam("datum_vazenja") String datumVazenja,
 			@RequestParam("preduzece") String nazivPreduzeca) throws ParseException, java.text.ParseException {
 		
 		System.out.println("Datum pocetka vazenja: " + datumVazenja);
-		
+	
 		String datum = datumVazenja;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = formatter.parse(datum);
 	    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		
+		System.out.println("Datum"+datum);
 	    Preduzece preduzece = preduzeceService.findByNazivPreduzeca(nazivPreduzeca);
 	    
 	    if(datumVazenja == null || nazivPreduzeca == null) {
@@ -105,8 +105,8 @@ public class CenovnikController {
 		
 	}
 	
-	@PostMapping(path = "/izmeniCenovnik", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ResponseEntity<Void> izmeniCenovnik(@RequestParam("id") long id,
+	@PostMapping(path = "/izmeniCenovnik", consumes = "application/json")
+	public ResponseEntity<Void> izmeniCenovnik(@RequestParam("id") Long id,
 			@RequestParam("datum_vazenja") String datumVazenja, 
 			@RequestParam("preduzece") String nazivPreduzeca) throws ParseException, java.text.ParseException{
 	    
