@@ -1,5 +1,6 @@
 package com.poslovnaInformatika.podsistemProdaje.repository;
 
+
 import java.awt.print.Pageable;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface PoslovniPartnerRepository extends JpaRepository<PoslovniPartner
 //	Page<PoslovniPartner> findAll(Pageable page);
 	PoslovniPartner findByNazivPoslovnogPartnera (String nazivPoslovnogPartnera);
 	
+
 }

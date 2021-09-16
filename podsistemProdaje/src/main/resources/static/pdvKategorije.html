@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <script src="bootstrap/bootstrap.js"></script>
+    <script src="js/pdvKategorije.js"></script>
+    <script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <title>PDV kategorije</title>
+    
+    <script>
+        $(document).ready(callPdvCategories);
+    </script>
+</head>
+
+
+<table id="dataTable" class="table">
+    <thead>
+        <tr>
+            <th>Naziv pdv kategorije</th>
+        </tr>
+    </thead>
+    <tbody id="dataTableBody">
+    </tbody>
+    
+</table>
+<ul class="pagination justify-content-center bg-success" id="category-index"></ul>
+<br>
+<div class="form-group mx-auto w-25">
+    <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
+    <select class="form-control" id="nmb-select">
+        <option value="1">1</option>
+        <option value="3">3</option>
+        <option value="9">9</option>
+    </select>
+</div>
+</html>

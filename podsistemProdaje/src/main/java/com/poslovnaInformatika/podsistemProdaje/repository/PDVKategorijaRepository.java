@@ -16,4 +16,8 @@ public interface PDVKategorijaRepository extends JpaRepository<PDVKategorija, Lo
 	Page<PDVKategorija> findAll(Pageable pageable);
 	Page<PDVKategorija> findByNazivKategorije(String name, Pageable page);
 	List<PDVKategorija> findByNazivKategorije(String name, Sort sort);
+	
+	//ovde
+	//Page<PDVKategorija> findAllByPageAndSize(int pageNo, int pageSize);
+
 }
