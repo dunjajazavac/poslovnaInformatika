@@ -9,5 +9,10 @@ import com.poslovnaInformatika.podsistemProdaje.model.RobaUsluga;
 
 @Repository
 public interface RobaUslugaRepository extends JpaRepository<RobaUsluga, Long> {
+<<<<<<< HEAD
+=======
+	RobaUsluga findByNazivRobeUsluge (String nazivRobeUsluge);
+	
+>>>>>>> branch 'milicaNovaGrana' of git@github.com:dunjajazavac/poslovnaInformatika.git
 
 }
