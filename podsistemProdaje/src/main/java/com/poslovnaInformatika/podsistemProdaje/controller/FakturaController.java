@@ -239,7 +239,7 @@ public class FakturaController {
 		    	
 		    try {	    		
 		    	InputStream is = null;
-		    	is = new FileInputStream(new File("C:\\Users\\Win10\\git\\poslovnaInformatika\\podsistemProdaje\\src\\main\\resources\\faktura.jrxml"));
+		    	is = new FileInputStream(new File("C:\\Users\\Win10\\git\\poslovnaInformatika2\\podsistemProdaje\\src\\main\\resources\\faktura.jrxml"));
 		    	JasperDesign jasperDesign = JRXmlLoader.load(is);
 		    	JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		    	String path = "C:\\Users\\Win10\\Downloads\\jasperFolder\\fakturaSaStavkama.pdf";
@@ -268,7 +268,7 @@ public class FakturaController {
 	        fakture = fakturaService.findAll();
 	        
 			String path = "C:\\Users\\Win10\\Downloads\\jasperFolder";
-			File file = ResourceUtils.getFile("C:\\Users\\Win10\\git\\poslovnaInformatika\\podsistemProdaje\\src\\main\\resources\\faktureDnevnik.jrxml");
+			File file = ResourceUtils.getFile("C:\\Users\\Win10\\git\\poslovnaInformatika2\\podsistemProdaje\\src\\main\\resources\\faktureDnevnik.jrxml");
 			JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(fakture);
 			Map<String, Object> params = new HashMap<String, Object>();

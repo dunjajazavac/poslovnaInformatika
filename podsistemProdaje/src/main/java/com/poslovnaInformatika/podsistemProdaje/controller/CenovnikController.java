@@ -105,10 +105,10 @@ public class CenovnikController {
 		
 	}
 	
-	@PostMapping(path = "/izmeniCenovnik", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ResponseEntity<Void> izmeniCenovnik(@RequestParam("id") long id,
-			@RequestParam("datum_vazenja") String datumVazenja, 
-			@RequestParam("preduzece") String nazivPreduzeca) throws ParseException, java.text.ParseException{
+	@PostMapping(path = "/izmeniCenovnik", consumes = "application/json")
+	public ResponseEntity<Void> izmeniCenovnik(@RequestParam(required =false) Long id,
+			@RequestParam(value="datum_vazenja",required=false) String datumVazenja, 
+			@RequestParam(value="preduzece",required=false) String nazivPreduzeca) throws ParseException, java.text.ParseException{
 	    
 	    Cenovnik cenovnik = cenovnikService.findOne(id);
 	    

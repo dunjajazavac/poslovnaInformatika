@@ -1,5 +1,4 @@
 package com.poslovnaInformatika.podsistemProdaje.model;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "faktura")
@@ -28,51 +28,52 @@ public class Faktura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idFakture;
 	
-	
-	@Column(name = "broj_fakture",nullable = false)
+	@NotNull
+	@Column(name = "broj_fakture", columnDefinition = "INT")
 	private int brojFakture;
 	
-	
-	@Column(name = "datum_fakture", columnDefinition = "DATE",nullable = false)
+	@NotNull
+	@Column(name = "datum_fakture", columnDefinition = "DATE")
 	private Date datumFakture;
 	
-	
-	@Column(name = "datum_valute", columnDefinition = "DATE",nullable = false)
+	@NotNull
+	@Column(name = "datum_valute", columnDefinition = "DATE")
 	private Date datumValute;
 	
-	
-	@Column(name = "ukupna_osnovica", columnDefinition = "DECIMAL",nullable = false)
+	@NotNull
+	@Column(name = "ukupna_osnovica", columnDefinition = "DECIMAL")
 	private double ukupnaOsnovica;
 	
-	
-	@Column(name = "ukupan_pdv", columnDefinition = "DECIMAL",nullable = false)
+	@NotNull
+	@Column(name = "ukupan_pdv", columnDefinition = "DECIMAL")
 	private double ukupanPDV;
 	
-	
-	@Column(name = "ukupan_iznos", columnDefinition = "DECIMAL",nullable = false)
+	@NotNull
+	@Column(name = "ukupan_iznos", columnDefinition = "DECIMAL")
 	private double ukupanIznos;
 	
-	@Column(name = "status_fakture")
+	@NotBlank(message = "Status fakture ne sme biti prazno")
+	@Column(name = "status_fakture", columnDefinition = "CHAR(1)")
 	private String statusFakture;
 	
-	@NotNull
+	@NotNull(message = "Mora postojati poslovna godina")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_godine",nullable = false)
+	@JoinColumn(name = "id_godine")
 	private PoslovnaGodina poslovnaGodina;
 	
-	
+	@NotNull(message = "Mora postojati preduzece")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_preduzeca",nullable = false)
+	@JoinColumn(name = "id_preduzeca")
 	private Preduzece preduzece;
 	
-	
+	@NotNull(message = "Mora postojati poslovni partner")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_poslovnog_partnera",nullable = false)
+	@JoinColumn(name = "id_poslovnog_partnera")
 	private PoslovniPartner poslovniPartner;
 	
-	//dodati u uml
+	@NotNull(message = "Mora postojati narudzbenica")
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_narudzbenice",nullable = false)
+	@JoinColumn(name = "id_narudzbenice")
 	private Narudzbenica narudzbenica;
 	
 	
@@ -80,7 +81,6 @@ public class Faktura {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "faktura")
 	private List<StavkaFakture> stavkeFakture = new ArrayList<StavkaFakture>();
 	
-	//dodati u uml
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "faktura")
 	private List<Otpremnica> otpremnice = new ArrayList<Otpremnica>();
