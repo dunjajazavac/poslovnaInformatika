@@ -1,5 +1,6 @@
 package com.poslovnaInformatika.podsistemProdaje.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -17,11 +18,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poslovnaInformatika.podsistemProdaje.dto.JedinicaMereDTO;
+import com.poslovnaInformatika.podsistemProdaje.dto.RobaUslugeDTO;
 import com.poslovnaInformatika.podsistemProdaje.model.JedinicaMere;
+import com.poslovnaInformatika.podsistemProdaje.model.RobaUsluga;
 import com.poslovnaInformatika.podsistemProdaje.service.JedinicaMereService;
 
 
@@ -33,23 +40,71 @@ public class JedinicaMereController {
 	@Autowired
 	private JedinicaMereService jedinicaMereService;
 	
-	@GetMapping(path = "/all")
-	public List<JedinicaMere> getAll(){
-		return jedinicaMereService.findAll();
+	@RequestMapping(value="/all", method = RequestMethod.GET)
+	public ResponseEntity<List<JedinicaMereDTO>> getAllJediniceMere(){
+		
+		List<JedinicaMere> jMere = jedinicaMereService.findAll();
+		List<JedinicaMereDTO> jedinicaMereDTO = new ArrayList<>();
+		for(JedinicaMere jedinicaMere : jMere) {
+			jedinicaMereDTO.add(new JedinicaMereDTO(jedinicaMere));
+		}
+		return new ResponseEntity<>(jedinicaMereDTO, HttpStatus.OK);
 	}
 	
-
-	@GetMapping(path = "/p")
-    public ResponseEntity<List<JedinicaMere>> getAllJedinicaMere(@RequestParam Pageable page) 
-    {
-       
-		Page<JedinicaMere> jediniceMere = jedinicaMereService.findAll(page);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("total", String.valueOf(jediniceMere.getTotalPages()));
-        return ResponseEntity.ok().headers(headers).body(jediniceMere.getContent());
-    }
+	@RequestMapping(value="/{id}", method= RequestMethod.GET)
+	public ResponseEntity<JedinicaMereDTO> getOneJM(@PathVariable Long id) {
+		JedinicaMere jm = jedinicaMereService.findOne(id); 
+		if(jm == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<JedinicaMereDTO>(new JedinicaMereDTO(jm), HttpStatus.OK);
+	}
 	
-	@GetMapping(path = "/searchByNaziv")
+	@RequestMapping( method=RequestMethod.POST)
+	public ResponseEntity<JedinicaMereDTO> saveJedinicaMere(@RequestBody JedinicaMereDTO jedinicaMereDTO) {
+		JedinicaMere jm = new JedinicaMere();
+
+		jm.setNazivJediniceMere(jedinicaMereDTO.getNaziv());
+		jm.setSkraceniNaziv(jedinicaMereDTO.getSkrNaziv());
+
+		jm = jedinicaMereService.save(jm);
+		
+		return new ResponseEntity<>(new JedinicaMereDTO(jm), HttpStatus.CREATED);	
+	
+	}
+	
+	@PutMapping(value="/{jedinicaMereId}", consumes="application/json")
+	public ResponseEntity<JedinicaMereDTO> updateJedinicaMere(@RequestBody JedinicaMereDTO jedinicaMereDTO, @PathVariable("jedinicaMereId")Long id) {
+
+		JedinicaMere jedinicaMere = jedinicaMereService.findOne(id); 
+		
+		if(jedinicaMere == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		jedinicaMere.setNazivJediniceMere(jedinicaMereDTO.getNaziv());
+		jedinicaMere.setSkraceniNaziv(jedinicaMereDTO.getSkrNaziv());
+		
+		jedinicaMere = jedinicaMereService.save(jedinicaMere);
+		
+		return new ResponseEntity<JedinicaMereDTO>(new JedinicaMereDTO(jedinicaMere), HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) 
+	public ResponseEntity<Void> deleteJedinicaMere(@PathVariable Long id){
+		JedinicaMere jm = jedinicaMereService.findOne(id); 
+		if(jm!= null) {
+			jedinicaMereService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	
+	
+	
+/*	@GetMapping(path = "/searchByNaziv")
 	private ResponseEntity<List<JedinicaMere>> searchByNaziv(@RequestParam("naziv") String nazivJediniceMere, @RequestParam Pageable page) {
 
 		Page<JedinicaMere> jediniceMere = jedinicaMereService.findAllByNazivJediniceMere(nazivJediniceMere, page);
@@ -67,69 +122,9 @@ public class JedinicaMereController {
         headers.set("total", String.valueOf(jediniceMere.getTotalPages()));
         return ResponseEntity.ok().headers(headers).body(jediniceMere.getContent());
 		
-	}
+	}*/
 	
-	//moj nacin slanja, bez converter klasa
-	@PostMapping(value = "/dodajJedinicuMere")
-	private ResponseEntity<Void> dodajJedinicuMere(@RequestParam(name = "naziv_jedinice_mere") String nazivJediniceMere, 
-			@RequestParam(name = "skraceni_naziv") String skraceniNaziv){
-		
-		if(nazivJediniceMere == null || skraceniNaziv == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		
-		System.out.println("Naziv jedinice mere: " + nazivJediniceMere);
-		System.out.println("Skraceni naziv: " + skraceniNaziv);
-		
-		JedinicaMere jedinicaMere = new JedinicaMere();
-		jedinicaMere.setNazivJediniceMere(nazivJediniceMere);
-		jedinicaMere.setSkraceniNaziv(skraceniNaziv);
-		jedinicaMereService.save(jedinicaMere);
-		
-		System.out.println("Dodata je nova jedinica mere");
-
-		return new ResponseEntity<Void>(HttpStatus.OK);
-		
-	}
-
-	@PostMapping(value = "/izmeniJedinicuMere/")
-	private ResponseEntity<Void> izmeniJedinicuMere(@RequestParam("id") long id,
-			@Validated @RequestParam("naziv_jedinice_mere") String naziv,
-			@RequestParam("skraceni_naziv") String skraceniNaziv) {
-		
-		JedinicaMere jedinicaMere = jedinicaMereService.findOne(id);
-		
-		if(jedinicaMere != null) {
-			jedinicaMere.setIdJediniceMere(id);
-			jedinicaMere.setNazivJediniceMere(naziv);
-			jedinicaMere.setSkraceniNaziv(skraceniNaziv);
-			jedinicaMereService.save(jedinicaMere);
-			
-			System.out.println("Izmena jedinice mere");
-			
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		
-	}
 	
-	@DeleteMapping(value = "/obrisiJedinicuMere/{id}")
-	private ResponseEntity<Void> obrisiJedinicuMere(@PathVariable("id") long id){
-		
-		JedinicaMere jedinicaMere = jedinicaMereService.findOne(id);
-		
-		if(jedinicaMere == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		
-		jedinicaMereService.remove(jedinicaMere.getIdJediniceMere());
-		
-		System.out.println("Obrisana je jedinica mere");
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-		
-	}
 	
 	@ExceptionHandler(value = ConstraintViolationException.class)
 	public ResponseEntity<Void> handle() {

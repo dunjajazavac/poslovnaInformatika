@@ -2,6 +2,7 @@ package com.poslovnaInformatika.podsistemProdaje.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -20,12 +21,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.poslovnaInformatika.podsistemProdaje.dto.JedinicaMereDTO;
+import com.poslovnaInformatika.podsistemProdaje.dto.PDVStopaDTO;
+import com.poslovnaInformatika.podsistemProdaje.model.JedinicaMere;
 import com.poslovnaInformatika.podsistemProdaje.model.PDVStopa;
 import com.poslovnaInformatika.podsistemProdaje.repository.PDVKategorijaRepository;
 import com.poslovnaInformatika.podsistemProdaje.repository.PDVStopaRepository;
+import com.poslovnaInformatika.podsistemProdaje.service.PDVStopaService;
 
 
 
@@ -37,18 +46,75 @@ import com.poslovnaInformatika.podsistemProdaje.repository.PDVStopaRepository;
 public class PDVStopaController {
 	
 	@Autowired
-	PDVStopaRepository pdvStopaRepo;
+	PDVStopaService pdvStopaService;
 	
-	@Autowired
-	PDVKategorijaRepository pdvKategorijaRepo;
-	
-	@GetMapping(path = "/all")
-	public List<PDVStopa> getAll(){
-		return pdvStopaRepo.findAll();
+	@RequestMapping(value="/all", method = RequestMethod.GET)
+	public ResponseEntity<List<PDVStopaDTO>> getAllPDVStopa(){
+		
+		List<PDVStopa> stopa = pdvStopaService.findAll();
+		List<PDVStopaDTO> stopaDTO = new ArrayList<>();
+		for(PDVStopa pdvStopa : stopa) {
+			stopaDTO.add(new PDVStopaDTO(pdvStopa));
 		}
+		return new ResponseEntity<>(stopaDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{id}", method= RequestMethod.GET)
+	public ResponseEntity<PDVStopaDTO> getOnePS(@PathVariable Long id) {
+		PDVStopa stopa = pdvStopaService.findOne(id); 
+		if(stopa == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<PDVStopaDTO>(new PDVStopaDTO(stopa), HttpStatus.OK);
+	}
+	
+	@RequestMapping( method=RequestMethod.POST)
+	public ResponseEntity<PDVStopaDTO> savePDVStopa(@RequestBody PDVStopaDTO pdvStopaDTO) {
+		PDVStopa pdvStopa = new PDVStopa();
+		
+		pdvStopa.setDatumVazenja(pdvStopaDTO.getDatum());
+		pdvStopa.setProcenat(pdvStopaDTO.getProcenaat());
+
+		pdvStopa = pdvStopaService.save(pdvStopa);
+		
+		return new ResponseEntity<>(new PDVStopaDTO(pdvStopa), HttpStatus.CREATED);	
+	
+	}
+	
+	@PutMapping(value="/{pdvStopaId}", consumes="application/json")
+	public ResponseEntity<PDVStopaDTO> updatePDVStopa(@RequestBody PDVStopaDTO pdvStopaDTO, @PathVariable("pdvStopaId")Long id) {
+
+		PDVStopa stopa= pdvStopaService.findOne(id); 
+		
+		if(stopa == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		stopa.setDatumVazenja(pdvStopaDTO.getDatum());
+		stopa.setProcenat(pdvStopaDTO.getProcenaat());
+
+		stopa = pdvStopaService.save(stopa);
+		
+		return new ResponseEntity<PDVStopaDTO>(new PDVStopaDTO(stopa), HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) 
+	public ResponseEntity<Void> deletePDVStopa(@PathVariable Long id){
+		PDVStopa stopa= pdvStopaService.findOne(id); 
+		if(stopa!= null) {
+			pdvStopaService.remove(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	
-	@GetMapping(path = "/p")
+	
+	
+	
+	
+/*	@GetMapping(path = "/p")
     public ResponseEntity<List<PDVStopa>> getAllPDVStopa(@RequestParam Pageable page) 
     {
        Page<PDVStopa> pdvStopa = pdvStopaRepo.findAll(page);
@@ -81,23 +147,9 @@ public class PDVStopaController {
         headers.set("total", String.valueOf(pdvStope.getTotalPages()));
         return ResponseEntity.ok().headers(headers).body(pdvStope.getContent());
 		
-	}
+	}*/
 	
-	@DeleteMapping(value = "/obrisiPDVStopu/{id}")
-	public ResponseEntity<Void> obrisiPDVStopu(@PathVariable("id") long id) {
-		
-		PDVStopa pdvStopa = pdvStopaRepo.getOne(id);
-		
-		if(pdvStopa == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		
-		pdvStopaRepo.deleteById(pdvStopa.getIdStope());
-		
-		System.out.println("Obrisana pdv stopa.");
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+
 	
 	
 	@ExceptionHandler(value = ConstraintViolationException.class)

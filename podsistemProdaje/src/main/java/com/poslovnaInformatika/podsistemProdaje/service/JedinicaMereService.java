@@ -22,14 +22,14 @@ public class JedinicaMereService {
 	private JedinicaMereRepository jedinicaMereRepo;
 	
 
-	public JedinicaMere findByNazivJediniceMere(String nazivJediniceMere) {
+	/*public JedinicaMere findByNazivJediniceMere(String nazivJediniceMere) {
 		return jedinicaMereRepo.findByNazivJediniceMere(nazivJediniceMere);
 	}
 
 
 	public JedinicaMere findBySkraceniNaziv(String skraceniNazivJediniceMere) {
 		return jedinicaMereRepo.findBySkraceniNaziv(skraceniNazivJediniceMere);
-	}
+	}*/
 
 
 	public JedinicaMere save(JedinicaMere jedinicaMere) {
@@ -54,7 +54,7 @@ public class JedinicaMereService {
 	}
 
 	
-	public Page<JedinicaMere> findAllByNazivJediniceMere(String nazivJediniceMere,Pageable page) {
+/*	public Page<JedinicaMere> findAllByNazivJediniceMere(String nazivJediniceMere,Pageable page) {
 		return jedinicaMereRepo.findAllByNazivJediniceMere(nazivJediniceMere,page);
 	}
 
@@ -68,7 +68,7 @@ public class JedinicaMereService {
 
 	public Page<JedinicaMere> findAllBySkraceniNaziv(String skraceniNazivJediniceMere, Pageable pageable) {
 		return jedinicaMereRepo.findAllBySkraceniNaziv(skraceniNazivJediniceMere, pageable);
-	}
+	}*/
 
 }
 

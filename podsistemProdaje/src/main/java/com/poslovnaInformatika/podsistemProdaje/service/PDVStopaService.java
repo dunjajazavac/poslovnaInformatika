@@ -30,9 +30,9 @@ public class PDVStopaService {
 	}
 	
 
-	public PDVStopa findByProcenat(double procenat) {
+/*	public PDVStopa findByProcenat(double procenat) {
 		return pdvStopaRepository.findByProcenat(procenat);
-	}
+	}*/
 
 	
 	public PDVStopa save(PDVStopa pdvStopa) {
@@ -52,14 +52,14 @@ public class PDVStopaService {
 
 
 	
-	public Page<PDVStopa> findAllByDatumVazenja(Date datumVazenja, Pageable pageable) {
+	/*public Page<PDVStopa> findAllByDatumVazenja(Date datumVazenja, Pageable pageable) {
 		return pdvStopaRepository.findAllByDatumVazenja(datumVazenja,pageable);
 	}
 
 
 	public Page<PDVStopa> findAllByProcenat(double procenat, Pageable pageable) {
 		return pdvStopaRepository.findAllByProcenat(procenat,pageable);
-	}
+	}*/
 
 
 
