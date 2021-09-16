@@ -1,6 +1,6 @@
 package com.poslovnaInformatika.podsistemProdaje.service;
 
-import java.awt.print.Pageable;
+
 
 import java.util.List;
 
