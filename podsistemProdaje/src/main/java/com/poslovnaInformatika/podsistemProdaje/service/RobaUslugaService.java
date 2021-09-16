@@ -32,11 +32,8 @@ public class RobaUslugaService {
 	public void remove(Long id) {
 		repo.deleteById(id);
 	}
-<<<<<<< HEAD
-=======
-	
+
 	public RobaUsluga findByNazivRobeUsluge(String nazivRobeUsluge) {
 		return repo.findByNazivRobeUsluge(nazivRobeUsluge);
 	}
->>>>>>> branch 'milicaNovaGrana' of git@github.com:dunjajazavac/poslovnaInformatika.git
 }
