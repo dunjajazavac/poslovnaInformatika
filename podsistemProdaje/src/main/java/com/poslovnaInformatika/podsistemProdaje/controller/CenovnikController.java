@@ -105,7 +105,7 @@ public class CenovnikController {
 		
 	}
 	
-	@PostMapping(path = "/izmeniCenovnik", consumes = "application/json")
+	@PostMapping(path = "/izmeniCenovnik", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
 	public ResponseEntity<Void> izmeniCenovnik(@RequestParam("id") Long id,
 			@RequestParam("datum_vazenja") String datumVazenja, 
 			@RequestParam("preduzece") String nazivPreduzeca) throws ParseException, java.text.ParseException{
