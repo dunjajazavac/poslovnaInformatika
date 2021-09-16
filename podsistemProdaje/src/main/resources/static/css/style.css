@@ -1,6 +1,3 @@
-body {
-	background-image: url("wavegreen.png");
-}
 
 .pageHead {
 	margin-top: 100px;
@@ -44,6 +41,14 @@ table tr.highlighted{
 
 table tr:not(.header){
 	cursor:pointer;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+table td {
+   border:1px solid #000;
 }
 
 toolbar {
