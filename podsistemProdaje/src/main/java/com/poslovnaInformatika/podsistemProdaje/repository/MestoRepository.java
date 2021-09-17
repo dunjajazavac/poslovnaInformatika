@@ -11,12 +11,13 @@ import com.poslovnaInformatika.podsistemProdaje.model.NaseljenoMesto;
 
 @Repository
 public interface MestoRepository extends JpaRepository<NaseljenoMesto, Long> {
-	NaseljenoMesto findByNazivMesto (String nazivMesto);
-			
+	
+	NaseljenoMesto findByNazivMesta (String nazivMesta);
 		
 	List<NaseljenoMesto> findAll();
 		
-	Page<NaseljenoMesto> findAllByNazivMesto(String nazivMesto, Pageable pageable);
+	//elena zakomentarisala 
+	//Page<NaseljenoMesto> findAllByNazivMesto(String nazivMesto, Pageable pageable);
 		
 		
 }

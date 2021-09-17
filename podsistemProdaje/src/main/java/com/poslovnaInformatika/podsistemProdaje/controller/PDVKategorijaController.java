@@ -44,6 +44,50 @@ public class PDVKategorijaController {
 	@Autowired
 	private PDVKategorijaRepository pdvKategorijaRepository; 
 	
+	@RequestMapping(value="/allSorted", method = RequestMethod.GET)
+	public ResponseEntity<List<PDVKategorija>> getAllPdvCategories(
+			@RequestParam(required = false) String name, 
+			@RequestParam("pageNo") int page, 
+			@RequestParam("pageSize") int size,
+			@RequestParam(defaultValue="id, desc") String[] sort) {
+		
+		try {
+			
+			 List<Order> orders = new ArrayList<Order>();
+
+		      if (sort[0].contains(",")) {
+		        // will sort more than 2 fields
+		        // sortOrder="field, direction"
+		        for (String sortOrder : sort) {
+		          String[] _sort = sortOrder.split(",");
+		          orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
+		        }
+		      } else {
+		        // sort=[field, direction]
+		        orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+		      }
+		      
+		     Pageable paging = PageRequest.of(page, size);
+		     Page<PDVKategorija> pdvKategorije;
+		     
+		     if(name == null) 
+					pdvKategorije = pdvKategorijaRepository.findAll(paging);
+		     else 
+		    	 pdvKategorije = pdvKategorijaRepository.findByNazivKategorije(name, paging);
+
+		     
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.set("totalPages", String.valueOf(pdvKategorije.getTotalPages()));
+	        return ResponseEntity.ok().headers(headers).body(pdvKategorije.getContent());
+		        
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	public ResponseEntity<List<PDVKategorijaDTO>> getAllPDVKategorija(){
 		
@@ -103,56 +147,7 @@ public class PDVKategorijaController {
 		}
 	}
 	
-	@RequestMapping(value="/allSorted", method = RequestMethod.GET)
-	public ResponseEntity<List<PDVKategorija>> getAllPdvCategories(
-			@RequestParam(required = false) String name, 
-			@RequestParam(defaultValue="0") int page, 
-			@RequestParam(defaultValue="3") int size,
-			@RequestParam(defaultValue="id, desc") String[] sort) {
-		
-		try {
-			 List<Order> orders = new ArrayList<Order>();
 
-		      if (sort[0].contains(",")) {
-		        // will sort more than 2 fields
-		        // sortOrder="field, direction"
-		        for (String sortOrder : sort) {
-		          String[] _sort = sortOrder.split(",");
-		          orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-		        }
-		      } else {
-		        // sort=[field, direction]
-		        orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-		      }
-		      
-		      List<PDVKategorija> pdvKategorije = new ArrayList<>();
-		      Pageable paging = PageRequest.of(page, size);
-		      
-		      Page<PDVKategorija> pagePdvKategorije; 
-		      
-		      if(name == null) 
-		    	  pagePdvKategorije = pdvKategorijaRepository.findAll(paging);
-		      else 
-		    	  pagePdvKategorije = pdvKategorijaRepository.findByNazivKategorije(name, paging);
-		      
-		      pdvKategorije = pagePdvKategorije.getContent();
-		      
-		      Map<String, Object> response = new HashMap<>();
-		      response.put("pdvKategorije", pdvKategorije);
-		      response.put("currentPage", pagePdvKategorije.getNumber());
-		      response.put("totalItems", pagePdvKategorije.getTotalElements());
-		      response.put("totalPages", pagePdvKategorije.getTotalPages());
-		     
-		      HttpHeaders headers = new HttpHeaders();
-		      headers.set("totalPages", String.valueOf(pagePdvKategorije.getTotalPages()));
-		      
-		      return ResponseEntity.ok().headers(headers).body(pagePdvKategorije.getContent());
-		} catch(Exception e ) {
-			e.printStackTrace();
-		}
-		
-		return null; 
-	}
 	
 	//helper method 
 	private Sort.Direction getSortDirection(String direction) {

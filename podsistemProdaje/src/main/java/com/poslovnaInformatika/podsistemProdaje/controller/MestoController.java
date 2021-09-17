@@ -34,6 +34,8 @@ public class MestoController {
 		return mService.findAll();
 	}
 
+	//elena zakomentarisala 
+	/*
 	@GetMapping(path = "/searchByNaziv")
 	private ResponseEntity<List<NaseljenoMesto>> searchByNaziv(@RequestParam("naziv") String nazivMesta,
 			@RequestParam Pageable page) {
@@ -44,7 +46,7 @@ public class MestoController {
         return ResponseEntity.ok().headers(headers).body(mesta.getContent());
 		
 	}
-	
+	*/
 	
 
 }

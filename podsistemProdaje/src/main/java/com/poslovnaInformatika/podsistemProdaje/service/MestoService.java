@@ -17,8 +17,8 @@ public class MestoService {
 	@Autowired
 	private MestoRepository mestoRepo;
 
-	public NaseljenoMesto findByNazivMesto(String nazivMesto) {
-		return mestoRepo.findByNazivMesto(nazivMesto);
+	public NaseljenoMesto findByNazivMesto(String nazivMesta) {
+		return mestoRepo.findByNazivMesta(nazivMesta);
 	}
 
 	public NaseljenoMesto save(NaseljenoMesto mesto) {
@@ -38,8 +38,11 @@ public class MestoService {
 		return mestoRepo.findAll();
 	}
 
+	//elena zakomentarisala 
+	/* 
 	public Page<NaseljenoMesto> findAllByNazivMesto(String nazivMesto, Pageable page) {
 		return mestoRepo.findAllByNazivMesto(nazivMesto, page);
 	}
+	*/
 
 }
