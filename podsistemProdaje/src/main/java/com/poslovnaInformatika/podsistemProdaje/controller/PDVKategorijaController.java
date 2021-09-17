@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -148,6 +151,24 @@ public class PDVKategorijaController {
 		}
 		
 		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/addCategory")
+	public ResponseEntity<PDVKategorijaDTO> addCategory(@RequestParam("name") String name) {
+		
+		if(name == null) {
+			return new ResponseEntity<PDVKategorijaDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+		System.out.println("Naziv kategorije: " + name);
+		
+		PDVKategorija pdvKategorija = new PDVKategorija();
+		pdvKategorija.setNazivKategorije(name);
+		pdvKategorija.setPdvStope(null);
+		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
+		
+		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija),HttpStatus.OK);
+		
 	}
 	
 	@PostMapping(consumes="application/json")

@@ -1,6 +1,7 @@
 function getPdvCategories () {
 
     callPdvCategories(); 
+
     $(document).on("click", 'tr', function(event) {
 		highlightRow(this);
 	});
@@ -67,8 +68,7 @@ function callPdvCategories() {
         }
     })
 }
-    
-    
+      
 function searchPdvCategory() {
     var pageNo = 0; 
     var categoryIndex = $('#categoryIndex');
@@ -127,7 +127,49 @@ function searchPdvCategory() {
     })
 }
 
+function addPdvCategory() {
+    var categoryNameInput = $('#categoryNameInput');
+    //var addButton = $('#doAdd');
+
+    //addButton.on('click', function(event){
+
+    var name = categoryNameInput.val();
+    
+    if(name == ''){
+        alert("Molim unesite ime kategorije! ");
+    }
+    
+    $.post("http://localhost:8086/api/pdvKategorije/addCategory?name=" + name, function(data) {
+        
+        callPdvCategories();
+        categoryNameInput.val("");
+    });
+
+   
+	return false;
+
+}
+
 function reset() {
     document.getElementById("collapseSearch").reset();
 }
+
+function toggleSearch() {
+    var x = document.getElementById("collapseSearch");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+function toggleAdd() {
+    var x = document.getElementById("addModalScrollable");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+      
        
