@@ -11,7 +11,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.Narudzbenica;
 public interface NarudzbenicaRepository extends JpaRepository<Narudzbenica, Long> {
 	
 	
-Narudzbenica findByBrojNarudzbenice (int brojNarudzbenice);
+	Narudzbenica findByBrojNarudzbenice (int brojNarudzbenice);
 	
 	Page<Narudzbenica> findAllByBrojNarudzbenice(int brojNarudzbenice, Pageable pageable);
 

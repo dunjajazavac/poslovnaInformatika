@@ -1,5 +1,6 @@
 package com.poslovnaInformatika.podsistemProdaje.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,66 +11,76 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.poslovnaInformatika.podsistemProdaje.intrfc.JedinicaMereServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.JedinicaMere;
 import com.poslovnaInformatika.podsistemProdaje.repository.JedinicaMereRepository;
 
 
 @Transactional
 @Service
-public class JedinicaMereService {
+public class JedinicaMereService implements JedinicaMereServiceInterface {
 	
 	@Autowired
-	private JedinicaMereRepository jedinicaMereRepo;
-	
+	private JedinicaMereRepository jedinicaMereRepository;
 
-	/*public JedinicaMere findByNazivJediniceMere(String nazivJediniceMere) {
-		return jedinicaMereRepo.findByNazivJediniceMere(nazivJediniceMere);
+	@Override
+	public JedinicaMere findByNazivJediniceMere(String nazivJediniceMere) {
+		return jedinicaMereRepository.findByNazivJediniceMere(nazivJediniceMere);
 	}
 
+	@Override
+	public JedinicaMere findBySkraceniNaziv(String skraceniNaziv) {
+		return jedinicaMereRepository.findBySkraceniNaziv(skraceniNaziv);
+	}
 
-	public JedinicaMere findBySkraceniNaziv(String skraceniNazivJediniceMere) {
-		return jedinicaMereRepo.findBySkraceniNaziv(skraceniNazivJediniceMere);
-	}*/
-
-
+	@Override
 	public JedinicaMere save(JedinicaMere jedinicaMere) {
-		return jedinicaMereRepo.save(jedinicaMere);
+		return jedinicaMereRepository.save(jedinicaMere);
+	}
+
+	@Override
+	public JedinicaMere findOne(Long id) {
+		return jedinicaMereRepository.getOne(id);
+	}
+
+	@Override
+	public List<JedinicaMere> findAll() {
+		return jedinicaMereRepository.findAll();
+	}
+
+	@Override
+	public void remove(Long id) {
+		jedinicaMereRepository.deleteById(id);
 		
 	}
 
+	@Override
+	public Page<JedinicaMere> findAll(Pageable pageable) {
+		return jedinicaMereRepository.findAll(pageable);
+	}
 
-	public JedinicaMere findOne(Long id) {
-		return jedinicaMereRepo.getOne(id);
+	@Override
+	public Page<JedinicaMere> findPaginated(int pageNo, int pageSize) {
+		return jedinicaMereRepository.findAll(PageRequest.of(pageNo, pageSize));
+	}
+
+	@Override
+	public Page<JedinicaMere> findAllByNazivJediniceMere(String nazivJediniceMere, int pageNo, int pageSize) {
+		return jedinicaMereRepository.findAllByNazivJediniceMere(nazivJediniceMere,PageRequest.of(pageNo, pageSize));
+	}
+
+	@Override
+	public Page<JedinicaMere> findAll(int pageNo, int pageSize) {
+		return jedinicaMereRepository.findAll(PageRequest.of(pageNo, pageSize));
+	}
+
+	@Override
+	public Page<JedinicaMere> findAllBySkraceniNaziv(String skraceniNaziv, int pageNo, int pageSize) {
+		return jedinicaMereRepository.findAllBySkraceniNaziv(skraceniNaziv,PageRequest.of(pageNo, pageSize));
+
 	}
 
 	
-	public List<JedinicaMere> findAll() {
-		return jedinicaMereRepo.findAll();
-	}
-
-
-	public void remove(Long id) {
-		jedinicaMereRepo.deleteById(id);
-
-	}
-
-	
-/*	public Page<JedinicaMere> findAllByNazivJediniceMere(String nazivJediniceMere,Pageable page) {
-		return jedinicaMereRepo.findAllByNazivJediniceMere(nazivJediniceMere,page);
-	}
-
-	
-	public Page<JedinicaMere> findAll(Pageable page){
-		return jedinicaMereRepo.findAll(page);
-	}
-
-
-	
-
-	public Page<JedinicaMere> findAllBySkraceniNaziv(String skraceniNazivJediniceMere, Pageable pageable) {
-		return jedinicaMereRepo.findAllBySkraceniNaziv(skraceniNazivJediniceMere, pageable);
-	}*/
-
 }
 
 
