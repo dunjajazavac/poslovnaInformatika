@@ -19,7 +19,7 @@
     </script>
 </head>
 
-<div class="collapse" id="collapseSearch">
+<div id="collapseSearch">
     <form>
         <div class="row">
             <div class="col-10 search-inputs">
@@ -33,13 +33,14 @@
                 </div>
             </div>
             <div class="col-2 center">
-                <button id="doSearch" type="button" class="btn btn-outline-secondary">Pretraži</button>
-                <button id="doReset" type="button" class="btn btn-outline-secondary">Poništi</button>
+                <button onclick="searchPdvCategory()" id="doSearch" type="button" class="btn btn-outline-secondary">Pretraži</button>
+                <button onclick="reset()" id="doReset" type="button" class="btn btn-outline-secondary">Poništi</button>
             </div>
         </div>
     </form>
 </div>
 
+<!--
 
 <div class="toolbar">
     <button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
@@ -49,6 +50,8 @@
     <button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button>
     
 </div>
+-->
+
 
 <table id="dataTable" class="table">
     <thead>

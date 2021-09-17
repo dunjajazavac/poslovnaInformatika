@@ -88,6 +88,46 @@ public class PDVKategorijaController {
 		
 	}
 	
+	@RequestMapping(value="/byName", method = RequestMethod.GET)
+	public ResponseEntity<List<PDVKategorija>> getAllPdvCategoriesByName(
+			@RequestParam(required = false) String name, 
+			@RequestParam("pageNo") int page, 
+			@RequestParam("pageSize") int size,
+			@RequestParam(defaultValue="id, desc") String[] sort) {
+		
+		try {
+			
+			 List<Order> orders = new ArrayList<Order>();
+
+		      if (sort[0].contains(",")) {
+		        // will sort more than 2 fields
+		        // sortOrder="field, direction"
+		        for (String sortOrder : sort) {
+		          String[] _sort = sortOrder.split(",");
+		          orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
+		        }
+		      } else {
+		        // sort=[field, direction]
+		        orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+		      }
+		      
+		     Pageable paging = PageRequest.of(page, size);
+		     Page<PDVKategorija> pdvKategorije;
+		  
+		     pdvKategorije = pdvKategorijaRepository.findByNazivKategorije(name, paging);
+		   
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.set("totalPages", String.valueOf(pdvKategorije.getTotalPages()));
+	        return ResponseEntity.ok().headers(headers).body(pdvKategorije.getContent());
+		        
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	public ResponseEntity<List<PDVKategorijaDTO>> getAllPDVKategorija(){
 		
