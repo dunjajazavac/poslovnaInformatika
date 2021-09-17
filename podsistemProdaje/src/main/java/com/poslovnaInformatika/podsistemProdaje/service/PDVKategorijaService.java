@@ -37,4 +37,8 @@ public class PDVKategorijaService {
 	public Page<PDVKategorija> findAll(int pageNo, int pageSize) {
 		return repo.findAll(new PageRequest(pageNo, pageSize));
 	}
+	
+	public PDVKategorija findByNazivKategorije(String nazivKategorije) {
+		return repo.findByNazivKategorije(nazivKategorije);
+	}
 }

@@ -31,7 +31,6 @@ public class PDVStopa {
 	
 	//@NotBlank(message = "Procenat ne sme biti prazan")
 	//@Size(min=1, max=2, message = "Procenat ne sme da bude prazan")
-	@DecimalMax("2")
 	@Column(name = "procenat", columnDefinition = "DOUBLE")
 	private double procenat;
 

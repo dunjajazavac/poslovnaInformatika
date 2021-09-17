@@ -12,6 +12,14 @@ import com.poslovnaInformatika.podsistemProdaje.model.PDVStopa;
 
 @Repository
 public interface PDVStopaRepository extends JpaRepository<PDVStopa, Long> {
+	
+PDVStopa findByProcenat (double procenat);
+	
+	List<PDVStopa> findAll();
+
+	Page<PDVStopa> findAllByDatumVazenja(Date datumVazenja, Pageable pageable);
+	
+	Page<PDVStopa> findAllByProcenat(double procenat, Pageable pageable);
 
 	
 	
