@@ -1,5 +1,7 @@
 package com.poslovnaInformatika.podsistemProdaje.dto;
 
+import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
+
 public class PreduzeceDTO {
 
 	private Long idPreduzeca;
@@ -10,7 +12,7 @@ public class PreduzeceDTO {
 	private Long idMesta;
 	public PreduzeceDTO() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	public PreduzeceDTO(Long idPreduzeca, String nazivPreduzeca, String adresa, String brojTelefona, String fax,
 			Long idMesta) {
@@ -21,6 +23,16 @@ public class PreduzeceDTO {
 		this.brojTelefona = brojTelefona;
 		this.fax = fax;
 		this.idMesta = idMesta;
+	}
+	public PreduzeceDTO(Preduzece p) {
+		
+		this.idPreduzeca = p.getIdPreduzeca();
+		this.nazivPreduzeca = p.getNazivPreduzeca();
+		this.adresa = p.getAdresa();
+		this.brojTelefona = p.getBrojTelefona();
+		this.fax = p.getFax();
+		this.idMesta = p.getIdPreduzeca();
+		
 	}
 	public Long getIdPreduzeca() {
 		return idPreduzeca;
