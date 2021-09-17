@@ -1,15 +1,15 @@
 package com.poslovnaInformatika.podsistemProdaje.service;
 
 
-import java.awt.print.Pageable;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.poslovnaInformatika.podsistemProdaje.model.PoslovniPartner;
-
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovniPartnerRepository;
 @Service
 public class PoslovniPartnerService {
@@ -28,15 +28,18 @@ public class PoslovniPartnerService {
 		partnerRepo.deleteById(id);
 
 	}
-//
+
 //	public List<PoslovniPartner> findByPreduzece_id(Long PreduzeceId ) {
 //		return partnerRepo.findByPreduzece_id(PreduzeceId);
 //	}
+	public List<PoslovniPartner> findAll( ) {
+		return partnerRepo.findAll();
+	}
 
-//	public Page<PoslovniPartner> findAll(Pageable page) {
-//		return partnerRepo.findAll(page);
-//	}
-//	
+	public Page<PoslovniPartner> findAll(Pageable page) {
+		return partnerRepo.findAll(page);
+	}
+	
 	public PoslovniPartner findByNazivPoslovnogPartnera(String nazivPoslovnogPartnera) {
 		return partnerRepo.findByNazivPoslovnogPartnera(nazivPoslovnogPartnera);
 	}

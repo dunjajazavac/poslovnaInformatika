@@ -1,67 +1,53 @@
 package com.poslovnaInformatika.podsistemProdaje.dto;
 
+import com.poslovnaInformatika.podsistemProdaje.model.NaseljenoMesto;
+
 public class MestoDTO {
 	private Long idMesta;
-	private int ptt;
-	private String nazivPreduzeca;
-	private Long idPreduzeca;
-	
-	
+	private int pttBroj;
+	private String nazivMesta;
+
 	public MestoDTO() {
 		super();
-		
+
 	}
 
-
-	public MestoDTO(Long idMesta, int ptt, String nazivPreduzeca, Long idPreduzeca) {
+	public MestoDTO(Long idMesta, int pttBroj, String nazivMesta, String nazivPreduzeca, Long idPreduzeca) {
 		super();
 		this.idMesta = idMesta;
-		this.ptt = ptt;
-		this.nazivPreduzeca = nazivPreduzeca;
-		this.idPreduzeca = idPreduzeca;
+		this.pttBroj = pttBroj;
+		this.nazivMesta = nazivMesta;
 	}
 
+	public MestoDTO(NaseljenoMesto m) {
+		this.idMesta = m.getIdMesta();
+		this.pttBroj = m.getPttBroj();
+		this.nazivMesta = m.getNazivMesta();
+
+	}
 
 	public Long getIdMesta() {
 		return idMesta;
 	}
 
-
 	public void setIdMesta(Long idMesta) {
 		this.idMesta = idMesta;
 	}
 
-
-	public int getPtt() {
-		return ptt;
+	public int getPttBroj() {
+		return pttBroj;
 	}
 
-
-	public void setPtt(int ptt) {
-		this.ptt = ptt;
+	public void setPttBroj(int ptt) {
+		this.pttBroj = pttBroj;
 	}
 
-
-	public String getNazivPreduzeca() {
-		return nazivPreduzeca;
+	public String getNazivMesta() {
+		return nazivMesta;
 	}
 
-
-	public void setNazivPreduzeca(String nazivPreduzeca) {
-		this.nazivPreduzeca = nazivPreduzeca;
+	public void setNazivMesta(String nazivMesta) {
+		this.nazivMesta = nazivMesta;
 	}
-
-
-	public Long getIdPreduzeca() {
-		return idPreduzeca;
-	}
-
-
-	public void setIdPreduzeca(Long idPreduzeca) {
-		this.idPreduzeca = idPreduzeca;
-	}
-	
-	
-	
 
 }

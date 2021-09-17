@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.poslovnaInformatika.podsistemProdaje.model.NaseljenoMesto;
 import com.poslovnaInformatika.podsistemProdaje.repository.MestoRepository;
+import com.poslovnaInformatika.podsistemProdaje.util.PageRequest;
 @Transactional
 @Service
 public class MestoService {
 	@Autowired
 	private MestoRepository mestoRepo;
 
-	public NaseljenoMesto findByNazivMesto(String nazivMesta) {
+	public NaseljenoMesto findByNazivMesta(String nazivMesta) {
 		return mestoRepo.findByNazivMesta(nazivMesta);
 	}
 
@@ -38,11 +39,14 @@ public class MestoService {
 		return mestoRepo.findAll();
 	}
 
-	//elena zakomentarisala 
-	/* 
-	public Page<NaseljenoMesto> findAllByNazivMesto(String nazivMesto, Pageable page) {
-		return mestoRepo.findAllByNazivMesto(nazivMesto, page);
+	
+	public Page<NaseljenoMesto> findAllByNazivMesta(String nazivMesta, Pageable page) {
+		return mestoRepo.findAllByNazivMesta(nazivMesta, page);
 	}
-	*/
+	
+	public Page<NaseljenoMesto> findAll(int pageNo, int pageSize) {
+		return mestoRepo.findAll(new PageRequest(pageNo, pageSize));
+	}
+	
 
 }
