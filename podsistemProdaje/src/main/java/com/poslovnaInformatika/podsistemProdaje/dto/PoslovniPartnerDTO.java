@@ -1,5 +1,7 @@
 package com.poslovnaInformatika.podsistemProdaje.dto;
 
+import com.poslovnaInformatika.podsistemProdaje.model.PoslovniPartner;
+
 public class PoslovniPartnerDTO {
 	
 	private Long idPoslovnogPartnera;
@@ -25,6 +27,17 @@ public class PoslovniPartnerDTO {
 		this.vrstaPartnera = vrstaPartnera;
 		this.idMesta = idMesta;
 		this.idPreduzeca = idPreduzeca;
+	}
+	public PoslovniPartnerDTO(PoslovniPartner p) {
+		this.idPoslovnogPartnera = p.getIdPoslovnogPartnera();
+		this.naziv = p.getNazivPoslovnogPartnera();
+		this.adresa = p.getAdresa();
+		this.fax = p.getFax();
+		this.email = p.getEmail();
+		this.vrstaPartnera = p.getVrstaPartnera();
+		this.idMesta = p.getNaseljenoMesto().getIdMesta();
+		this.idPreduzeca = p.getPreduzece().getIdPreduzeca();
+		
 	}
 	public Long getIdPoslovnogPartnera() {
 		return idPoslovnogPartnera;
