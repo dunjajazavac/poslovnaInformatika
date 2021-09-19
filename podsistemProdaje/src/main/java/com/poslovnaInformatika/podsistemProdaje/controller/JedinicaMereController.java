@@ -110,7 +110,7 @@ public class JedinicaMereController {
 	}
 
 	@PostMapping(value = "/izmeniJedinicuMere/", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
-	private ResponseEntity<Void> izmeniJedinicuMere(@RequestParam("id_jedinice_mere") long id,
+	private ResponseEntity<Void> izmeniJedinicuMere(@RequestParam("id") long id,
 			@Validated @RequestParam("naziv_jedinice_mere") String naziv,
 			@RequestParam("skraceni_naziv") String skraceniNaziv) {
 		

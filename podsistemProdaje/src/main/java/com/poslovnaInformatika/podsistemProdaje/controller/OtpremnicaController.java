@@ -89,13 +89,7 @@ public class OtpremnicaController {
 	@PostMapping(path = "/dodajOtpremnicu")
 	public ResponseEntity<Void> dodajOtpremnicu(@RequestParam("broj_otpremnice") String brojOtpremnice, @RequestParam("kupac") String kupac, @RequestParam("adresa_isporuke") String adresaIsporuke, @RequestParam("datum_isporuke") String datumIsporuke, @RequestParam("prevoznik") String prevoznik,@RequestParam("faktura") String brojFakture, @RequestParam("redni_broj_proizvoda") String stavkaOtpremnice) throws ParseException {
 		
-		System.out.println("Broj otpremnice: " + brojOtpremnice);
-		System.out.println("Kupac: " + kupac);
-		System.out.println("Adresa isporuke: " + adresaIsporuke);
-		System.out.println("Datum isporuke: " + datumIsporuke);
-		System.out.println("Prevoznik: " + prevoznik);
-		System.out.println("Faktura: " +  brojFakture);
-		System.out.println("Stavka otpremnice: " + stavkaOtpremnice);
+		
 		
 		int brojOtpremniceInt = Integer.parseInt(brojOtpremnice);
 		
@@ -120,7 +114,7 @@ public class OtpremnicaController {
 	    otpremnica.setFaktura(faktura);
 	    otpremnicaServiceInterface.save(otpremnica);
 	    
-	    System.out.println("Dodata je nova otpremnica");
+	    System.out.println("Dodata otpremnicaaaaaaaa");
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
@@ -155,7 +149,7 @@ public class OtpremnicaController {
 			otpremnica.setFaktura(faktura);
 			otpremnicaServiceInterface.save(otpremnica);
 			
-			System.out.println("Izmenjena je otpremnica.");
+			System.out.println("Izmenjenaaaaaa ");
 			
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}else {
@@ -176,7 +170,7 @@ public class OtpremnicaController {
 		
 		otpremnicaServiceInterface.remove(otpremnica.getIdOtpremnice());
 		
-		System.out.println("Obrisana je otpremnica.");
+		System.out.println("Obrisanaaaaaaaa.");
 		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -191,7 +185,7 @@ public class OtpremnicaController {
 			Statement stmt = null;
 			
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pi", "root", "root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pi", "root", "dunja");
 			
 			stmt = conn.createStatement();
 			

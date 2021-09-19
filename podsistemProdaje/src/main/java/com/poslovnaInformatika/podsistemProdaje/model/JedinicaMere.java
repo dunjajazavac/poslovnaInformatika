@@ -35,8 +35,7 @@ public class JedinicaMere {
 	private String nazivJediniceMere;
 	
 	@NotBlank(message = "Skraceni naziv ne sme biti prazan")
-	@Size(min=1, max=5)
-	@Column(name = "skraceni_naziv", columnDefinition = "CHAR(5)")
+	@Column(name = "skraceni_naziv", columnDefinition = "CHAR(20)")
 	private String skraceniNaziv;
 	
 	@JsonIgnore
