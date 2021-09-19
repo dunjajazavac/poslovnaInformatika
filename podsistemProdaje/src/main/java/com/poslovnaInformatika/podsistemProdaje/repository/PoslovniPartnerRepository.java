@@ -16,8 +16,15 @@ public interface PoslovniPartnerRepository extends JpaRepository<PoslovniPartner
 	
 
 	//List<PoslovniPartner> findByPreduzece_id(Long id);
-	Page<PoslovniPartner> findAll(Pageable page);
+	//Page<PoslovniPartner> findAll(int pageNo, int pageSize);
 	PoslovniPartner findByNazivPoslovnogPartnera (String nazivPoslovnogPartnera);
+	Page<PoslovniPartner> findAllByEmail (String email,Pageable page);
+	
+
+	Page<PoslovniPartner> findAllByAdresa (String adresa,Pageable page);
+	Page<PoslovniPartner> findAllByVrstaPartnera (String vrstaPartnera, Pageable page);
+
+
 	
 
 }

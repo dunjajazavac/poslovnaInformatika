@@ -16,8 +16,9 @@ public interface MestoRepository extends JpaRepository<NaseljenoMesto, Long> {
 		
 	List<NaseljenoMesto> findAll();
 	Page<NaseljenoMesto> findAll(Pageable pageable);	
-	//elena zakomentarisala 
+	 
 	Page<NaseljenoMesto> findAllByNazivMesta(String nazivMesta, Pageable pageable);
-		
+	Page<NaseljenoMesto> findAllByPttBroj (int pttBroj, Pageable pageable);
+
 		
 }
