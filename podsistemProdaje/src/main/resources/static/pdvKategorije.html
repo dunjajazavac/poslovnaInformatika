@@ -26,7 +26,7 @@
     <button onClick="toggleSearch()" id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
     <button onClick="toggleAdd()" id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
     <button onClick="toggleUpdate()" id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button>
-    <button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button> 
+    <button  id="delete" type="button" class="btn btn-outline-secondary">Obriši</button> 
 </div>
 
                                              <!--TABELA-->
@@ -101,6 +101,8 @@
             </form>
 </div>
 
+                                             <!-- IZMJENA -->
+
 <div id="collapseUpdate" class="collapse">
     <div class="modal fade" id="updateModalScrollable" aria-labelledby="updateModalScrollableTitle">
                     <h5 class="modal-title" id="updateModalScrollableTitle">Izmjena PDV kategorije</h5>
@@ -123,4 +125,27 @@
                 </div>
     </div>
 
+
+                                          <!-- BRISANJE -->
+<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+		    <h5 class="modal-title" id="deletePromptLabel">Jeste li sigurni?</h5>
+			    <button type="button" class="close deletePromptClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="deletePromptText"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary deletePromptClose">Otkaži</button>
+			        <button type="button" id="doDelete" class="btn btn-primary">Obriši</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+       
+                                            
 </html>
