@@ -1,76 +1,3 @@
-function highlightRow(row){
-	if(!$(row).hasClass("header")){
-  		$(".highlighted").removeClass("highlighted");
-    	$(row).addClass("highlighted");
-    }
-}
-
-function reset() {
-    document.getElementById("collapseSearch").reset();
-}
-
-function toggleAdd() {
-    var x = document.getElementById("collapseAdd");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
-
-
-function toggleSearch() {
-    var x = document.getElementById("collapseSearch");
-        if (x.style.display === "none") {
-             x.style.display = "block";
-            } 
-        else {
-            x.style.display = "none";
-        }
-}
-
-function toggleUpdate() {
-    var x = document.getElementById("collapseUpdate");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
-
-function toggleDelete() {
-    var x = document.getElementById("collapseDelete");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
-
-  function getId(){
-	var row = $(".highlighted");
-    var id = row.find(".idKategorije").html();
-    if(id==undefined){
-    	console.log("No entity selected!");
-    	return null;
-    }
-    else{
-    	return id;
-    }  
-}
-
-function getName(){
-	var row = $(".highlighted");
-    var name = row.find(".nazivKategorije").html();
-    if(name==undefined){
-    	console.log("No entity selected!");
-    	return null;
-    }
-    else{
-    	return name;
-    }  
-}
-
 function callPdvCategories() {
     var pageNo = 0; 
     var categoryIndex = $('#categoryIndex');
@@ -133,7 +60,12 @@ function callPdvCategories() {
 		highlightRow(this);
 	});
 
+    $(document).on("click", '#refresh', function(event){
+		callPdvCategories();
+	});
+
     $(document).on("click", '#delete', function(event){
+        event.preventDefault(); 
 		var name = getName();
 		if(name!=null){
 			$('#deletePromptText').text("Brise se: " + name);
@@ -143,14 +75,94 @@ function callPdvCategories() {
 	});
 	
 	$(document).on("click", '.deletePromptClose', function(event){
+        event.preventDefault();
 		$('#deletePromptModal').modal('hide');
 	});
-	
-	$(document).on("click", '#doDelete', function(event){
+
+    $(document).on("click", '#doDelete', function(event){
 		deletePdvCategory();
 		$('#deletePromptModal').modal('hide');
-	});    
+	});
+	 
 }
+
+
+function highlightRow(row){
+	if(!$(row).hasClass("header")){
+  		$(".highlighted").removeClass("highlighted");
+    	$(row).addClass("highlighted");
+    }
+}
+
+function resetSearch() {
+    document.getElementById("collapseSearch").reset();
+}
+
+
+function toggleAdd() {
+    var x = document.getElementById("collapseAdd");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+
+function toggleSearch() {
+    var x = document.getElementById("collapseSearch");
+        if (x.style.display === "none") {
+             x.style.display = "block";
+            } 
+        else {
+            x.style.display = "none";
+        }
+}
+
+function toggleUpdate() {
+    var x = document.getElementById("collapseUpdate");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+function toggleDelete() {
+    var x = document.getElementById("collapseDelete");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+
+  function getId(){
+	var row = $(".highlighted");
+    var id = row.find(".idKategorije").html();
+    if(id==undefined){
+    	console.log("No entity selected!");
+    	return null;
+    }
+    else{
+    	return id;
+    }  
+}
+
+function getName(){
+	var row = $(".highlighted");
+    var name = row.find(".nazivKategorije").html();
+    if(name==undefined){
+    	console.log("No entity selected!");
+    	return null;
+    }
+    else{
+    	return name;
+    }  
+}
+
+
       
 function searchPdvCategory() {
     var pageNo = 0; 
@@ -250,15 +262,11 @@ function updatePdvCategory(){
 }
 
 function deletePdvCategory() {
-
-    alert('pozvana metoda');
     var id = getId(); 
-    alert(id);
     $.ajax({
     	url: "http://localhost:8086/api/pdvKategorije/deleteCategory/" + id,
     	type: "DELETE",
     	success: function(){
-            //alert('Obrisana kategorija')
     		callPdvCategories();
         }
 	});
