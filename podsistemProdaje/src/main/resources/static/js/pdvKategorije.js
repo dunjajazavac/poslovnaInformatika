@@ -1,11 +1,8 @@
-function getPdvCategories () {
-
-    callPdvCategories(); 
-
-    $(document).on("click", 'tr', function(event) {
-		highlightRow(this);
-	});
-
+function highlightRow(row){
+	if(!$(row).hasClass("header")){
+  		$(".highlighted").removeClass("highlighted");
+    	$(row).addClass("highlighted");
+    }
 }
 
 function callPdvCategories() {
@@ -34,8 +31,6 @@ function callPdvCategories() {
                         
                     "</tr>"
                 $("#dataTableBody").append(newRow);
-
-                //console.log(newRow);
             }
 
             nmbSelect.on('change',function (event) {
@@ -67,6 +62,12 @@ function callPdvCategories() {
             alert('Doslo je do greske priliom ucitavanja svih kategorija!');
         }
     })
+
+    $(document).on("click", 'tr', function(event) {
+		highlightRow(this);
+	});
+
+    
 }
       
 function searchPdvCategory() {
@@ -127,29 +128,6 @@ function searchPdvCategory() {
     })
 }
 
-function addPdvCategory() {
-    var categoryNameInput = $('#categoryNameInput');
-    //var addButton = $('#doAdd');
-
-    //addButton.on('click', function(event){
-
-    var name = categoryNameInput.val();
-    
-    if(name == ''){
-        alert("Molim unesite ime kategorije! ");
-    }
-    
-    $.post("http://localhost:8086/api/pdvKategorije/addCategory?name=" + name, function(data) {
-        
-        callPdvCategories();
-        categoryNameInput.val("");
-    });
-
-   
-	return false;
-
-}
-
 function reset() {
     document.getElementById("collapseSearch").reset();
 }
@@ -164,12 +142,132 @@ function toggleSearch() {
   }
 
 function toggleAdd() {
-    var x = document.getElementById("addModalScrollable");
+    var x = document.getElementById("collapseAdd");
     if (x.style.display === "none") {
       x.style.display = "block";
     } else {
       x.style.display = "none";
     }
   }
-      
-       
+
+function toggleUpdate() {
+    var x = document.getElementById("collapseUpdate");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+  function addPdvCategory() {
+    var categoryNameInput = $('#categoryNameInput');
+    var name = categoryNameInput.val();
+    
+    if(name == ''){
+        alert("Molim unesite ime kategorije! ");
+    }
+    
+    $.post("http://localhost:8086/api/pdvKategorije/addCategory?name=" + name, function(data) {
+        
+        callPdvCategories();
+        categoryNameInput.val("");
+    });
+
+	return false;
+}
+
+/*
+function editPdvCategory() {
+    var id = getId(); 
+    var editInputCategoryName = $("#editInputCategoryName");
+    var name = editInputCategoryName.val(); 
+
+    if(name == '') {
+        alert("Molim unesite ime kategorije!"); 
+    }
+
+    $.put("http://localhost:8086/api/pdvKategorije/updateCategory?name=" + name + "&id=" + id, function(data) {
+        alert('prosla izmjena');
+        alert('novo ime je ' + name);
+        callPdvCategories(); 
+        editInputCategoryName.val();
+    });
+
+    return false; 
+}*/
+
+
+function updatePdvCategory(){
+	var id = getId();
+	//alert(id); 
+    //var name = getName(); 
+    //alert(name);
+
+	var editInputCategoryName = $('#editInputCategoryName');
+    var name = editInputCategoryName.val();
+		
+    alert('pozvana update metoda ')
+		
+	
+	if(name == ''){
+		alert("Nije ime uneseno");
+	}
+		
+	var params = {
+			'id': id,
+            'name' : name
+	}
+
+    $.ajax({
+        url: "http://localhost:8086/api/pdvKategorije/updateCategory/" + id + '/' + name ,
+        type: 'PUT',
+        success: function(result) {
+            alert('Izmijenjena pdv kategorija');			
+            callPdvCategories();
+            editInputCategoryName.val("");
+        }
+    });
+        
+	return false;
+	
+}
+
+
+/*
+function deletePdvCategory() {
+    var id = getId(); 
+    alert(id);
+    $.ajax({
+    	url: "http://localhost:8080/api/pdvKategorije/deleteCategory/" + id,
+    	type: "DELETE",
+    	success: function(){
+    		callPdvCategories();
+        }
+	});
+}
+*/
+
+function getId(){
+	var row = $(".highlighted");
+    var id = row.find(".idKategorije").html();
+    if(id==undefined){
+    	console.log("No entity selected!");
+    	return null;
+    }
+    else{
+    	return id;
+    }  
+}
+
+function getName(){
+	var row = $(".highlighted");
+    var name = row.find(".nazivKategorije").html();
+    if(name==undefined){
+    	console.log("No entity selected!");
+    	return null;
+    }
+    else{
+    	return name;
+    }  
+}
+
