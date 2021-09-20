@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <script src="bootstrap/bootstrap.js"></script>
+    <script src="js/grupaRobeUsluga.js"></script>
+    <script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <title>Grupa robe usluga</title>
+    
+    <script>
+    	$(document).ready(loadScript); 
+       
+    </script>
+</head>
+<body>
+
+                                <!-- TOOLBAR -->
+    <div class="toolbar">
+        <button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
+        <button onClick="toggleSearch()" id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
+        <button onClick="toggleAdd()" id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+        <button onClick="toggleUpdate()" id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button>
+        <button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button> 
+    </div> 
+
+                                <!-- SEARCH -->
+    <div id="collapseSearch" class="collapse">
+        <form>
+            <div class="row">
+                        <div class="col-10 search-inputs">
+                            <div class="form-group form-row">
+                                <label for="groupNameSearchInput" class="col-sm-2 col-form-label"> Naziv grupe</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="groupNameSearchInput">
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                            </div>
+                        </div>
+                        <div class="col-2 center">
+                            <button onclick="searchGroup()" id="doSearch" type="button" class="btn btn-outline-secondary">Pretraži</button>
+                            <button onclick="reset()" id="doReset" type="button" class="btn btn-outline-secondary">Poništi</button>
+                        </div>
+                    </div>
+                </form>
+    </div>
+                                <!--TABELA -->
+    <table id="dataTable" class="table">
+        <thead>
+            <tr>
+                <th>Naziv grupe </th>
+            </tr>
+        </thead>
+        <tbody id="dataTableBody">
+        </tbody>
+    </table>
+
+                                <!-- PAGINACIJA -->
+<ul class="pagination justify-content-center bg-success" id="categoryIndex"></ul>
+<br>
+<div class="form-group mx-auto w-25">
+    <label for="nmbSelect">Odaberite broj entiteta za prikaz</label>
+    <select class="form-control" id="nmbSelect">
+        <option value="1">1</option>
+        <option value="3">3</option>
+        <option value="9">9</option>
+    </select>
+</div>
+
+                                    <!-- DODAVANJE -->
+<div id="collapseAdd" class="collapse">
+               <div class="modal fade" id="addModalScrollable" aria-labelledby="addModalScrollableTitle">
+                      <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje grupe robe</h5>
+                      <button type="button" class="close addModalClose" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="groupNameInput">Naziv grupe robe</label>
+                          <input type="text" class="form-control" id="groupNameInput" aria-describedby="nazivHelp" placeholder="Unesite naziv grupe robe">
+                        </div>
+                        <div class="form-group">
+                          <label for="categorySelect">PDV kategorija</label>
+                          <select class="form-control"  id="categorySelect">
+                            
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button onClick="window.location.href='http://localhost:8086/grupaRobeUsluga.html';" type="button" class="btn btn-secondary addModalClose" >Otkaži</button>
+                      <button onClick="addGroup()" type="button" id="doAdd" class="btn btn-primary">Sačuvaj</button>
+                    </div>
+                  </div>
+                </div>
+</div>
+
+                                    <!-- IZMJENA -->
+<div id="collapseUpdate" class="collapse">
+    <div class="modal fade" id="updateModalScrollable" aria-labelledby="updateModalScrollableTitle">
+        <h5 class="modal-title" id="updateModalScrollableTitle">Izmjena grupe </h5>
+                <button type="button" class="close updateModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="editInputGroup">Naziv grupe</label>
+                        <input type="text" class="form-control" id="editInputGroup" aria-describedby="editInputCategoryName" placeholder="Unesite zeljenu izmjenu">
+                    </div>
+
+                <div class="form-group">
+                    <label for="editCategorySelect">PDV kategorija</label>
+                        <select class="form-control"  id="editCategorySelect">
+                          
+                        </select>
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button onClick="window.location.href='http://localhost:8086/grupaRobeUsluga.html';" type="button" class="btn btn-secondary updateModalClose">Otkaži</button>
+                    <button onClick="updateGroup()" type="button" id="doUpdate" class="btn btn-primary">Sačuvaj</button>
+                </div>
+    </div>                                           
+</div>
+
+<div class="modal fade" id="deletePromptModal" role="dialog" aria-labelledby="deletePromptLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+    <h5 class="modal-title" id="deletePromptLabel">Jeste li sigurni?</h5>
+        <button type="button" class="close deletePromptClose" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="deletePromptText"></p>
+          </div>
+          <div class="modal-footer">
+            <button onClick="window.location.href='http://localhost:8086/grupaRobeUsluga.html';" type="button" class="btn btn-secondary deletePromptClose">Otkaži</button>
+            <button type="button" id="doDelete" class="btn btn-primary">Obriši</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

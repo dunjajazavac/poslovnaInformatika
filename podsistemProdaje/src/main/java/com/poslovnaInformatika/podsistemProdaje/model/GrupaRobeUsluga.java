@@ -34,7 +34,7 @@ public class GrupaRobeUsluga {
 	@Column(name = "naziv_grupe", columnDefinition = "VARCHAR(30)")
 	private String nazivGrupe;
 	
-	@NotNull(message = "Mora da postoji pdv kategorija")
+	//@NotNull(message = "Mora da postoji pdv kategorija")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kategorija_id")
 	private PDVKategorija pdvKategorija;

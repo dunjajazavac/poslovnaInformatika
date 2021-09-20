@@ -66,10 +66,16 @@ public class GrupaRobeUslugaController {
 		return new ResponseEntity<>(new GrupaRobeUslugaDTO(grupeRobaUsluga), HttpStatus.OK);
 	}
 	
-	@PostMapping(consumes="application/json", value= "/addGroup")
+	@PostMapping(value= "/addGroup")
 	public ResponseEntity<GrupaRobeUslugaDTO> addGroup(
-			@RequestParam String groupName,
-			@RequestParam String pdvCategoryName ){		
+			@RequestParam("groupName") String groupName,
+			@RequestParam("pdvCategoryName") String pdvCategoryName
+			){		
+		
+		
+		if(groupName == null) {
+			return new ResponseEntity<GrupaRobeUslugaDTO>(HttpStatus.BAD_REQUEST);
+		}
 		
 		GrupaRobeUsluga grupaRobeUsluga = new GrupaRobeUsluga();
 		
@@ -84,11 +90,11 @@ public class GrupaRobeUslugaController {
 		return new ResponseEntity<>(new GrupaRobeUslugaDTO(grupaRobeUsluga), HttpStatus.CREATED);	
 	}
 	
-	@PutMapping(consumes="application/json", value= "/updateGroup/{id}/{groupName}/{pdvCategoryName}")
+	@PutMapping(value= "/updateGroup")
 	public ResponseEntity<GrupaRobeUslugaDTO> updateGroup(
-			@PathVariable("id") Long id,
-			@PathVariable("groupName") String groupName,
-			@PathVariable("pdvCategoryName") String pdvCategoryName){		
+			@RequestParam("id") Long id,
+			@RequestParam("groupName") String groupName,
+			@RequestParam("pdvCategoryName") String pdvCategoryName){		
 		
 		GrupaRobeUsluga grupaRobeUsluga = grupaRobeUslugaService.findOne(id);
 		
@@ -106,6 +112,7 @@ public class GrupaRobeUslugaController {
 		
 		return new ResponseEntity<>(new GrupaRobeUslugaDTO(grupaRobeUsluga), HttpStatus.OK);	
 	}
+	
 	
 	@RequestMapping(value="/deleteGroup/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteGroup(@PathVariable Long id){
