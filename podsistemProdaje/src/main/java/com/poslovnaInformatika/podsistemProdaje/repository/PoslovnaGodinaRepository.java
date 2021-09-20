@@ -10,7 +10,6 @@ import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 @Repository
 public interface PoslovnaGodinaRepository extends JpaRepository<PoslovnaGodina, Long>{
 
-	PoslovnaGodina findOneByGodina(Long idGodine);
 
 
 	PoslovnaGodina findByGodina(int godina);

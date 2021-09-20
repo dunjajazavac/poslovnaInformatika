@@ -4,21 +4,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.poslovnaInformatika.podsistemProdaje.intrfc.PoslovnaGodinaServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovnaGodinaRepository;
 @Transactional
 @Service
-public class PoslovnaGodinaService {
+public class PoslovnaGodinaService implements PoslovnaGodinaServiceInterface{
 
 	@Autowired
 	PoslovnaGodinaRepository poslovnaGodinaRepository;
 	
-	public PoslovnaGodina findOne(Long idGodine) {
-		return poslovnaGodinaRepository.findOneByGodina(idGodine);
+	public PoslovnaGodina findOne(Long id) {
+		return poslovnaGodinaRepository.findById(id).orElse(null);
 	}
 	
 	public List<PoslovnaGodina> findAll() {
@@ -31,21 +33,24 @@ public class PoslovnaGodinaService {
 	public PoslovnaGodina findByGodina(int godina) {
 		return poslovnaGodinaRepository.findByGodina(godina);
 	}
-	public Page<PoslovnaGodina> findAll(Pageable page) {
-		return poslovnaGodinaRepository.findAll(page);
-	}
+	
 	public void remove(Long id) {
 		poslovnaGodinaRepository.deleteById(id);
 	}
-	
-	public Page<PoslovnaGodina> findAllByGodina(int godina,Pageable page){
-		return poslovnaGodinaRepository.findAllByGodina(godina, page);
+
+	@Override
+	public Page<PoslovnaGodina> findAll(int pageNo, int pageSize) {
+		
+		return poslovnaGodinaRepository.findAll(PageRequest.of(pageNo, pageSize));
 	}
 
-	
-	public PoslovnaGodina findOnePoslovnaGodina(Long id) {
-		return poslovnaGodinaRepository.findById(id).orElse(null);
+	@Override
+	public Page<PoslovnaGodina> findAllByGodina(int godina, int pageNo, int pageSize) {
+		
+		return poslovnaGodinaRepository.findAllByGodina(godina, PageRequest.of(pageNo, pageSize));
 	}
+	
+	
 	
 
 

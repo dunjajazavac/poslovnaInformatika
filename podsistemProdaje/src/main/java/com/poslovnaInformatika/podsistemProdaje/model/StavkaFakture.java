@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
-
 @Entity
 @Table(name = "stavka_fakture")
 public class StavkaFakture {
@@ -218,4 +216,5 @@ public class StavkaFakture {
 				+ ", osnovicaZaPDV=" + osnovicaZaPDV + ", iznosPDV=" + iznosPDV + ", ukupanIznos=" + ukupanIznos
 				+ ", preduzece=" + preduzece + ", faktura=" + faktura + ", robaUsluga=" + robaUsluga + "]";
 	}
+
 }

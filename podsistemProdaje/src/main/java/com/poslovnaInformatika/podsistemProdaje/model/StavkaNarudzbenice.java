@@ -1,5 +1,7 @@
 package com.poslovnaInformatika.podsistemProdaje.model;
 
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-
-
 
 @Entity
 @Table(name = "stavka_narudzbenice")
@@ -126,6 +126,5 @@ public class StavkaNarudzbenice {
 		return "StavkaNarudzbenice [id=" + id + ", jedinicaMere=" + jedinicaMere + ", kolicina=" + kolicina + ", cena="
 				+ cena + ", iznos=" + iznos + ", narudzbenica=" + narudzbenica + ", robaUsluga=" + robaUsluga + "]";
 	}
+
 }
-
-

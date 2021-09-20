@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.poslovnaInformatika.podsistemProdaje.intrfc.PoslovnaGodinaServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.PoslovnaGodina;
 import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovnaGodinaRepository;
@@ -37,28 +39,39 @@ public class PoslovnaGodinaController {
 	private PoslovnaGodinaService poslovnaService;
 	@Autowired
 	private PreduzeceRepository preduzeceRepo;
+	@Autowired
+	private PoslovnaGodinaServiceInterface poslovnaGodinaSeviceInterface;
 	
 	@GetMapping(path="/all")
 	public List<PoslovnaGodina> findAll(){
 		return poslovnaService.findAll();
 	}
 	
-	@GetMapping(path="/p")
-	public ResponseEntity<List<PoslovnaGodina>> getAllPoslovnaGodina(@RequestParam Pageable pageable){
-		Page<PoslovnaGodina> godine=poslovnaService.findAll(pageable);
-		HttpHeaders headers =new HttpHeaders();
-		headers.set("total", String.valueOf(godine.getTotalPages()));
-		return ResponseEntity.ok().headers(headers).body(godine.getContent());
-	}
-	@GetMapping(path="/searchByGodina")
-	private ResponseEntity<List<PoslovnaGodina>> searchByGodina(@RequestParam("godina") String godinaString,Pageable page){
-		int godina=Integer.parseInt(godinaString);
+	@GetMapping(path = "/p")
+    public ResponseEntity<List<PoslovnaGodina>> getAllPoslovnaGodina(
+                        @RequestParam("pageNo") Integer pageNo, 
+                        @RequestParam("pageSize") Integer pageSize) 
+    {
+       
+		Page<PoslovnaGodina> godine = poslovnaGodinaSeviceInterface.findAll(pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(godine.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(godine.getContent());
+    }
+	@GetMapping(path = "/searchByGodina")
+	private ResponseEntity<List<PoslovnaGodina>> searchByGodina(@RequestParam("godina") String godinaString,
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
+
+		int godina = Integer.parseInt(godinaString);
 		
-		Page<PoslovnaGodina> godine=poslovnaService.findAllByGodina(godina,page);
-		HttpHeaders headers=new HttpHeaders();
-		headers.set("total",String.valueOf(godine.getTotalPages()));
-		return ResponseEntity.ok().headers(headers).body(godine.getContent());
+		Page<PoslovnaGodina> godine = poslovnaGodinaSeviceInterface.findAllByGodina(godina, pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(godine.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(godine.getContent());
+		
 	}
+	
 	@PostMapping(path="/dodajGodinu")
 	public ResponseEntity<Void> dodajGodinu(@Validated @RequestParam("godina") String godina,@RequestParam("zakljucena") String zakljucena,@RequestParam("preduzece") String nazivPreduzeca){
 		int godinaInt=Integer.parseInt(godina);
@@ -94,7 +107,7 @@ public class PoslovnaGodinaController {
 		int godinaInt=Integer.parseInt(godina);
 		
 
-		PoslovnaGodina poslovnaGodina=poslovnaService.findOnePoslovnaGodina(id);
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
 
 		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
 		if(poslovnaGodina !=null) {
@@ -119,13 +132,13 @@ public class PoslovnaGodinaController {
 	}
 	
 	@DeleteMapping(path="/obrisiGodinu/{id}")
-	public ResponseEntity<Void> obrisiGodinu(@RequestParam Long id){
+	public ResponseEntity<Void> obrisiGodinu(@PathVariable Long id){
 		
 		
 
 
 
-		PoslovnaGodina poslovnaGodina=poslovnaService.findOnePoslovnaGodina(id);
+		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
 
 		if(poslovnaGodina!= null) {
 			poslovnaService.remove(poslovnaGodina.getIdGodine());;

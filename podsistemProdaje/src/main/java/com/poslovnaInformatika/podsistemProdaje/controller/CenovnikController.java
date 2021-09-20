@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.poslovnaInformatika.podsistemProdaje.intrfc.CenovnikServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.Cenovnik;
 import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.model.StavkaCenovnika;
@@ -43,6 +43,9 @@ public class CenovnikController {
 	@Autowired
 	private CenovnikService cenovnikService;
 	
+	@Autowired
+	private CenovnikServiceInterface cenovnikServiceInterface;
+	
 	
 	@Autowired
 	private PreduzeceService preduzeceService;
@@ -54,26 +57,32 @@ public class CenovnikController {
 	public List<Cenovnik> getAll(){
 		return cenovnikService.findAll();
 	}
-	@GetMapping(path="/p")
-	public ResponseEntity<List<Cenovnik>> getAllCenovnik(@RequestParam Pageable page){
-		Page<Cenovnik> cenovnici=cenovnikService.findAll(page);
-		 HttpHeaders headers = new HttpHeaders();
-		 headers.set("total", String.valueOf(cenovnici.getTotalPages()));
-	     return ResponseEntity.ok().headers(headers).body(cenovnici.getContent());
-
-	}
+	@GetMapping(path = "/p")
+    public ResponseEntity<List<Cenovnik>> getAllCenovnik(
+                        @RequestParam("pageNo") Integer pageNo, 
+                        @RequestParam("pageSize") Integer pageSize) 
+    {
+       
+		Page<Cenovnik> cenovnici = cenovnikServiceInterface.findAll(pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(cenovnici.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(cenovnici.getContent());
+    }
 	
-	@GetMapping(path="/searchByDatumPocetkaVazenja")
-	private ResponseEntity<List<Cenovnik>> searchByPocetakVazenja(@RequestParam("datum_vazenja") String datumVazenja,@RequestParam Pageable page) throws ParseException, java.text.ParseException{
-		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-		Date date=formatter.parse(datumVazenja);
-		java.sql.Date datumPocetkaVazenja=new java.sql.Date(date.getTime());
+	@GetMapping(path = "/searchByDatumPocetkaVazenja")
+	private ResponseEntity<List<Cenovnik>> searchByDatumPocetkaVazenja(@RequestParam("datum_vazenja") String datumString,
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) throws ParseException, java.text.ParseException {
 		
-		Page<Cenovnik> cenovnik=cenovnikService.findAllByDatumPocetkaVazenja(datumPocetkaVazenja, page);
-		HttpHeaders headers = new HttpHeaders();
-	    headers.set("total", String.valueOf(cenovnik.getTotalPages()));
-	    return ResponseEntity.ok().headers(headers).body(cenovnik.getContent());
-			
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = formatter.parse(datumString);
+	    java.sql.Date datumPocetkaVazenja = new java.sql.Date(date.getTime());
+
+		Page<Cenovnik> cenovnik = cenovnikServiceInterface.findAllByDatumPocetkaVazenja(datumPocetkaVazenja, pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(cenovnik.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(cenovnik.getContent());
+		
 	}
 	
 	

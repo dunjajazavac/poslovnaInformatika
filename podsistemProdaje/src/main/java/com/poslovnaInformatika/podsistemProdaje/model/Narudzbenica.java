@@ -1,7 +1,5 @@
 package com.poslovnaInformatika.podsistemProdaje.model;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
