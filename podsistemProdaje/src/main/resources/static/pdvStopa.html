@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="bootstrap/bootstrap.js"></script>
+<script src="js/pdvStopa.js"></script>
+<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<script src="bootstrap/funkcije.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script>$(document).ready(getPDVStope);</script>
+<title>PDV stopa</title>
+</head>
+<body>
+			<!-- Pretraga -->
+			<div class="collapse" id="collapseSearch">
+				<form>
+					<div class="row">
+						<div class="col-10 search-inputs">
+							<div class="form-group form-row">
+					    		<label for="datumSearchInput" class="col-sm-2 col-form-label">Datum vazenja</label>
+					    		<div class="col-sm-4">
+					    			<input type="date" class="form-control" id="datumSearchInput">
+					    		</div>
+					    		<label for="procenatSearchInput" class="col-sm-2 col-form-label">Procenat</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="procenatSearchInput">
+					    		</div>
+							</div>
+							<div class="form-group form-row">
+							</div>
+						</div>
+						<div class="col-2 center">
+							<button id="doSearch" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+							<button id="doReset" type="button" class="btn btn-outline-secondary">Ponisti</button>
+						</div>
+					</div>
+				</form>
+				
+				
+			</div>
+			
+			<!-- Toolbar -->	
+			<div class="toolbar">
+				<button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
+				
+				<button id="search" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+				
+				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+				<button id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button>
+				<button id="delete" type="button" class="btn btn-outline-secondary">Obrisi</button>
+				
+	
+			
+			<table id="dataTable" class="table">
+				<thead>
+					<tr>
+						<th>PDV kategorija</th>
+						<th>Datum vazenja</th>
+						<th>Procenat</th>
+					</tr>
+				</thead>
+				<tbody id="dataTableBody">
+				</tbody>	
+			</table>
+			
+			<ul class="pagination justify-content-center bg-success" id="stopa-page"></ul>
+            <br>
+            <div class="form-group mx-auto w-25">
+                <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
+                <select class="form-control" id="nmb-select">
+                	<option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+			
+			
+			<!-- Dodavanje pdv stope -->
+			<div class="modal fade" id="addModalScrollable" tabindex="-1" role="dialog" aria-labelledby="addModalScrollableTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-scrollable" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje PDV stope</h5>
+			        <button type="button" class="close addModalClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+					  <div class="form-group">
+					    <label for="datumInput">Datum vazenja</label>
+					    <input type="date" class="form-control" id="datumInput" aria-describedby="datumHelp" placeholder="Unesite datum vazenja PDV stope">
+					  </div>
+					   <div class="form-group">
+					    <label for="procenatInput">Procenat</label>
+					    <input type="text" class="form-control" id="procenatInput" aria-describedby="procenatHelp" placeholder="Unesite procenat PDV stope">
+					  </div>
+					  <div class="form-group">
+					    <label for="kategorijaSelect">PDV kategorija</label>
+					    <select class="form-control"  id="kategorijaSelect"></select>
+					  </div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary addModalClose" >Otkazi</button>
+			        <button type="button" id="doAdd" class="btn btn-primary">Sacuvaj</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- Izmena pdv stope -->
+			<div class="modal fade" id="updateModalScrollable" tabindex="-1" role="dialog" aria-labelledby="updateModalScrollableTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="updateModalScrollableTitle">Izmena PDV stope</h5>
+							<button type="button" class="close updateModalClose" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<label for="datumIzmeniInput">Datum vazenja</label>
+									<input type="date" class="form-control" id="datumIzmeniInput" aria-describedby="nazivJediniceMereIzmeni" placeholder="Unesite datum vazenja PDV stope">
+								</div>
+								<div class="form-group">
+									<label for="procenatIzmeniInput">Procenat</label>
+									<input type="text" class="form-control" id="procenatIzmeniInput" aria-describedby="procenatIzmeni" placeholder="Unesite procenat PDV stope">
+								</div>
+								<div class="form-group">
+					    			<label for="kategorijaIzmeniSelect">PDV kategorija</label>
+					    			<select class="form-control"  id="kategorijaIzmeniSelect">
+					    
+					   				</select>
+					  			</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary updateModalClose">Otkazi</button>
+							<button type="button" id="doUpdate" class="btn btn-primary">Sacuvaj</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Brisanje pdv stope -->
+			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="deletePromptLabel">Da li ste sigurni?</h5>
+			        <button type="button" class="close deletePromptClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="deletePromptText"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary deletePromptClose">Otkazi</button>
+			        <button type="button" id="doDelete" class="btn btn-primary">Obrisi</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+		
+</body>
+</html>

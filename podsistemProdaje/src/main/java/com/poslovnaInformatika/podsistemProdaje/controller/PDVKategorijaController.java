@@ -47,6 +47,12 @@ public class PDVKategorijaController {
 	@Autowired
 	private PDVKategorijaRepository pdvKategorijaRepository; 
 	
+	
+	@GetMapping(path = "/svi")
+	public List<PDVKategorija> getAll(){
+		return pdvKategorijaService.findAll();
+	}
+	
 	@RequestMapping(value="/allSorted", method = RequestMethod.GET)
 	public ResponseEntity<List<PDVKategorija>> getAllPdvCategories(
 			@RequestParam(required = false) String name, 
