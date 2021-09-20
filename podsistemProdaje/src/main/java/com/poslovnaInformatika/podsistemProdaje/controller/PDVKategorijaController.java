@@ -201,22 +201,16 @@ public class PDVKategorijaController {
 	
 	@PutMapping(value = "/updateCategory/{id}/{name}")
 	public ResponseEntity<PDVKategorijaDTO> updateCategory(@PathVariable("id") Long id, @PathVariable("name") String name) {
-		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Uslo u update metodu <<<<<<<<<<<<<<<<<<<<<<<<<<<,"); 
-				
+						
 		PDVKategorija pdvKategorija = pdvKategorijaService.findOne(id);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>Id odabrane iz kategorije je <<<<<<<<<<<<<<<<<<<<<<<<<<" + pdvKategorija.getIdKategorije()); 
 		if(id == null) {
 			return new ResponseEntity<PDVKategorijaDTO>(HttpStatus.BAD_REQUEST);
 		}
 		
-		//pdvKategorija.setIdKategorije(id);
 		pdvKategorija.setNazivKategorije(name);
-		//pdvKategorija.setNazivKategorije(pdvKategorija.getNazivKategorije());
 		pdvKategorija.setPdvStope(null);
 		
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>.Izmjenjene vrijednosti su : <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + pdvKategorija.getNazivKategorije());
 		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
 		
 		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija),HttpStatus.OK);
