@@ -1,4 +1,5 @@
-package com.poslovnaInformatika.podsistemProdaje.model;
+package com.poslovnaInformatika.podsistemProdaje.model
+;
 
 import java.io.Serializable;
 
