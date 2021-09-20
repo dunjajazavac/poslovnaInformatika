@@ -36,7 +36,7 @@ table {
 
 table tr.highlighted{
 	color: #212529;
-  	background-color: rgba(0, 0, 0, 0.075);
+  	background-color:aquamarine;
 }
 
 table tr:not(.header){
@@ -52,10 +52,10 @@ table td {
 }
 
 toolbar {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-top: 10px;
+	padding-bottom: 14px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .toolbar > button {

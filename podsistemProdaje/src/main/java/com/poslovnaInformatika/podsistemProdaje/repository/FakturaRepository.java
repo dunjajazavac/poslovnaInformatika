@@ -13,7 +13,7 @@ public interface FakturaRepository extends JpaRepository<Faktura, Long> {
 
 	
 	Faktura findByBrojFakture(int brojFakture);
-	Page<Faktura> findAllByStatusFakture(String status,Pageable page);
-	Page<Faktura> findAll(Pageable page);
-	Page<Faktura> findAllByBrojFakture(int brojFakture, Pageable page);
+	Page<Faktura> findAllByBrojFakture (int brojFakture, Pageable pageable);
+	
+	Page<Faktura> findAllByStatusFakture (String statusFakture, Pageable pageable);
 }

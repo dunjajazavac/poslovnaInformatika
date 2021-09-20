@@ -43,7 +43,9 @@ public class MestoService {
 	public Page<NaseljenoMesto> findAllByNazivMesta(String nazivMesta, Pageable page) {
 		return mestoRepo.findAllByNazivMesta(nazivMesta, page);
 	}
-	
+	public Page<NaseljenoMesto> findAllByPttBroj(int pttBroj, Pageable page) {
+		return mestoRepo.findAllByPttBroj(pttBroj, page);
+	}
 	public Page<NaseljenoMesto> findAll(int pageNo, int pageSize) {
 		return mestoRepo.findAll(new PageRequest(pageNo, pageSize));
 	}

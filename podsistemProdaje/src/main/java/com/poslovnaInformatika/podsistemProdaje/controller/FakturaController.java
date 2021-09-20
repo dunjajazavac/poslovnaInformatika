@@ -50,6 +50,10 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.poslovnaInformatika.podsistemProdaje.intrfc.FakturaServiceInterface;
+import com.poslovnaInformatika.podsistemProdaje.intrfc.NarudzbenicaServiceInterface;
+import com.poslovnaInformatika.podsistemProdaje.intrfc.OtpremnicaServiceInterface;
+import com.poslovnaInformatika.podsistemProdaje.intrfc.StavkaOtpremniceServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.Faktura;
 import com.poslovnaInformatika.podsistemProdaje.model.Narudzbenica;
 import com.poslovnaInformatika.podsistemProdaje.model.Otpremnica;
@@ -58,6 +62,8 @@ import com.poslovnaInformatika.podsistemProdaje.model.StavkaFakture;
 import com.poslovnaInformatika.podsistemProdaje.model.StavkaOtpremnice;
 import com.poslovnaInformatika.podsistemProdaje.repository.FakturaRepository;
 import com.poslovnaInformatika.podsistemProdaje.service.FakturaService;
+import com.poslovnaInformatika.podsistemProdaje.service.OtpremnicaService;
+import com.poslovnaInformatika.podsistemProdaje.service.RobaUslugaService;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -77,8 +83,22 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 @RequestMapping(value = "api/fakture")
 @ControllerAdvice
 public class FakturaController {
+	
+	@Autowired
+	private FakturaServiceInterface fakturaServiceInterface;
 	@Autowired
 	private FakturaService fakturaService;
+	
+	@Autowired
+	private RobaUslugaService robaUslugeService;
+	
+	@Autowired
+	private NarudzbenicaServiceInterface narudzbenicaServiceInterface;
+	@Autowired
+	private OtpremnicaServiceInterface otpremnicaServiceInterface;
+	@Autowired
+	private StavkaOtpremniceServiceInterface stavkaOtpremniceServiceInterface;
+	
 
 	@GetMapping(path = "/all")
 	public List<Faktura> getAll() {
@@ -87,10 +107,11 @@ public class FakturaController {
 	
 	@GetMapping(path = "/p")
     public ResponseEntity<List<Faktura>> getAllFaktura(
-                        @RequestParam Pageable page) 
+                        @RequestParam("pageNo") Integer pageNo, 
+                        @RequestParam("pageSize") Integer pageSize) 
     {
        
-		Page<Faktura> fakture = fakturaService.findAll(page);
+		Page<Faktura> fakture = fakturaServiceInterface.findAll(pageNo, pageSize);
         HttpHeaders headers = new HttpHeaders();
         headers.set("total", String.valueOf(fakture.getTotalPages()));
         return ResponseEntity.ok().headers(headers).body(fakture.getContent());
@@ -99,11 +120,12 @@ public class FakturaController {
 	
 	@GetMapping(value = "/searchByBrojFakture")
 	public ResponseEntity<List<Faktura>> searchByBrojFakture(@RequestParam("broj") String brojFaktureString,
-			@RequestParam Pageable page) {
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
 		
 		int brojFakture = Integer.parseInt(brojFaktureString);
 		
-		Page<Faktura> fakture = fakturaService.findAllByBrojFakture(brojFakture, page);
+		Page<Faktura> fakture = fakturaServiceInterface.findAllByBrojFakture(brojFakture, pageNo, pageSize);
 		HttpHeaders headers = new HttpHeaders();
 	    headers.set("total", String.valueOf(fakture.getTotalPages()));
 	    return ResponseEntity.ok().headers(headers).body(fakture.getContent());
@@ -111,9 +133,10 @@ public class FakturaController {
 	
 	@GetMapping(value = "/searchByStatusFakture")
 	public ResponseEntity<List<Faktura>> searchByStatusFakture(@RequestParam("status") String statusFakture,
-			@RequestParam Pageable page){
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize){
 		
-		Page<Faktura> fakture = fakturaService.findAllByStatusFakture(statusFakture, page);
+		Page<Faktura> fakture = fakturaServiceInterface.findAllByStatusFakture(statusFakture, pageNo, pageSize);
 		HttpHeaders headers = new HttpHeaders();
 	    headers.set("total", String.valueOf(fakture.getTotalPages()));
 	    return ResponseEntity.ok().headers(headers).body(fakture.getContent());
@@ -326,13 +349,13 @@ public class FakturaController {
 			
 			Faktura faktura = fakturaService.findOne(id);
 			
-//			RobaUsluga roba1 = robaUslugaService.findByNazivRobeUsluge(roba);
-//			RobaUsluga robaUsluga = robaUslugaService.findOne(roba1.getIdRobeUsluge());
-//			
+			RobaUsluga roba1 = robaUslugeService.findByNazivRobeUsluge(roba);
+			RobaUsluga robaUsluga = robaUslugeService.findOne(roba1.getIdRobeUsluge());
+			
 			int brojNarudzbenice = Integer.parseInt(brojNarudzbeniceString);
 			
-//			Narudzbenica narudzbenica1 = narudzbenicaService.findByBrojNarudzbenice(brojNarudzbenice);
-//			Narudzbenica narudzbenica = narudzbenicaService.findOne(narudzbenica1.getId());
+			Narudzbenica narudzbenica1 = narudzbenicaServiceInterface.findByBrojNarudzbenice(brojNarudzbenice);
+			Narudzbenica narudzbenica = narudzbenicaServiceInterface.findOne(narudzbenica1.getId());
 			
 			if(faktura == null) {
 				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -372,16 +395,16 @@ public class FakturaController {
 					otpremnica.setPotpisVozaca(false);
 					otpremnica.setPrimioRobu(false);
 					otpremnica.setFaktura(faktura);
-//					otpremnica.setNarudzbenica(narudzbenica);
-//					otpremnicaService.save(otpremnica);
-//					
+					otpremnica.setNarudzbenica(narudzbenica);
+					otpremnicaServiceInterface.save(otpremnica);
+					
 				
 					stavkaOtpremnice.setOtpremnica(otpremnica);
 					stavkaOtpremnice.setCena(rset.getDouble("iznos"));
 					stavkaOtpremnice.setKolicina(rset.getDouble("kolicina"));
 					stavkaOtpremnice.setNapomena(napomena);
-//					stavkaOtpremnice.setRobaUsluga(robaUsluga);
-//					stavkaOtpremniceService.save(stavkaOtpremnice);
+					stavkaOtpremnice.setRobaUsluga(robaUsluga);
+					stavkaOtpremniceServiceInterface.save(stavkaOtpremnice);
 				}
 				
 			}catch (Exception e) {

@@ -11,11 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.poslovnaInformatika.podsistemProdaje.intrfc.CenovnikServiceInterface;
 import com.poslovnaInformatika.podsistemProdaje.model.Cenovnik;
 import com.poslovnaInformatika.podsistemProdaje.repository.CenovnikRepository;
 @Transactional
 @Service
-public class CenovnikService {
+public class CenovnikService implements CenovnikServiceInterface {
 	@Autowired
 	private CenovnikRepository cenovnikRepo;
 	
@@ -43,12 +44,18 @@ public class CenovnikService {
 		return cenovnikRepo.findByDatumPocetkaVazenja(datumVazenja);
 	}
 	
-	public Page<Cenovnik> findAll(org.springframework.data.domain.Pageable page) {
-		return cenovnikRepo.findAll(page);
-	}
 	
-	public Page<Cenovnik> findAllByDatumPocetkaVazenja(Date datumPocetkaVazenja,org.springframework.data.domain.Pageable page) {
-		return cenovnikRepo.findAllByDatumPocetkaVazenja(datumPocetkaVazenja,page);
+
+	@Override
+	public Page<Cenovnik> findAll(int pageNo, int pageSize) {
+		
+		return cenovnikRepo.findAll(PageRequest.of(pageNo, pageSize));
+	}
+
+	@Override
+	public Page<Cenovnik> findAllByDatumPocetkaVazenja(Date datumPocetkaVazenja, int pageNo, int pageSize) {
+		
+		return cenovnikRepo.findAllByDatumPocetkaVazenja(datumPocetkaVazenja, PageRequest.of(pageNo, pageSize));
 	} 
 	
 

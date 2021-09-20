@@ -4,13 +4,20 @@ package com.poslovnaInformatika.podsistemProdaje.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.poslovnaInformatika.podsistemProdaje.model.JedinicaMere;
 import com.poslovnaInformatika.podsistemProdaje.model.PoslovniPartner;
+import com.poslovnaInformatika.podsistemProdaje.model.StavkaOtpremnice;
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovniPartnerRepository;
+
+@Transactional
 @Service
 public class PoslovniPartnerService {
 	@Autowired
@@ -36,11 +43,26 @@ public class PoslovniPartnerService {
 		return partnerRepo.findAll();
 	}
 
-	public Page<PoslovniPartner> findAll(Pageable page) {
+	/*public Page<PoslovniPartner> findAll(Pageable page) {
 		return partnerRepo.findAll(page);
+	}*/
+	public Page<PoslovniPartner> findAll(int pageNo, int pageSize) {
+		return partnerRepo.findAll(PageRequest.of(pageNo, pageSize));
 	}
-	
+
 	public PoslovniPartner findByNazivPoslovnogPartnera(String nazivPoslovnogPartnera) {
 		return partnerRepo.findByNazivPoslovnogPartnera(nazivPoslovnogPartnera);
+	}
+	
+	
+	public Page<PoslovniPartner> findAllByEmail(String email, int pageNo, int pageSize) {
+		return partnerRepo.findAllByEmail(email,PageRequest.of(pageNo, pageSize));
+	}
+
+	public Page<PoslovniPartner> findAllByAdresa(String adresa, int pageNo, int pageSize) {
+		return partnerRepo.findAllByAdresa(adresa,PageRequest.of(pageNo, pageSize));
+	}
+	public Page<PoslovniPartner> findAllByVrstaPartnera(String vrstaPartnera, int pageNo, int pageSize) {
+		return partnerRepo.findAllByVrstaPartnera(vrstaPartnera,PageRequest.of(pageNo, pageSize));
 	}
 }

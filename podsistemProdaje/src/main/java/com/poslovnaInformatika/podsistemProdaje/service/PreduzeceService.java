@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.poslovnaInformatika.podsistemProdaje.model.PoslovniPartner;
 import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.repository.PreduzeceRepository;
 @Transactional
@@ -42,5 +44,11 @@ public class PreduzeceService {
 
 	public Page<Preduzece> findAll(Pageable page) {
 		return preduzeceRepo.findAll(page);
+	}
+	public Page<Preduzece> findAllByNazivPreduzeca(String nazivPreduzeca, int pageNo, int pageSize) {
+		return preduzeceRepo.findAllByNazivPreduzeca(nazivPreduzeca,PageRequest.of(pageNo, pageSize));
+	}
+	public Page<Preduzece> findAllByAdresa(String adresa, int pageNo, int pageSize) {
+		return preduzeceRepo.findAllByAdresa(adresa,PageRequest.of(pageNo, pageSize));
 	}
 }

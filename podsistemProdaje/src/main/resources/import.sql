@@ -2,6 +2,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 INSERT INTO pdv_kategorija(naziv_kategorije) VALUES ('Srednja stopa pdv');
 INSERT INTO pdv_kategorija(naziv_kategorije) VALUES ('Visa stopa pdv');
+INSERT INTO pdv_kategorija(naziv_kategorije) VALUES ('Srednja visa pdv');
+INSERT INTO pdv_kategorija(naziv_kategorije) VALUES ('Niska stopa pdv');
+INSERT INTO pdv_kategorija(naziv_kategorije) VALUES ('Visoka stopa pdv');
+
 
 INSERT INTO pdv_stopa(datum_vazenja, procenat, kategorija_id) VALUES ('2020-04-20', 8, 1);
 INSERT INTO pdv_stopa(datum_vazenja, procenat, kategorija_id) VALUES ('2020-08-29', 18, 2);

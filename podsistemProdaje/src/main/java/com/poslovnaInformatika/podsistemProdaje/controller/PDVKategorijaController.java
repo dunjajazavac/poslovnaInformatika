@@ -187,6 +187,7 @@ public class PDVKategorijaController {
 		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija), HttpStatus.CREATED);	
 	}
 	
+	/*
 	@PutMapping(value="/{pdvKategorijeId}", consumes="application/json")
 	public ResponseEntity<PDVKategorijaDTO> updatePDVKategorija(@RequestBody PDVKategorijaDTO pdvKategorijaDTO, @PathVariable("pdvKategorijeId") Long id){		
 		
@@ -202,8 +203,27 @@ public class PDVKategorijaController {
 	
 		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija), HttpStatus.OK);	
 	}
+	*/
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@PutMapping(value = "/updateCategory/{id}/{name}")
+	public ResponseEntity<PDVKategorijaDTO> updateCategory(@PathVariable("id") Long id, @PathVariable("name") String name) {
+						
+		PDVKategorija pdvKategorija = pdvKategorijaService.findOne(id);
+		
+		if(id == null) {
+			return new ResponseEntity<PDVKategorijaDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+		pdvKategorija.setNazivKategorije(name);
+		pdvKategorija.setPdvStope(null);
+		
+		pdvKategorija = pdvKategorijaService.save(pdvKategorija);
+		
+		return new ResponseEntity<>(new PDVKategorijaDTO(pdvKategorija),HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value="/deleteCategory/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deletePdvKategorija(@PathVariable Long id){
 		PDVKategorija pdvKategorija = pdvKategorijaService.findOne(id);
 		if (pdvKategorija != null){
