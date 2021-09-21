@@ -40,12 +40,12 @@ public class RobaUsluga {
 	@Column(name = "roba", columnDefinition = "TINYINT(1)")
 	private boolean roba;
 	
-	@NotNull(message = "Mora da postoji jedinica mere")
+	//@NotNull(message = "Mora da postoji jedinica mere")
 	@ManyToOne
 	@JoinColumn(name = "id_jedinice_mere")
 	private JedinicaMere jedinicaMere;
 	
-	@NotNull(message = "Mora da postoji grupa robe")
+	//@NotNull(message = "Mora da postoji grupa robe")
 	@ManyToOne
 	@JoinColumn(name = "id_grupe")
 	private GrupaRobeUsluga grupaRobeUsluga;

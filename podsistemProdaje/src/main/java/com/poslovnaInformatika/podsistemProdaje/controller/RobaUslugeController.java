@@ -165,11 +165,11 @@ public class RobaUslugeController {
 		return new ResponseEntity<RobaUslugeDTO>(new RobaUslugeDTO(robaUsluge), HttpStatus.OK);
 	}
 	
-	@PostMapping(consumes="application/json", value="/addGoodsService")
+	@PostMapping(value="/addGoodsService")
 	public ResponseEntity<RobaUslugeDTO> saveGoodsService(
 			@RequestParam("name") String name,
 			@RequestParam("desc") String desc,
-			@RequestParam("goods") boolean goods,
+			@RequestParam("goods") String goods,
 			@RequestParam("measureName") String measureName,
 			@RequestParam("groupName") String groupName) {
 		
@@ -182,11 +182,15 @@ public class RobaUslugeController {
 
 		RobaUsluga robaUsluga = new RobaUsluga();
 
-		robaUsluga.setGrupaRobeUsluga(null);
 		robaUsluga.setJedinicaMere(getMeasure);
 		robaUsluga.setNazivRobeUsluge(name);
 		robaUsluga.setOpis(desc);
-		robaUsluga.setRoba(goods);
+		
+		if(goods.equalsIgnoreCase("Da")) {
+			robaUsluga.setRoba(true);
+		}else {
+			robaUsluga.setRoba(false);
+		}
 		robaUsluga.setGrupaRobeUsluga(getGroup);
 		
 		robaUsluga = robaUslugeService.save(robaUsluga);
@@ -196,14 +200,14 @@ public class RobaUslugeController {
 	}
 	
 	
-	@PutMapping(value="/updateGoodsService/{id}/{name}/{desc}/{goods}/{measureName}/{groupName}", consumes="application/json")
+	@PutMapping(value="/updateGoodsService")
 	public ResponseEntity<RobaUslugeDTO> updateGoodsService(
-			@PathVariable("id") Long id,
-			@PathVariable("name") String name,
-			@PathVariable("desc") String desc,
-			@PathVariable("goods") boolean goods,
-			@PathVariable("measureName") String measureName,
-			@PathVariable("groupName") String groupName) {
+			@RequestParam("id") Long id,
+			@RequestParam("name") String name,
+			@RequestParam("desc") String desc,
+			@RequestParam("goods") String goods,
+			@RequestParam("measureName") String measureName,
+			@RequestParam("groupName") String groupName) {
 
 		RobaUsluga robaUsluga = robaUslugeService.findOne(id); 
 		
@@ -221,7 +225,13 @@ public class RobaUslugeController {
 		robaUsluga.setJedinicaMere(getMeasure);
 		robaUsluga.setNazivRobeUsluge(name);
 		robaUsluga.setOpis(desc);
-		robaUsluga.setRoba(goods);
+		
+		if(goods.equalsIgnoreCase("Da")) {
+			robaUsluga.setRoba(true);
+		}else {
+			robaUsluga.setRoba(false);
+		}
+		
 		robaUsluga.setGrupaRobeUsluga(getGroup);
 		
 		robaUsluga = robaUslugeService.save(robaUsluga);
