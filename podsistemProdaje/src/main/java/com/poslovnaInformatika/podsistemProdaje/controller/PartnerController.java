@@ -66,6 +66,11 @@ public class PartnerController {
 		return new ResponseEntity<>(pDTO, HttpStatus.OK);
 
 	}
+	
+	@GetMapping(path = "/allMilica")
+	public List<PoslovniPartner> getAllMilica(){
+		return pService.findAll();
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<PoslovniPartnerDTO> getPreduzece(@PathVariable Long id) {
