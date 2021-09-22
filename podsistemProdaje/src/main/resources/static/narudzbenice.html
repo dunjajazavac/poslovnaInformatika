@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="bootstrap/bootstrap.js"></script>
+		<script src="js/narudzbenice.js"></script>
+		<script src="bootstrap/funkcije.js"></script>
+
+		
+		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/stil.css">
+		
+		<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+	
+		<title>Narudzbenice</title>
+		
+		<script>
+			$(document).ready(getNarudzbenice);
+		</script>
+	
+	</head>
+	<body background="bootstrap/wavegreen.png">
+
+		<div class="container">
+			
+			<h1 class="pageHead">Narudzbenice</h1>
+			
+			<!-- Pretraga -->
+			<div class="collapse" id="collapseSearch">
+				<form>
+					<div class="row">
+						
+						<div class="col-10 search-inputs">
+							
+							<div class="form-group form-row">
+					    		<label for="brojSearchInput" class="col-sm-2 col-form-label">Broj narudzbenice</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="brojSearchInput">
+					    		</div>
+							</div>
+							
+							<div class="form-group form-row">
+							</div>
+						</div>
+						<div class="col-2 center">
+							<button id="doSearch" type="button" class="btn btn-outline-secondary">Pretraži</button>
+							<button id="doReset" type="button" class="btn btn-outline-secondary">Poništi</button>
+						</div>
+					</div>
+				</form>
+				
+				
+			</div>
+			
+			<!-- Toolbar -->	
+			<div class="toolbar">
+				<button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
+				
+				<button id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
+				
+				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+				<button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button>
+				<button id="kreirajFakturu" type="button" class="btn btn-outline-secondary">Kreiraj fakturu</button>
+				
+<!-- 				Pagination -->
+				
+<!-- 				<div class="pagination" > -->
+<!-- 					<button type="button" class="btn btn-outline-secondary btn-sm disabled btn-pagination-previous"><i class="fas fa-angle-left"></i></button> -->
+<!-- 					<span class="pagination-numbering">x do y od z</span> -->
+<!-- 					<button type="button" class="btn btn-outline-secondary btn-sm btn-pagination-next"><i class="fas fa-angle-right"></i></button> -->
+<!-- 				</div> -->
+			</div> 
+				
+	
+			
+			<table id="dataTable" class="table">
+				<thead>
+					<tr>
+						<th>Broj narudzbenice</th>
+						<th>Preduzece</th>
+						<th>Poslovni partner</th>
+						<th>Godina</th>
+					</tr>
+				</thead>
+				<tbody id="dataTableBody">
+				</tbody>
+			</table>
+			
+			
+			<ul class="pagination justify-content-center bg-success" id="narudzbenica-page"></ul>
+            <br>
+            <div class="form-group mx-auto w-25">
+                <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
+                <select class="form-control" id="nmb-select">
+                	<option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+			
+			
+			<!-- Dodavanje narudzbenice --> 
+			<div class="modal fade" id="addModalScrollable" tabindex="-1" role="dialog" aria-labelledby="addModalScrollableTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-scrollable" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje narudzbenice</h5>
+			        <button type="button" class="close addModalClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+					  <div class="form-group">
+					    <label for="brojNarudzbeniceInput">Broj narudzbenice</label>
+					    <input type="text" class="form-control" id="brojNarudzbeniceInput" aria-describedby="brojNarudzbenice" placeholder="Unesite broj narudzbenice">
+					  </div>
+					  <div class="form-group">
+					    <label for="preduzeceSelect">Preduzece</label>
+					    <select class="form-control"  id="preduzeceSelect">
+					    
+					    </select>
+					  </div>
+					  <div class="form-group">
+					    <label for="poslovniPartnerSelect">Poslovni partner</label>
+					    <select class="form-control"  id="poslovniPartnerSelect">
+					    
+					    </select>
+					  </div>
+					  <div class="form-group">
+					    <label for="godinaSelect">Godina</label>
+					    <select class="form-control"  id="godinaSelect">
+					    
+					    </select>
+					  </div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary addModalClose" >Otkaži</button>
+			        <button type="button" id="doAdd" class="btn btn-primary">Sačuvaj</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- Kreiraj fakturu na osnovu narudzbenice -->
+			<div class="modal fade" id="updateModalScrollable" tabindex="-1" role="dialog" aria-labelledby="updateModalScrollableTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="updateModalScrollableTitle">Kreiranje fakture od narudzbenice</h5>
+							<button type="button" class="close updateModalClose" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<label for="datumValuteInput">Datum valute</label>
+									<input type="date" class="form-control" id="datumValuteInput" aria-describedby="datumValute" placeholder="Unesite datum valute">
+								</div>
+								<div class="form-group">
+									<label for="rabatInput">Rabat</label>
+									<input type="text" class="form-control" id="rabatInput" aria-describedby="rabat" placeholder="Unesite rabat">
+								</div>
+								<div class="form-group">
+									<label for="pdvStopaInput">PDV stopa</label>
+									<input type="text" class="form-control" id="pdvStopaInput" aria-describedby="pdvStopa" placeholder="Unesite pdv stopu">
+								</div>
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="brojFaktureInput">Broj fakture</label> -->
+<!-- 									<input type="text" class="form-control" id="brojFaktureInput" aria-describedby="brojFakture" placeholder="Unesite broj fakture"> -->
+<!-- 								</div> -->
+								<div class="form-group">
+					    			<label for="robaSelect">Roba</label>
+					    			<select class="form-control"  id="robaSelect">
+					    
+					   		 		</select>
+					  			</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary updateModalClose">Otkaži</button>
+							<button type="button" id="doKreirajFakturu" class="btn btn-primary">Sačuvaj</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- Obrisi narudzbenicu-->
+			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="deletePromptLabel">Jeste li sigurni?</h5>
+			        <button type="button" class="close deletePromptClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="deletePromptText"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary deletePromptClose">Otkaži</button>
+			        <button type="button" id="doDelete" class="btn btn-primary">Obriši</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+		
+	</body>
+</html>

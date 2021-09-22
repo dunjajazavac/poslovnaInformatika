@@ -28,6 +28,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.repository.PoslovnaGodinaRepository;
 import com.poslovnaInformatika.podsistemProdaje.repository.PreduzeceRepository;
 import com.poslovnaInformatika.podsistemProdaje.service.PoslovnaGodinaService;
+import com.poslovnaInformatika.podsistemProdaje.service.PreduzeceService;
 
 @CrossOrigin
 @RestController
@@ -38,7 +39,7 @@ public class PoslovnaGodinaController {
 	@Autowired
 	private PoslovnaGodinaService poslovnaService;
 	@Autowired
-	private PreduzeceRepository preduzeceRepo;
+	private PreduzeceService preduzeceService;
 	@Autowired
 	private PoslovnaGodinaServiceInterface poslovnaGodinaSeviceInterface;
 	
@@ -76,7 +77,7 @@ public class PoslovnaGodinaController {
 	public ResponseEntity<Void> dodajGodinu(@Validated @RequestParam("godina") String godina,@RequestParam("zakljucena") String zakljucena,@RequestParam("preduzece") String nazivPreduzeca){
 		int godinaInt=Integer.parseInt(godina);
 		
-		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
+		Preduzece preduzece=preduzeceService.findByNazivPreduzeca(nazivPreduzeca);
 		
 		if(godina ==null) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -100,33 +101,37 @@ public class PoslovnaGodinaController {
 		
 	}
 	
-	@PostMapping(path="/izmeniGodinu",consumes="application/x-www-form-urlencoded;charset=UTF-8")
-	public ResponseEntity<Void> izmeniGodinu(@RequestParam("id") Long id,@RequestParam("godina") String godina,@RequestParam("zakljucena") String zakljucena,@RequestParam("nazivPreduzeca") String nazivPreduzeca){
+	@PostMapping(path = "/izmeniGodinu", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+	public ResponseEntity<Void> izmeniGodinu(@RequestParam("id") long id,
+			@RequestParam("godina") String godina, @RequestParam("zakljucena") String zakljucena,
+			@RequestParam("preduzece") String nazivPreduzeca) {
+	
+		int godinaInt = Integer.parseInt(godina);
 		
+		PoslovnaGodina poslovnaGodina = poslovnaService.findOne(id);
 		
-		int godinaInt=Integer.parseInt(godina);
+		Preduzece preduzece = preduzeceService.findByNazivPreduzeca(nazivPreduzeca);
 		
-
-		PoslovnaGodina poslovnaGodina=poslovnaService.findOne(id);
-
-		Preduzece preduzece=preduzeceRepo.findByNazivPreduzeca(nazivPreduzeca);
-		if(poslovnaGodina !=null) {
+		if(poslovnaGodina != null) {
 			poslovnaGodina.setIdGodine(id);
 			poslovnaGodina.setGodina(godinaInt);
-			if(zakljucena.equalsIgnoreCase("DA")) {
+			
+			if(zakljucena.equalsIgnoreCase("Da")) {
 				poslovnaGodina.setZakljucena(true);
 			}else {
 				poslovnaGodina.setZakljucena(false);
 			}
 			poslovnaGodina.setPreduzece(preduzece);
+			
 			poslovnaService.save(poslovnaGodina);
-			System.out.println("Izmenjena poslovna godina");
+			
+			System.out.println("Izmenjena je poslovna godina.");
 			
 			return new ResponseEntity<Void>(HttpStatus.OK);
-	
 		}else {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
+		
 	
 		
 	}
