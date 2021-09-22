@@ -1,0 +1,90 @@
+
+.pageHead {
+	margin-top: 100px;
+	margin-bottom: 40px;
+	text-align: center;
+	color: grey;
+}
+
+.pagination{
+	float:right;
+}
+
+.btn-pagination-previous{
+  border-color: white;
+  margin-right:5px;
+}
+
+.btn-pagination-next{
+  border-color: white;
+  margin-left:5px;
+}
+
+.pagination-numbering {
+	display: inline-flex;
+	align-items: center;
+	color: green;
+}
+
+.search-inputs{
+	text-align: right;
+}
+
+table {
+	margin-top: 50px;
+}
+
+table tr.highlighted{
+	color: #212529;
+  	background-color:aquamarine;
+}
+
+table tr:not(.header){
+	cursor:pointer;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+table td {
+   border:1px solid #000;
+}
+
+toolbar {
+	padding-top: 10px;
+	padding-bottom: 14px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.toolbar > button {
+	margin-right: 3px;
+}
+
+
+td.idJediniceMere, td.idKategorije, td.idMesta, td.idPreduzeca, td.idPoslovnogPartnera, td.idStope, td.idGrupe, td.idRobeUsluge, td.idGodine,
+td.idStavke, td.idCenovnika, td.idFakture, td.idStavkeOtpremnice, td.idOtpremnice, td.idStavkeNarudzbenice, td.idNarudzbenice{
+ 	visibility: hidden; 
+ 	max-width: 0px;
+}
+
+.center{
+	margin:auto;
+}
+
+/* #list-nav { */
+/* 	display:flex; */
+/*     flex-flow:row wrap; */
+/*     justify-content:center */
+/* } */
+
+/* #list-nav-link { */
+/* 	display:flex; control the items' content */
+/*     justify-content:center; horizontally */
+/*     align-items:center; */
+/* } */
+
+/* #list-nav { */
+/* 	display: grid !important; */
+/* } */

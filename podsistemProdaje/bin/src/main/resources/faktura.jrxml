@@ -30,7 +30,7 @@
 		</box>
 	</style>
 	<subDataset name="FakturaSaStavkama" uuid="f0e795cd-ca99-4a41-88fd-e43ef285b54d">
-		<parameter name="faktura" class="projekat.model.Faktura"/>
+		<parameter name="faktura" class="com.poslovnaInformatika.podsistemProdaje.model.Faktura"/>
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
@@ -45,7 +45,7 @@
 		<field name="ukupanIznos" class="java.lang.Double"/>
 	</subDataset>
 	<parameter name="stavkaFakture" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="faktura" class="projekat.model.Faktura">
+	<parameter name="faktura" class="com.poslovnaInformatika.podsistemProdaje.model.Faktura">
 		<defaultValueExpression><![CDATA[$P{faktura}]]></defaultValueExpression>
 	</parameter>
 	<queryString>
