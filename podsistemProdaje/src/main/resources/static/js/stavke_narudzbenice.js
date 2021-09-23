@@ -204,7 +204,7 @@ function dobaviNarudzbenice() {
 
 function dobaviRobu() {
 	$.ajax({
-		url : "http://localhost:8086/api/robeUsluga/allMilica"
+		url : "http://localhost:8086/api/robeUsluge/allMilica"
 	}).then(
 		function(data) {
 			$("#robaSelect").empty();
