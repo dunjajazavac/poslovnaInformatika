@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="bootstrap/bootstrap.js"></script>
+<script src="js/stavkeOtpremnice.js"></script>
+<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<script src="bootstrap/funkcije.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<title>Stavke otpremnice</title>
+<script>$(document).ready(getStavkeOtpremnice);</script>
+</head>
+<body>
+<!-- Pretraga -->
+			<div class="collapse" id="collapseSearch">
+				<form>
+					<div class="row">
+						
+						<div class="col-10 search-inputs">
+							
+							<div class="form-group form-row">
+					    		<label for="redniSearch" class="col-sm-2 col-form-label">Redni broj proizvoda</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="redniSearchInput">
+					    		</div>
+					    		
+					    		<label for="cenaSearch" class="col-sm-2 col-form-label">Cena</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="cenaSearchInput">
+					    		</div>
+							</div>
+							
+							
+							<div class="form-group form-row">
+							</div>
+						</div>
+						<div class="col-2 center">
+							<button id="doSearch" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+							<button id="doReset" type="button" class="btn btn-outline-secondary">Ponisti</button>
+						</div>
+					</div>
+				</form>
+				
+				
+			</div>
+			
+			<!-- Toolbar -->	
+			<div class="toolbar">
+				<button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
+				
+				<button id="search" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+				
+
+				<button id="delete" type="button" class="btn btn-outline-secondary">Obrisi</button>
+			
+				
+
+			</div>
+				
+	
+			
+			<table id="dataTable" class="table">
+				<thead>
+					<tr>
+						<th>R. broj proizvoda</th>
+						<th>Jedinica mere</th>
+						<th>Cena</th>
+						<th>Kolicina</th>
+						<th>Napomena</th>
+						<th>Otpremnica</th>
+						<th>Roba</th>
+					</tr>
+				</thead>
+				<tbody id="dataTableBody">
+				</tbody>
+			</table>
+			
+			<ul class="pagination justify-content-center bg-success" id="stavkaO-page"></ul>
+            <br>
+            <div class="form-group mx-auto w-25">
+                <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
+                <select class="form-control" id="nmb-select">
+                	<option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+			
+			
+			<!-- Obrisi stavku otpremnice -->
+			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="deletePromptLabel">Da li ste sigurni sigurni?</h5>
+			        <button type="button" class="close deletePromptClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="deletePromptText"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary deletePromptClose">Otkazi</button>
+			        <button type="button" id="doDelete" class="btn btn-primary">Obrisi</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+		
+	</body>
+</body>
+</html>
