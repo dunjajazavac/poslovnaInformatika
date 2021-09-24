@@ -132,7 +132,7 @@ public class PartnerController {
 	    headers.set("total", String.valueOf(partner.getTotalPages()));
 	    return ResponseEntity.ok().headers(headers).body(partner.getContent());
 	}
-	@PostMapping(path = "/dodajPoslovnogPartnera",consumes = "application/json")
+	@PostMapping(path = "/dodajPoslovnogPartnera")
 	public ResponseEntity<Void> dodajPoslovnogPartnera(
 			@Validated @RequestParam("naziv_poslovnog_partnera") String nazivPoslovnogPartnera,
 			@RequestParam("adresa") String adresa, @RequestParam("telefon") String telefon,
@@ -167,7 +167,7 @@ public class PartnerController {
 
 	}
 
-	@PostMapping(path = "/izmeniPoslovnogPartnera", consumes = "application/json")
+	@PostMapping(path = "/izmeniPoslovnogPartnera", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
 	public ResponseEntity<Void> izmeniPoslovnogPartnera(@RequestParam("id") long id,
 			@RequestParam("naziv_poslovnog_partnera") String nazivPoslovnogPartnera,
 			@RequestParam("adresa") String adresa, @RequestParam("telefon") String telefon,
