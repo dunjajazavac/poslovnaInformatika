@@ -3,6 +3,8 @@ package com.poslovnaInformatika.podsistemProdaje.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +35,7 @@ import com.poslovnaInformatika.podsistemProdaje.model.Preduzece;
 import com.poslovnaInformatika.podsistemProdaje.service.MestoService;
 import com.poslovnaInformatika.podsistemProdaje.service.PoslovniPartnerService;
 import com.poslovnaInformatika.podsistemProdaje.service.PreduzeceService;
+import com.sun.el.parser.ParseException;
 
 @CrossOrigin
 @RestController
@@ -82,14 +86,59 @@ public class PartnerController {
 
 		return new ResponseEntity<>(new PoslovniPartnerDTO(p), HttpStatus.OK);
 	}
+	@GetMapping(path = "/searchByNaziv")
+	private ResponseEntity<List<PoslovniPartner>> searchByNaziv(@RequestParam("naziv") String nazivPoslovnogPartnera,
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
 
-	@PostMapping(consumes = "application/json")
+		Page<PoslovniPartner> partner = pService.findAllByNazivPoslovnogPartnera(nazivPoslovnogPartnera, pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(partner.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(partner.getContent());
+		
+	}
+	
+	@GetMapping(path = "/searchByAdresa")
+	private ResponseEntity<List<PoslovniPartner>> searchByAdresa(@RequestParam("adresa") String adresa,
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
+
+		Page<PoslovniPartner> partner = pService.findAllByAdresa(adresa, pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(partner.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(partner.getContent());
+		
+	}
+	
+	@GetMapping(path = "/searchByEmail")
+	private ResponseEntity<List<PoslovniPartner>> searchByEmail(@RequestParam("email") String email, 
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
+		
+		Page<PoslovniPartner> partner = pService.findAllByEmail(email, pageNo, pageSize);
+		HttpHeaders headers = new HttpHeaders();
+	    headers.set("total", String.valueOf(partner.getTotalPages()));
+	    return ResponseEntity.ok().headers(headers).body(partner.getContent());
+		
+	}
+	
+	@GetMapping(path = "/searchByVrstaPartnera")
+	private ResponseEntity<List<PoslovniPartner>> searchByVrstaPartnera(@RequestParam("vrsta") String vrstaPartnera,
+			@RequestParam("pageNo") Integer pageNo, 
+            @RequestParam("pageSize") Integer pageSize) {
+		
+		Page<PoslovniPartner> partner = pService.findAllByVrstaPartnera(vrstaPartnera, pageNo, pageSize);
+		HttpHeaders headers = new HttpHeaders();
+	    headers.set("total", String.valueOf(partner.getTotalPages()));
+	    return ResponseEntity.ok().headers(headers).body(partner.getContent());
+	}
+	@PostMapping(path = "/dodajPoslovnogPartnera",consumes = "application/json")
 	public ResponseEntity<Void> dodajPoslovnogPartnera(
 			@Validated @RequestParam("naziv_poslovnog_partnera") String nazivPoslovnogPartnera,
 			@RequestParam("adresa") String adresa, @RequestParam("telefon") String telefon,
 			@RequestParam("fax") String fax, @RequestParam("email") String email,
 			@RequestParam("vrsta_partnera") String vrstaPartnera, @RequestParam("mesto") String nazivMesta,
-			@RequestParam("preduzece") String nazivPreduzeca) {
+			@RequestParam("preduzece") String nazivPreduzeca)throws ParseException  {
 
 		NaseljenoMesto mesto = mService.findByNazivMesta(nazivMesta);
 		Preduzece preduzece = predService.findByNazivPreduzeca(nazivPreduzeca);
@@ -118,7 +167,7 @@ public class PartnerController {
 
 	}
 
-	@PutMapping(value = "/{id}", consumes = "application/json")
+	@PostMapping(path = "/izmeniPoslovnogPartnera", consumes = "application/json")
 	public ResponseEntity<Void> izmeniPoslovnogPartnera(@RequestParam("id") long id,
 			@RequestParam("naziv_poslovnog_partnera") String nazivPoslovnogPartnera,
 			@RequestParam("adresa") String adresa, @RequestParam("telefon") String telefon,
@@ -153,7 +202,7 @@ public class PartnerController {
 
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/obrisiPoslovnogPartnera/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deletePreduzece(@PathVariable Long id) {
 		PoslovniPartner p = pService.findOne(id);
 		if (p != null) {
@@ -162,6 +211,10 @@ public class PartnerController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	@ExceptionHandler(value = ConstraintViolationException.class)
+	public ResponseEntity<Void> handle() {
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 }

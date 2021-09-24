@@ -16,7 +16,9 @@ public interface PreduzeceRepository extends JpaRepository<Preduzece, Long>{
 	
 	Preduzece findByNazivPreduzeca (String nazivPreduzeca);
 	List<Preduzece> findAll();
-	Page<Preduzece> findAll(Pageable page);
+	
+	
+	
 	Page<Preduzece> findAllByNazivPreduzeca (String nazivPreduzeca, Pageable page);
 	
 	Page<Preduzece> findAllByAdresa (String adresa,Pageable page);

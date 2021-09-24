@@ -65,4 +65,9 @@ public class PoslovniPartnerService {
 	public Page<PoslovniPartner> findAllByVrstaPartnera(String vrstaPartnera, int pageNo, int pageSize) {
 		return partnerRepo.findAllByVrstaPartnera(vrstaPartnera,PageRequest.of(pageNo, pageSize));
 	}
+
+	public Page<PoslovniPartner> findAllByNazivPoslovnogPartnera(String nazivPoslovnogPartnera, Integer pageNo,
+			Integer pageSize) {
+		return partnerRepo.findAllByNazivPoslovnogPartnera(nazivPoslovnogPartnera,PageRequest.of(pageNo, pageSize));
+	}
 }

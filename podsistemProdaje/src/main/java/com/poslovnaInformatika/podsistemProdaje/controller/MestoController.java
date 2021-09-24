@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,18 +37,11 @@ public class MestoController {
 	@Autowired
 	private MestoService mService;
 	
-	@RequestMapping(path = "/all", method = RequestMethod.GET)
-	public ResponseEntity<List<MestoDTO>> getAll(){
-			
-			List<NaseljenoMesto> mesta = mService.findAll();
-			List<MestoDTO> mDTO = new ArrayList<>();
-			for(NaseljenoMesto m : mesta) {
-				mDTO.add(new MestoDTO(m));
-			}
-			return new ResponseEntity<>(mDTO, HttpStatus.OK);
-		
+	@GetMapping(path = "/all")
+	public List<NaseljenoMesto> getAll() {
+		return mService.findAll();
 	}
-
+	
 	//elena zakomentarisala 
 	@GetMapping(path = "/p")
     public ResponseEntity<List<NaseljenoMesto>> getAllNaseljenoMesto(
@@ -93,35 +87,52 @@ public class MestoController {
 		
 		return new ResponseEntity<>(new MestoDTO(mesto), HttpStatus.OK);
 	}
-	
-	@PostMapping(consumes="application/json")
-	public ResponseEntity<MestoDTO> saveMesto(@RequestBody MestoDTO mDTO){		
+	@PostMapping(path = "/dodajMesto")
+	public ResponseEntity<Void> dodajMesto(@Validated @RequestParam("naziv_mesta") String nazivMesta, @RequestParam("ptt_broj") String pttBroj) {
+		
+		System.out.println("Naziv naseljenog mesta: " + nazivMesta);
+		System.out.println("Ptt broj naseljnog mesta: " + pttBroj);
+		
+		if(nazivMesta == null || pttBroj == null) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		
+		int pttBrojInt = Integer.parseInt(pttBroj);
+			
 		NaseljenoMesto mesto = new NaseljenoMesto();
-		mesto.setPttBroj(mDTO.getPttBroj());
-		mesto.setNazivMesta(mDTO.getNazivMesta());
-	
-		mesto = mService.save(mesto);
-
-		return new ResponseEntity<>(new MestoDTO(mesto), HttpStatus.CREATED);	
+		mesto.setNazivMesta(nazivMesta);
+		mesto.setPttBroj(pttBrojInt);
+		mService.save(mesto);
+		
+		System.out.println("Dodato je naseljeno mesto.");
+		
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/{mestoId}", consumes="application/json")
-	public ResponseEntity<MestoDTO> updateMesto(@RequestBody MestoDTO mDTO, @PathVariable("mestoId") Long id){		
+	
+	@PostMapping(path = "/izmeniMesto", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+	public ResponseEntity<Void> izmeniMesto(@RequestParam("id") long id, @RequestParam("naziv_mesta") String nazivMesta,
+			@RequestParam("ptt_broj") String pttBroj) {
 		
 		NaseljenoMesto mesto = mService.findOne(id);
 		
-		if(mesto == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		mesto.setPttBroj(mDTO.getPttBroj());
-		mesto.setNazivMesta(mDTO.getNazivMesta());
+		int pttBrojInt = Integer.parseInt(pttBroj);
 		
-		mesto = mService.save(mesto);
-	
-		return new ResponseEntity<>(new MestoDTO(mesto), HttpStatus.OK);	
+		if(mesto != null) {
+			mesto.setIdMesta(id);
+			mesto.setNazivMesta(nazivMesta);
+			mesto.setPttBroj(pttBrojInt);
+			mService.save(mesto);
+			
+			System.out.println("Izmenjeno je naseljeno mesto");
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="obrisiMesto/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteMesto(@PathVariable Long id){
 		NaseljenoMesto mesto = mService.findOne(id);
 		if (mesto != null){

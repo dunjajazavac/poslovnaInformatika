@@ -42,9 +42,11 @@ public class PreduzeceService {
 		return preduzeceRepo.findAll();
 	}
 
-	public Page<Preduzece> findAll(Pageable page) {
-		return preduzeceRepo.findAll(page);
+	
+	public Page<Preduzece> findAll(int pageNo, int pageSize) {
+		return preduzeceRepo.findAll(PageRequest.of(pageNo, pageSize));
 	}
+
 	public Page<Preduzece> findAllByNazivPreduzeca(String nazivPreduzeca, int pageNo, int pageSize) {
 		return preduzeceRepo.findAllByNazivPreduzeca(nazivPreduzeca,PageRequest.of(pageNo, pageSize));
 	}
