@@ -27,6 +27,7 @@ function callGroup() {
                 newRow = 
                     "<tr>" 
                         + "<td class=\"nazivGrupe\">" + output[i].nazivGrupe + "</td>"
+                        + "<td class=\"pdvKategorija\">" + output[i].pdvKategorija.nazivKategorije + "</td>"
                         + "<td class=\"idGrupe\" style:display:none>" + output[i].idGrupe + "</td>" +
                         
                     "</tr>"

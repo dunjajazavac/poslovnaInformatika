@@ -6,7 +6,7 @@
 		
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="bootstrap/bootstrap.js"></script>
-		<script src="js/stavke_narudzbenice.js"></script>
+		<script src="js/stavkaFakture.js"></script>
 		<script src="bootstrap/funkcije.js"></script>
 
 		
@@ -15,10 +15,10 @@
 		
 		<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
 	
-		<title>Stavke narudzbenice</title>
+		<title>Stavke fakture</title>
 		
 		<script>
-			$(document).ready(getStavkeNarudzbenice);
+			$(document).ready(getStavkeFakture);
 		</script>
 	
 	</head>
@@ -26,7 +26,8 @@
 
 		<div class="container">
 			
-			<h1 class="pageHead">Stavke narudzbenice</h1>
+			
+			<h1 class="pageHead">Stavke fakture</h1>
 			
 			<!-- Pretraga -->
 			<div class="collapse" id="collapseSearch">
@@ -36,11 +37,10 @@
 						<div class="col-10 search-inputs">
 							
 							<div class="form-group form-row">
-					    		<label for="cenaSearch" class="col-sm-2 col-form-label">Cena</label>
+					    		<label for="iznosSearch" class="col-sm-2 col-form-label">Iznos</label> 
 					    		<div class="col-sm-4">
-					    			<input type="text" class="form-control" id="cenaSearchInput">
+					    			<input type="text" class="form-control" id="iznosSearchInput">
 					    		</div>
-					    		
 							</div>
 							
 							
@@ -63,7 +63,8 @@
 				
 				<button id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
 				
-				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+<!-- 				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button> -->
+<!-- 				<button id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button> -->
 				<button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button>
 				
 				<!-- Pagination -->
@@ -80,19 +81,24 @@
 			<table id="dataTable" class="table">
 				<thead>
 					<tr>
-						<th>Jedinica mere</th>
-						<th>Kolicina</th>
-						<th>Cena</th>
+						<th>Kol.</th>
+						<th>Rab.</th>
+						<th>J.cena</th>
 						<th>Iznos</th>
-						<th>Narudzbenica</th>
+						<th>PDV s.</th>
+						<th>Osn.PDV</th>
+						<th>Izn.PDV</th>
+						<th>Uk.iznos</th>
+						<th>Faktura</th>
 						<th>Roba</th>
+						<th>Preduzece</th>
 					</tr>
 				</thead>
 				<tbody id="dataTableBody">
 				</tbody>
 			</table>
 			
-			<ul class="pagination justify-content-center bg-success" id="stavkaN-page"></ul>
+			<ul class="pagination justify-content-center bg-success" id="stavkaF-page"></ul>
             <br>
             <div class="form-group mx-auto w-25">
                 <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
@@ -107,58 +113,7 @@
             </div>
 			
 			
-			<!-- Dodavanje stavke narudzbenice -->
-			<div class="modal fade" id="addModalScrollable" tabindex="-1" role="dialog" aria-labelledby="addModalScrollableTitle" aria-hidden="true">
-			  <div class="modal-dialog modal-dialog-scrollable" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje stavke narudzbenice</h5>
-			        <button type="button" class="close addModalClose" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <form>
-					  <div class="form-group">
-					    <label for="jedinicaMereInput">Jedinica mere</label>
-					    <input type="text" class="form-control" id="jedinicaMereInput" aria-describedby="jedinicaMere" placeholder="Unesite jedinicu mere">
-					  </div>
-					   <div class="form-group">
-					    <label for="kolicinaInput">Kolicina</label>
-					    <input type="text" class="form-control" id="kolicinaInput" aria-describedby="kolicina" placeholder="Unesite kolicinu">
-					  </div>
-					  <div class="form-group">
-					    <label for="cenaInput">Cena</label>
-					    <input type="text" class="form-control" id="cenaInput" aria-describedby="cena" placeholder="Unesite cena">
-					  </div>
-<!-- 					  <div class="form-group"> -->
-<!-- 					    <label for="iznosInput">Iznos</label> -->
-<!-- 					    <input type="text" class="form-control" id="iznosInput" aria-describedby="iznos" placeholder="Iznos = kolicina * cena"> -->
-<!-- 					  </div> -->
-
-					  <div class="form-group">
-					    <label for="narudzbenicaSelect">Narudzbenica</label>
-					    <select class="form-control"  id="narudzbenicaSelect">
-					    
-					    </select>
-					  </div>
-					  <div class="form-group">
-					    <label for="robaSelect">Roba</label>
-					    <select class="form-control"  id="robaSelect">
-					    
-					    </select>
-					  </div>
-					</form>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary addModalClose" >Otkaži</button>
-			        <button type="button" id="doAdd" class="btn btn-primary">Sačuvaj</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			
-			<!-- Obrisi stavku narudzbenice-->
+			<!-- Obrisi stavku fakture -->
 			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">

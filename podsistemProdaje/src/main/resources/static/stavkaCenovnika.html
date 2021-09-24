@@ -6,19 +6,18 @@
 		
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="bootstrap/bootstrap.js"></script>
-		<script src="js/stavke_narudzbenice.js"></script>
 		<script src="bootstrap/funkcije.js"></script>
-
+		<script src="js/stavkaCenovnika.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="bootstrap/stil.css">
 		
 		<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
 	
-		<title>Stavke narudzbenice</title>
+		<title>Stavke cenovnika</title>
 		
 		<script>
-			$(document).ready(getStavkeNarudzbenice);
+			$(document).ready(getStavkeCenovnika);
 		</script>
 	
 	</head>
@@ -26,24 +25,20 @@
 
 		<div class="container">
 			
-			<h1 class="pageHead">Stavke narudzbenice</h1>
+			
+			<h1 class="pageHead">Stavke cenovnika</h1>
 			
 			<!-- Pretraga -->
 			<div class="collapse" id="collapseSearch">
 				<form>
 					<div class="row">
-						
 						<div class="col-10 search-inputs">
-							
 							<div class="form-group form-row">
-					    		<label for="cenaSearch" class="col-sm-2 col-form-label">Cena</label>
+					    		<label for="cenaSearchInput" class="col-sm-2 col-form-label">Cena</label>
 					    		<div class="col-sm-4">
 					    			<input type="text" class="form-control" id="cenaSearchInput">
 					    		</div>
-					    		
 							</div>
-							
-							
 							<div class="form-group form-row">
 							</div>
 						</div>
@@ -64,10 +59,10 @@
 				<button id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
 				
 				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+				<button id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button>
 				<button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button>
 				
 				<!-- Pagination -->
-				
 <!-- 				<div class="pagination" > -->
 <!-- 					<button type="button" class="btn btn-outline-secondary btn-sm disabled btn-pagination-previous"><i class="fas fa-angle-left"></i></button> -->
 <!-- 					<span class="pagination-numbering">x do y od z</span> -->
@@ -80,11 +75,8 @@
 			<table id="dataTable" class="table">
 				<thead>
 					<tr>
-						<th>Jedinica mere</th>
-						<th>Kolicina</th>
 						<th>Cena</th>
-						<th>Iznos</th>
-						<th>Narudzbenica</th>
+						<th>Cenovnik</th>
 						<th>Roba</th>
 					</tr>
 				</thead>
@@ -92,7 +84,7 @@
 				</tbody>
 			</table>
 			
-			<ul class="pagination justify-content-center bg-success" id="stavkaN-page"></ul>
+			<ul class="pagination justify-content-center bg-success" id="stavkaC-page"></ul>
             <br>
             <div class="form-group mx-auto w-25">
                 <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
@@ -107,12 +99,12 @@
             </div>
 			
 			
-			<!-- Dodavanje stavke narudzbenice -->
+			<!-- Dodavanje stavke cenovnika -->
 			<div class="modal fade" id="addModalScrollable" tabindex="-1" role="dialog" aria-labelledby="addModalScrollableTitle" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-scrollable" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje stavke narudzbenice</h5>
+			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje stavke cenovnika</h5>
 			        <button type="button" class="close addModalClose" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -120,25 +112,12 @@
 			      <div class="modal-body">
 			        <form>
 					  <div class="form-group">
-					    <label for="jedinicaMereInput">Jedinica mere</label>
-					    <input type="text" class="form-control" id="jedinicaMereInput" aria-describedby="jedinicaMere" placeholder="Unesite jedinicu mere">
-					  </div>
-					   <div class="form-group">
-					    <label for="kolicinaInput">Kolicina</label>
-					    <input type="text" class="form-control" id="kolicinaInput" aria-describedby="kolicina" placeholder="Unesite kolicinu">
+					    <label for="cenaInput">Cena stavke</label>
+					    <input type="text" class="form-control" id="cenaInput" aria-describedby="cenaHelp" placeholder="Unesite cenu stavke">
 					  </div>
 					  <div class="form-group">
-					    <label for="cenaInput">Cena</label>
-					    <input type="text" class="form-control" id="cenaInput" aria-describedby="cena" placeholder="Unesite cena">
-					  </div>
-<!-- 					  <div class="form-group"> -->
-<!-- 					    <label for="iznosInput">Iznos</label> -->
-<!-- 					    <input type="text" class="form-control" id="iznosInput" aria-describedby="iznos" placeholder="Iznos = kolicina * cena"> -->
-<!-- 					  </div> -->
-
-					  <div class="form-group">
-					    <label for="narudzbenicaSelect">Narudzbenica</label>
-					    <select class="form-control"  id="narudzbenicaSelect">
+					    <label for="cenovnikSelect">Cenovnik</label>
+					    <select class="form-control"  id="cenovnikSelect">
 					    
 					    </select>
 					  </div>
@@ -158,7 +137,45 @@
 			  </div>
 			</div>
 			
-			<!-- Obrisi stavku narudzbenice-->
+			<!-- Izmena stavke cenovnika -->
+			<div class="modal fade" id="updateModalScrollable" tabindex="-1" role="dialog" aria-labelledby="updateModalScrollableTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="updateModalScrollableTitle">Izmena stavke cenovnika</h5>
+							<button type="button" class="close updateModalClose" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							 <form>
+					  			<div class="form-group">
+					    			<label for="cenaIzmeniInput">Cena stavke</label>
+					    			<input type="text" class="form-control" id="cenaIzmeniInput" aria-describedby="cenaIzmeniHelp" placeholder="Unesite cenu stavke">
+					  			</div>
+					  			<div class="form-group">
+					    			<label for="cenovnikIzmeniSelect">Cenovnik</label>
+					    			<select class="form-control"  id="cenovnikIzmeniSelect">
+					    
+					    			</select>
+					  			</div>
+					  			<div class="form-group">
+					    			<label for="robaIzmeniSelect">Roba</label>
+					    			<select class="form-control"  id="robaIzmeniSelect">
+					    
+					    			</select>
+					  			</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary updateModalClose">Otkaži</button>
+							<button type="button" id="doUpdate" class="btn btn-primary">Sačuvaj</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Brisanje stavke cenovnika -->
 			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
