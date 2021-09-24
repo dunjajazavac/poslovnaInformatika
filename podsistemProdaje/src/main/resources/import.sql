@@ -70,8 +70,8 @@ INSERT INTO stavka_fakture(kolicina, rabat, jedinicna_cena, iznos, pdv_stopa, os
 INSERT INTO stavka_fakture(kolicina, rabat, jedinicna_cena, iznos, pdv_stopa, osnovica_za_pdv, iznos_pdv, ukupan_iznos, id_preduzeca, id_fakture, id_robe) VALUES (1, 10, 200, 200, 5, 190, 10, 200, 1, 2, 3);
 INSERT INTO stavka_fakture(kolicina, rabat, jedinicna_cena, iznos, pdv_stopa, osnovica_za_pdv, iznos_pdv, ukupan_iznos, id_preduzeca, id_fakture, id_robe) VALUES (1, 30, 600, 600, 5, 570, 29, 600, 1, 3, 4);
 
-INSERT INTO otpremnica(broj_otpremnice, kupac, adresa_isporuke, datum_isporuke, prevoznik, potpis_vozaca, primio_robu, id_fakture, id_narudzbenice) VALUES (1, 'pera', 'Vase Stajica 2, Novi Sad', '2020-10-10', 'MultiExpress', true, true, 1, 1);
-INSERT INTO otpremnica(broj_otpremnice, kupac, adresa_isporuke, datum_isporuke, prevoznik, potpis_vozaca, primio_robu, id_fakture, id_narudzbenice) VALUES (2, 'ana', 'Lazina 12, Novi Sad', '2020-11-11', 'OkExpress', true, true, 2, 2);
+INSERT INTO otpremnica(broj_otpremnice, kupac, adresa_isporuke, datum_isporuke, prevoznik, potpis_vozaca, primio_robu, id_fakture, id_narudzbenice) VALUES (1, 'pera', 'Vase Stajica 2, Novi Sad', '2021-10-10', 'MultiExpress', true, true, 1, 1);
+INSERT INTO otpremnica(broj_otpremnice, kupac, adresa_isporuke, datum_isporuke, prevoznik, potpis_vozaca, primio_robu, id_fakture, id_narudzbenice) VALUES (2, 'ana', 'Lazina 12, Novi Sad', '2021-11-11', 'OkExpress', true, true, 2, 2);
 
 INSERT INTO stavka_otpremnice(redni_broj_proizvoda, jedinica_mere, cena, kolicina, napomena, id_otpremnice, id_robe) VALUES (3, 'ml', 200, 1, '', 1, 5);
 INSERT INTO stavka_otpremnice(redni_broj_proizvoda, jedinica_mere, cena, kolicina, napomena, id_otpremnice, id_robe) VALUES (5, 'kg', 310,  1, 'brza isporuka', 2, 3);
