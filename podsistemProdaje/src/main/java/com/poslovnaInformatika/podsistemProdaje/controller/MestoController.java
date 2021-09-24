@@ -49,7 +49,17 @@ public class MestoController {
 	}
 
 	//elena zakomentarisala 
-	
+	@GetMapping(path = "/p")
+    public ResponseEntity<List<NaseljenoMesto>> getAllNaseljenoMesto(
+                        @RequestParam("pageNo") Integer pageNo, 
+                        @RequestParam("pageSize") Integer pageSize) 
+    {
+       
+		Page<NaseljenoMesto> mesta = mService.findAll(pageNo, pageSize);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(mesta.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(mesta.getContent());
+    }
 	@GetMapping(path = "/searchByNaziv")
 	private ResponseEntity<List<NaseljenoMesto>> searchByNaziv(@RequestParam("naziv") String nazivMesta,
 			@RequestParam Pageable page) {
@@ -60,6 +70,19 @@ public class MestoController {
         return ResponseEntity.ok().headers(headers).body(mesta.getContent());
 		
 	}
+	@GetMapping(path = "/searchByPttBroj")
+	private ResponseEntity<List<NaseljenoMesto>> searchByPttBroj(@RequestParam("ptt_broj") String pttBrojString,
+			@RequestParam Pageable page) {
+
+		int pttBroj = Integer.parseInt(pttBrojString);
+		
+		Page<NaseljenoMesto> mesta = mService.findAllByPttBroj(pttBroj, page);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("total", String.valueOf(mesta.getTotalPages()));
+        return ResponseEntity.ok().headers(headers).body(mesta.getContent());
+		
+	}
+	
 	@RequestMapping(value="/{id}", method= RequestMethod.GET)
 	public ResponseEntity<MestoDTO> getMesto(@PathVariable Long id){
 		NaseljenoMesto mesto = mService.findOne(id);
