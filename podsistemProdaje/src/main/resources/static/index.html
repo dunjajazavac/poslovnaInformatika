@@ -1,75 +1,59 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<script src="js/jquery-3.3.1.min.js"></script>
-		<script src="bootstrap/bootstrap.js"></script>
-		<title>Poslovna informatika</title>
-		<script>
-		</script>
-	
-	</head>
-	<body>
-
-		<div class="container">
-			<nav class="navbar navbar-expand navbar-dark bg-success fixed-top">
-				
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="index.html">Početna</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="robaUsluga.html"> Roba-usluga </a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="pdvKategorije.html"> PDV kategorije </a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="jediniceMere.html"> Jedinice mere </a>
-					</li>
-					<li> 
-						<a class="nav-link" href="pdvStopa.html"> PDV stopa </a>
-					</li>
-					<li> 
-						<a class="nav-link" href="stavkeOtpremnice.html"> Stavka otpremnice </a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="grupaRobeUsluga.html"> Grupa robe usluga </a>
-					</li>
-					<li class="nav-item active">
-
-						<a class="nav-link" href="cenovnici.html"> Cenovnici</a>
-
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="fakture.html"> Fakture</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="poslovne_godine.html"> Poslovne godine</a>
-					</li>
-					<li>
-						<a class="nav-link" href="narudzbenice.html">Narudzbenice</a>
-					</li>
-					<li>
-						<a class="nav-link" href="stavke_narudzbenice.html">Stavke narudzbenice</a>
-					</li>
-
-					<li class="nav-item active">
-						<a class="nav-link" href="stavkaCenovnika.html"> Stavka cenovnika </a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="stavkaFakture.html"> Stavka fakture </a>
-					</li>
-					
-					
-				</ul>
-				<ul class="navbar-nav" id="list-nav">
-				
-				</ul>
-			</nav>
-			
-			<h1 class="pageHead">Poslovna informatika</h1>
-		
-	</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title> Poslovna informatika </title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light"></div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="robaUsluga.html">Roba/usluga</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="grupaRobeUsluga.html">Grupe roba/usluga</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="pdvKategorije.html">PDV kategorije</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="jediniceMere.html">Jedinice mere</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="pdvStopa.html">PDV stopa</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="stavkeOtpremnice.html">Stavka otpremnice</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="cenovnici.html">Cenovnici</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="fakture.html">Fakture</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="poslovne_godine.html">Poslovne godine</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="narudzbenice.html">Narudzbenice</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="stavke_narudzbenice.html">Stavka narudzbenice</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="stavkaCenovnika.html">Stavka cenovnika</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="stavkaFakture.html">Stavka fakture</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-primary" id="sidebarToggle">Meni</button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Page content-->
+               <p>Dodati neki tekst o aplikaciji/podsistemu prodaje</p>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
+

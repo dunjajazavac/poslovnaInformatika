@@ -17,12 +17,14 @@ function callGroup() {
             categoryIndex.empty(); 
             $("#dataTableBody").empty(); 
 
+            /*
             for(var j=0; j<xhr.getResponseHeader('totalPages'); j++) {
                 categoryIndex.append(
                     `<li class="page-item ${pageNo==j? 'active': ''}">` + 
                     `<${pageNo==j? 'span':'a'} class="page-link" pageNo="${j}">${j+1}</${pageNo==j? 'span':'a'}></li>`
                 )
             }
+            */
             for (i = 0; i < output.length; i++) {
                 newRow = 
                     "<tr>" 
