@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="bootstrap/bootstrap.js"></script>
+<script src="js/otpremnice.js"></script>
+<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<script src="bootstrap/funkcije.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<title>Otpremnice</title>
+<script>$(document).ready(getOtpremnice);</script>
+</head>
+<body>
+<div class="collapse" id="collapseSearch">
+				<form>
+					<div class="row">
+						
+						<div class="col-10 search-inputs">
+							
+							<div class="form-group form-row">
+					    		<label for="brojSearch" class="col-sm-2 col-form-label">Broj otpremnice</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="brojSearchInput">
+					    		</div>
+					    		
+					    		<label for="kupacSearch" class="col-sm-2 col-form-label">Kupac</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="kupacSearchInput">
+					    		</div>
+					    		
+							</div>
+							<div  class="form-group form-row">
+								<label for="prevoznikSearch" class="col-sm-2 col-form-label">Prevoznik</label>
+								<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="prevoznikSearchInput">
+								</div>
+							</div>
+						</div>
+						<div class="col-2 center">
+							<button id="doSearch" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+							<button id="doReset" type="button" class="btn btn-outline-secondary">Ponisti</button>
+						</div>
+					</div>
+				</form>
+				
+				
+			</div>
+			
+			<!-- Toolbar -->	
+			<div class="toolbar">
+				<button id="refresh" type="button" class="btn btn-outline-secondary"><i class="fas fa-sync-alt"></i></button>
+				
+				<button id="search" type="button" class="btn btn-outline-secondary">Pretrazi</button>
+				
+
+				<button id="delete" type="button" class="btn btn-outline-secondary">Obrisi</button>
+		
+			</div>
+				
+	
+			
+			<table id="dataTable" class="table">
+				<thead>
+					<tr>
+						<th>Broj otpremnice</th>
+						<th>Kupac</th>
+						<th>Adresa isporuke</th>
+						<th>Datum isporuke</th>
+						<th>Prevoznik</th>
+						<th>Potpis vozaca</th>
+						<th>Primio robu</th>
+						<th>Faktura</th>
+						<th>Narudzbenica</th>
+					</tr>
+				</thead>
+				<tbody id="dataTableBody">
+				</tbody>
+			</table>
+			<ul class="pagination justify-content-center bg-success" id="otpremnica-page"></ul>
+            <br>
+            <div class="form-group mx-auto w-25">
+                <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
+                <select class="form-control" id="nmb-select">
+                	<option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+			
+			<!-- Obrisi otpremnicu-->
+			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="deletePromptLabel">Da li sigurni?</h5>
+			        <button type="button" class="close deletePromptClose" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p id="deletePromptText"></p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary deletePromptClose">Otkazi</button>
+			        <button type="button" id="doDelete" class="btn btn-primary">Obrisi</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+		</div>
+</body>
+</html>
