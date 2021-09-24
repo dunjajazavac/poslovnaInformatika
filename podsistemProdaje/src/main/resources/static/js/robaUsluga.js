@@ -28,6 +28,9 @@ function callGoods() {
                 newRow = 
                     "<tr>" 
                         + "<td class=\"nazivRobeUsluge\">" + output[i].nazivRobeUsluge + "</td>"
+                        + "<td class=\"opis\">" + output[i].opis + "</td>"
+                        + "<td class=\"jedinicaMere\">" + output[i].jedinicaMere.nazivJediniceMere + "</td>"
+                        + "<td class=\"grupaRobeUsluga\">" + output[i].grupaRobeUsluga.nazivGrupe + "</td>"
                         + "<td class=\"idRobeUsluge\" style:display:none>" + output[i].idRobeUsluge + "</td>" +
                         
                     "</tr>"
