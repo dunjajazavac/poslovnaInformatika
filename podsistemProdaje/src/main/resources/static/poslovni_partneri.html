@@ -6,32 +6,31 @@
 		
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="bootstrap/bootstrap.js"></script>
-		<script src="js/narudzbenice.js"></script>
 		<script src="bootstrap/funkcije.js"></script>
+		<script src="js/poslovni_partneri.js"></script>
 		
 		<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 		
 		
-
 		
 		<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="bootstrap/stil.css">
 		
 		<script src="https://kit.fontawesome.com/9497a339e1.js" crossorigin="anonymous"></script>
 	
-		<title>Narudzbenice</title>
+		<title>Poslovni partneri</title>
 		
 		<script>
-			$(document).ready(getNarudzbenice);
+			$(document).ready(getPartneri);
 		</script>
 	
 	</head>
 	<body background="bootstrap/wavegreen.png">
 	<div class="container">
 	<div class="d-flex" id="wrapper">
-		<div class="container">
+		
 		<div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light"></div>
         <div class="list-group list-group-flush">
@@ -70,24 +69,32 @@
         <!-- Page content-->
   
 			
-			
-			<h1 class="pageHead">Narudzbenice</h1>
+			<h1 class="pageHead">Poslovni partneri</h1>
 			
 			<!-- Pretraga -->
 			<div class="collapse" id="collapseSearch">
 				<form>
 					<div class="row">
-						
 						<div class="col-10 search-inputs">
-							
 							<div class="form-group form-row">
-					    		<label for="brojSearchInput" class="col-sm-2 col-form-label">Broj narudzbenice</label>
+					    		<label for="nazivSearchInput" class="col-sm-2 col-form-label">Naziv</label>
 					    		<div class="col-sm-4">
-					    			<input type="text" class="form-control" id="brojSearchInput">
+					    			<input type="text" class="form-control" id="nazivSearchInput">
+					    		</div>
+					    		<label for="adresaSearchInput" class="col-sm-2 col-form-label">Adresa</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="adresaSearchInput">
 					    		</div>
 							</div>
-							
 							<div class="form-group form-row">
+								<label for="emailSearchInput" class="col-sm-2 col-form-label">Email</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="emailSearchInput">
+					    		</div>
+					    		<label for="vrstaSearchInput" class="col-sm-2 col-form-label">Vrsta partnera</label>
+					    		<div class="col-sm-4">
+					    			<input type="text" class="form-control" id="vrstaSearchInput">
+					    		</div>
 							</div>
 						</div>
 						<div class="col-2 center">
@@ -107,35 +114,37 @@
 				<button id="search" type="button" class="btn btn-outline-secondary">Pretraži</button>
 				
 				<button id="add" type="button" class="btn btn-outline-secondary">Dodaj</button>
+				<button id="edit" type="button" class="btn btn-outline-secondary">Izmeni</button>
 				<button id="delete" type="button" class="btn btn-outline-secondary">Obriši</button>
-				<button id="kreirajFakturu" type="button" class="btn btn-outline-secondary">Kreiraj fakturu</button>
 				
-<!-- 				Pagination -->
-				
+				<!-- Pagination -->
 <!-- 				<div class="pagination" > -->
 <!-- 					<button type="button" class="btn btn-outline-secondary btn-sm disabled btn-pagination-previous"><i class="fas fa-angle-left"></i></button> -->
 <!-- 					<span class="pagination-numbering">x do y od z</span> -->
 <!-- 					<button type="button" class="btn btn-outline-secondary btn-sm btn-pagination-next"><i class="fas fa-angle-right"></i></button> -->
 <!-- 				</div> -->
-			</div> 
+			</div>
 				
 	
 			
 			<table id="dataTable" class="table">
 				<thead>
 					<tr>
-						<th>Broj narudzbenice</th>
+						<th>Naziv partnera</th>
+						<th>Adresa partnera</th>
+						<th>Telefon partnera</th>
+						<th>Fax partnera</th>
+						<th>Email partnera</th>
+						<th>Vrsta partnera</th>
+						<th>Naseljeno mesto</th>
 						<th>Preduzece</th>
-						<th>Poslovni partner</th>
-						<th>Godina</th>
 					</tr>
 				</thead>
 				<tbody id="dataTableBody">
 				</tbody>
 			</table>
 			
-			
-			<ul class="pagination justify-content-center bg-success" id="narudzbenica-page"></ul>
+			<ul class="pagination justify-content-center bg-success" id="partner-page"></ul>
             <br>
             <div class="form-group mx-auto w-25">
                 <label for="nmb-select">Odaberite broj entiteta za prikaz</label>
@@ -150,12 +159,12 @@
             </div>
 			
 			
-			<!-- Dodavanje narudzbenice --> 
+			<!-- Dodavanje poslovnog partnera -->
 			<div class="modal fade" id="addModalScrollable" tabindex="-1" role="dialog" aria-labelledby="addModalScrollableTitle" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-scrollable" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje narudzbenice</h5>
+			        <h5 class="modal-title" id="addModalScrollableTitle">Dodavanje poslovnog partnera</h5>
 			        <button type="button" class="close addModalClose" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
@@ -163,25 +172,41 @@
 			      <div class="modal-body">
 			        <form>
 					  <div class="form-group">
-					    <label for="brojNarudzbeniceInput">Broj narudzbenice</label>
-					    <input type="text" class="form-control" id="brojNarudzbeniceInput" aria-describedby="brojNarudzbenice" placeholder="Unesite broj narudzbenice">
+					    <label for="nazivInput">Naziv poslovnog partnera</label>
+					    <input type="text" class="form-control" id="nazivInput" aria-describedby="nazivHelp" placeholder="Unesite naziv poslovnog partnera">
+					  </div>
+					   <div class="form-group">
+					    <label for="adresaInput">Adresa poslovnog partnera</label>
+					    <input type="text" class="form-control" id="adresaInput" aria-describedby="adresaHelp" placeholder="Unesite adresu poslovnog partnera">
+					  </div>
+					  <div class="form-group">
+					    <label for="telefonInput">Telefon poslovnog partnera</label>
+					    <input type="text" class="form-control" id="telefonInput" placeholder="Unesite broj telefona poslovnog partnera">
+					  </div>
+					  <div class="form-group">
+					    <label for="faxInput">Fax poslovnog partnera</label>
+					    <input type="text" class="form-control" id="faxInput" placeholder="Unesite fax poslovnog partnera">
+					  </div>
+					   <div class="form-group">
+					    <label for="emailInput">Email poslovnog partnera</label>
+					    <input type="text" class="form-control" id="emailInput" placeholder="Unesite email poslovnog partnera">
+					  </div>
+						<div class="form-group">
+					    <label for="vrstaPartneraSelect">Vrsta partnera</label>
+					    <select class="form-control"  id="vrstaPartneraSelect">
+					    	<option>KU</option>
+					    	<option>DO</option>
+					    	<option>KD</option>
+					    </select>
+					  </div>
+					  <div class="form-group">
+					    <label for="mestoSelect">Mesto</label>
+					    <select class="form-control"  id="mestoSelect">
+					    </select>
 					  </div>
 					  <div class="form-group">
 					    <label for="preduzeceSelect">Preduzece</label>
 					    <select class="form-control"  id="preduzeceSelect">
-					    
-					    </select>
-					  </div>
-					  <div class="form-group">
-					    <label for="poslovniPartnerSelect">Poslovni partner</label>
-					    <select class="form-control"  id="poslovniPartnerSelect">
-					    
-					    </select>
-					  </div>
-					  <div class="form-group">
-					    <label for="godinaSelect">Godina</label>
-					    <select class="form-control"  id="godinaSelect">
-					    
 					    </select>
 					  </div>
 					</form>
@@ -194,52 +219,68 @@
 			  </div>
 			</div>
 			
-			<!-- Kreiraj fakturu na osnovu narudzbenice -->
+			
+			<!-- Izmena poslovnog partnera -->
 			<div class="modal fade" id="updateModalScrollable" tabindex="-1" role="dialog" aria-labelledby="updateModalScrollableTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-scrollable" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="updateModalScrollableTitle">Kreiranje fakture od narudzbenice</h5>
+							<h5 class="modal-title" id="updateModalScrollableTitle">Izmena poslovnog partnera</h5>
 							<button type="button" class="close updateModalClose" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
 							<form>
+					  			<div class="form-group">
+					    			<label for="nazivIzmeniInput">Naziv poslovnog partnera</label>
+					    			<input type="text" class="form-control" id="nazivIzmeniInput" aria-describedby="nazivIzmeniHelp" placeholder="Unesite naziv poslovnog partnera">
+					  			</div>
+					   			<div class="form-group">
+					    			<label for="adresaIzmeniInput">Adresa poslovnog partnera</label>
+					    			<input type="text" class="form-control" id="adresaIzmeniInput" aria-describedby="adresaIzmeniHelp" placeholder="Unesite adresu poslovnog partnera">
+					  			</div>
+					  			<div class="form-group">
+					    			<label for="telefonIzmeniInput">Telefon poslovnog partnera</label>
+					    			<input type="text" class="form-control" id="telefonIzmeniInput" placeholder="Unesite broj telefona poslovnog partnera">
+					  			</div>
+					  			<div class="form-group">
+					    			<label for="faxIzmeniInput">Fax poslovnog partnera</label>
+					    			<input type="text" class="form-control" id="faxIzmeniInput" placeholder="Unesite fax poslovnog partnera">
+					  			</div>
+					   			<div class="form-group">
+					    			<label for="emailIzmeniInput">Email poslovnog partnera</label>
+					    			<input type="text" class="form-control" id="emailIzmeniInput" placeholder="Unesite email poslovnog partnera">
+					  			</div>
 								<div class="form-group">
-									<label for="datumValuteInput">Datum valute</label>
-									<input type="date" class="form-control" id="datumValuteInput" aria-describedby="datumValute" placeholder="Unesite datum valute">
-								</div>
-								<div class="form-group">
-									<label for="rabatInput">Rabat</label>
-									<input type="text" class="form-control" id="rabatInput" aria-describedby="rabat" placeholder="Unesite rabat">
-								</div>
-								<div class="form-group">
-									<label for="pdvStopaInput">PDV stopa</label>
-									<input type="text" class="form-control" id="pdvStopaInput" aria-describedby="pdvStopa" placeholder="Unesite pdv stopu">
-								</div>
-<!-- 								<div class="form-group"> -->
-<!-- 									<label for="brojFaktureInput">Broj fakture</label> -->
-<!-- 									<input type="text" class="form-control" id="brojFaktureInput" aria-describedby="brojFakture" placeholder="Unesite broj fakture"> -->
-<!-- 								</div> -->
-								<div class="form-group">
-					    			<label for="robaSelect">Roba</label>
-					    			<select class="form-control"  id="robaSelect">
-					    
-					   		 		</select>
+					    			<label for="vrstaPartneraIzmeniSelect">Vrsta partnera</label>
+					    			<select class="form-control"  id="vrstaPartneraIzmeniSelect">
+					    				<option>KU</option>
+					    				<option>DO</option>
+					    				<option>KD</option>
+					    			</select>
+					  			</div>
+					  			<div class="form-group">
+					    			<label for="mestoIzmeniSelect">Mesto</label>
+					    			<select class="form-control"  id="mestoIzmeniSelect">
+					    			</select>
+					  				</div>
+					  			<div class="form-group">
+					    			<label for="preduzeceIzmeniSelect">Preduzece</label>
+					    			<select class="form-control"  id="preduzeceIzmeniSelect">
+					    			</select>
 					  			</div>
 							</form>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary updateModalClose">Otkaži</button>
-							<button type="button" id="doKreirajFakturu" class="btn btn-primary">Sačuvaj</button>
+							<button type="button" id="doUpdate" class="btn btn-primary">Sačuvaj</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			
-			
-			<!-- Obrisi narudzbenicu-->
+			<!-- Brisanje poslovnog partnera -->
 			<div class="modal fade" id="deletePromptModal" tabindex="-1" role="dialog" aria-labelledby="deletePromptLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
@@ -261,9 +302,7 @@
 			</div>
 			
 		</div>
-		</div>
-		</div>
-				<!-- Bootstrap core JS-->
+						<!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>

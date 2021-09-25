@@ -54,6 +54,11 @@ public class PoslovniPartnerService {
 		return partnerRepo.findByNazivPoslovnogPartnera(nazivPoslovnogPartnera);
 	}
 	
+	public Page<PoslovniPartner> findAllByNazivPoslovnogPartneraa(String nazivPoslovnogPartnera, int pageNo,
+			int pageSize) {
+		return partnerRepo.findAllByNazivPoslovnogPartnera(nazivPoslovnogPartnera,  PageRequest.of(pageNo, pageSize));
+	}
+
 	
 	public Page<PoslovniPartner> findAllByEmail(String email, int pageNo, int pageSize) {
 		return partnerRepo.findAllByEmail(email,PageRequest.of(pageNo, pageSize));

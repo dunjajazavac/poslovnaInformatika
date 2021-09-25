@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poslovnaInformatika.podsistemProdaje.model.NaseljenoMesto;
 import com.poslovnaInformatika.podsistemProdaje.repository.MestoRepository;
-import com.poslovnaInformatika.podsistemProdaje.util.PageRequest;
+
 @Transactional
 @Service
 public class MestoService {
@@ -40,14 +41,17 @@ public class MestoService {
 	}
 
 	
-	public Page<NaseljenoMesto> findAllByNazivMesta(String nazivMesta, Pageable page) {
-		return mestoRepo.findAllByNazivMesta(nazivMesta, page);
+	
+	public Page<NaseljenoMesto> findAllByNazivMesta(String nazivMesta, int pageNo, int pageSize) {
+		return mestoRepo.findAllByNazivMesta(nazivMesta,  PageRequest.of(pageNo, pageSize));
 	}
-	public Page<NaseljenoMesto> findAllByPttBroj(int pttBroj, Pageable page) {
-		return mestoRepo.findAllByPttBroj(pttBroj, page);
+
+	
+	public Page<NaseljenoMesto> findAllByPttBroj(int pttBroj, int pageNo, int pageSize) {
+		return mestoRepo.findAllByPttBroj(pttBroj, PageRequest.of(pageNo, pageSize));
 	}
 	public Page<NaseljenoMesto> findAll(int pageNo, int pageSize) {
-		return mestoRepo.findAll(new PageRequest(pageNo, pageSize));
+		return mestoRepo.findAll(PageRequest.of(pageNo, pageSize));
 	}
 	
 

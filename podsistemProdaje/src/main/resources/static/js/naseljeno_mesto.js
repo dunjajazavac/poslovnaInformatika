@@ -76,7 +76,12 @@ function dobaviMesta() {
 	var nmbSelect = $('#nmb-select');
 	var pageSize = nmbSelect.find(":selected").text();
 	$.ajax({
-		url : "http://localhost:8080/api/mesto/p?pageNo=" + pageNo + "&pageSize=" + pageSize
+		
+		error: function (e) {
+	        console.log(e); // logging the error object to console
+	    },
+		url : "http://localhost:8086/api/mesto/p?pageNo=" + pageNo + "&pageSize=" + pageSize
+	
 	}).then(
 			function(data, status, request) {
 				console.log(data);
@@ -88,6 +93,7 @@ function dobaviMesta() {
                         `<${pageNo==j? 'span':'a'} class="page-link" pageNo="${j}">${j+1}</${pageNo==j? 'span':'a'}></li>`);
                 }
 				for (i = 0; i < data.length; i++) {
+					console.log(data[i].idMesta)
 					newRow = 
 						"<tr>" 
 							+ "<td class=\"nazivMesta\">" + data[i].nazivMesta + "</td>"
@@ -129,7 +135,7 @@ function searchMestoByNaziv(){
 		var naziv = nazivSearchInput.val();
 		console.log(naziv);
 		$.ajax({
-			url : "http://localhost:8080/api/mesto/searchByNaziv?pageNo=" + pageNo + "&pageSize=" + pageSize + "&naziv=" + naziv
+			url : "http://localhost:8086/api/mesto/searchByNaziv?pageNo=" + pageNo + "&pageSize=" + pageSize + "&naziv=" + naziv
 		}).then(
 				function(data, status, request) {
 					console.log(data);
@@ -183,7 +189,7 @@ function searchMestoByPttBroj(){
 		var ptt_broj = pttBrojSearchInput.val();
 		console.log(ptt_broj);
 		$.ajax({
-			url : "http://localhost:8080/api/mesto/searchByPttBroj?pageNo=" + pageNo + "&pageSize=" + pageSize + "&ptt_broj=" + ptt_broj 
+			url : "http://localhost:8086/api/mesto/searchByPttBroj?pageNo=" + pageNo + "&pageSize=" + pageSize + "&ptt_broj=" + ptt_broj 
 		}).then(
 				function(data, status, request) {
 					console.log(data);
@@ -246,7 +252,7 @@ function dodajMesto(){
 			'naziv_mesta': naziv_mesta,
 			'ptt_broj': ptt_broj	
 		}
-		$.post("http://localhost:8080/api/mesto/dodajMesto", params, function(data) {
+		$.post("http://localhost:8086/api/mesto/dodajMesto", params, function(data) {
 			console.log('ispis...')
 			
 			alert('Dodata je novo mesto');
@@ -285,7 +291,7 @@ function izmeniMesto() {
 				'naziv_mesta': naziv_mesta,
 				'ptt_broj': ptt_broj	
 		}
-		$.post("http://localhost:8080/api/mesto/izmeniMesto/", params, function(data) {
+		$.post("http://localhost:8086/api/mesto/izmeniMesto/", params, function(data) {
 			console.log('ispis...')
 			console.log(data);
 			
@@ -309,7 +315,7 @@ function obrisiMesto(){
 	console.log(id);
 	
 	$.ajax({
-    	url: "http://localhost:8080/api/mesto/obrisiMesto/" + id,
+    	url: "http://localhost:8086/api/mesto/obrisiMesto/" + id,
     	type: "DELETE",
     	success: function(){
     		dobaviMesta();
